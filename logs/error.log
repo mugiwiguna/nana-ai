@@ -249,3 +249,23 @@
 2026-06-17 05:31:53: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
 2026-06-17 05:31:53: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
 2026-06-17 05:31:53:     at ignore-listed frames
+2026-06-17 08:28:18: Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-06-17 08:28:18:     at ignore-listed frames
+2026-06-17 08:28:18: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-06-17 08:28:18:     at ignore-listed frames
+2026-06-17 08:28:18: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-06-17 08:28:18:     at ignore-listed frames
+2026-06-17 08:28:19: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-06-17 08:28:19:     at ignore-listed frames
+2026-06-17 08:28:19: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-06-17 08:28:19:     at ignore-listed frames
+2026-06-17 08:28:19: Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-06-17 08:28:19:     at ignore-listed frames
+2026-06-17 08:28:20: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-06-17 08:28:20:     at ignore-listed frames
+2026-06-17 08:28:20: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-06-17 08:28:20:     at ignore-listed frames
+2026-06-17 08:28:20: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-06-17 08:28:20:     at ignore-listed frames
+2026-06-17 08:28:21: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-06-17 08:28:21:     at ignore-listed frames

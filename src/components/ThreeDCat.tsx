@@ -5,7 +5,6 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, Environment } from "@react-three/drei";
 import * as THREE from "three";
 
-/* ─── Prismatic cat head only ─── */
 function CatHead({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
   const groupRef = useRef<THREE.Group>(null);
   const leftPupilRef = useRef<THREE.Mesh>(null);
@@ -19,10 +18,10 @@ function CatHead({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
   const { viewport } = useThree();
 
   useFrame((_, delta) => {
-    const dt = delta * 1000; // to ms
+    const dt = delta * 1000;
     if (!groupRef.current) return;
 
-    // ── Smooth cursor follow ──
+    // ── Cursor follow ──
     const targetX = (mouseX - 0.5) * viewport.width * 0.5;
     const targetY = -(mouseY - 0.5) * viewport.height * 0.35;
     groupRef.current.rotation.y += ((mouseX - 0.5) * 0.6 - groupRef.current.rotation.y) * 0.04;
@@ -30,21 +29,14 @@ function CatHead({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
     groupRef.current.position.x += (targetX - groupRef.current.position.x) * 0.04;
     groupRef.current.position.y += (targetY - groupRef.current.position.y) * 0.04;
 
-    // ── Gaze: pupils track cursor direction ──
-    // Map screen-space cursor to eye-space direction
+    // ── Gaze: pupils follow cursor ──
     const gazeX = (mouseX - 0.5) * 0.25;
     const gazeY = (mouseY - 0.5) * 0.15;
     const maxPupil = 0.05;
-
     const lx = THREE.MathUtils.clamp(gazeX, -maxPupil, maxPupil);
     const ly = THREE.MathUtils.clamp(gazeY, -maxPupil, maxPupil);
-
-    if (leftPupilRef.current) {
-      leftPupilRef.current.position.set(lx, ly, 0.08);
-    }
-    if (rightPupilRef.current) {
-      rightPupilRef.current.position.set(lx, ly, 0.08);
-    }
+    if (leftPupilRef.current) leftPupilRef.current.position.set(lx, ly, 0.08);
+    if (rightPupilRef.current) rightPupilRef.current.position.set(lx, ly, 0.08);
 
     // ── Blinking ──
     blinkTimerRef.current += dt;
@@ -57,22 +49,20 @@ function CatHead({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
       }
     } else if (blinkTimerRef.current >= nextBlinkRef.current) {
       isBlinkingRef.current = true;
-      blinkDurationRef.current = 120; // 120ms blink
+      blinkDurationRef.current = 150;
     }
 
-    // Eyelid scale: 0 = open, 1 = closed
     const blink = isBlinkingRef.current
       ? (() => {
-          const progress = 1 - blinkDurationRef.current / 120;
-          // Fast close, slow open
-          if (progress < 0.2) return progress / 0.2; // 0→1 in first 20%
-          const reopen = (progress - 0.2) / 0.8; // 1→0 in last 80%
-          return 1 - reopen;
+          const p = 1 - blinkDurationRef.current / 150;
+          if (p < 0.15) return p / 0.15;        // 0→1 fast close
+          if (p > 0.75) return 1 - (p - 0.75) / 0.25; // 1→0 slow open
+          return 1;                               // hold closed
         })()
       : 0;
 
-    if (leftLidRef.current) leftLidRef.current.scale.y = blink < 0.01 ? 0.01 : blink;
-    if (rightLidRef.current) rightLidRef.current.scale.y = blink < 0.01 ? 0.01 : blink;
+    if (leftLidRef.current) leftLidRef.current.scale.y = Math.max(blink, 0.01);
+    if (rightLidRef.current) rightLidRef.current.scale.y = Math.max(blink, 0.01);
   });
 
   const mainColor = "#16a34a";
@@ -80,7 +70,7 @@ function CatHead({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
   const eyeColor = "#facc15";
   const noseColor = "#f472b6";
   const innerEarColor = "#fbcfe8";
-  const lidColor = "#14532d"; // darker green for eyelid
+  const lidColor = "#0c3d1a";
 
   const bodyMat = useMemo(() => new THREE.MeshStandardMaterial({ color: mainColor, roughness: 0.25, metalness: 0.15, flatShading: true }), []);
   const darkMat = useMemo(() => new THREE.MeshStandardMaterial({ color: darkColor, roughness: 0.3, metalness: 0.05, flatShading: true }), []);
@@ -89,15 +79,16 @@ function CatHead({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
   const noseMat = useMemo(() => new THREE.MeshStandardMaterial({ color: noseColor, roughness: 0.15, metalness: 0.1 }), []);
   const innerEarMat = useMemo(() => new THREE.MeshStandardMaterial({ color: innerEarColor, roughness: 0.25, flatShading: true }), []);
   const lidMat = useMemo(() => new THREE.MeshStandardMaterial({ color: lidColor, roughness: 0.3, metalness: 0.1, flatShading: true }), []);
+  const whiskerMat = useMemo(() => new THREE.MeshStandardMaterial({ color: "#f0f0f0", roughness: 0.3, metalness: 0.1 }), []);
 
   return (
     <group ref={groupRef}>
-      {/* ── Prismatic Head (octahedron = diamond shape, cat-like) ── */}
+      {/* ── Prismatic Head ── */}
       <mesh material={bodyMat} scale={[1.0, 1.05, 0.7]}>
         <octahedronGeometry args={[0.9, 2]} />
       </mesh>
 
-      {/* ── Left Ear (pyramid/prism) ── */}
+      {/* ── Left Ear ── */}
       <group position={[-0.45, 0.75, 0.1]} rotation={[0, 0, -0.2]}>
         <mesh material={bodyMat}>
           <coneGeometry args={[0.22, 0.6, 4, 1]} />
@@ -107,7 +98,7 @@ function CatHead({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
         </mesh>
       </group>
 
-      {/* ── Right Ear (pyramid/prism) ── */}
+      {/* ── Right Ear ── */}
       <group position={[0.45, 0.75, 0.1]} rotation={[0, 0, 0.2]}>
         <mesh material={bodyMat}>
           <coneGeometry args={[0.22, 0.6, 4, 1]} />
@@ -119,49 +110,42 @@ function CatHead({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
 
       {/* ── Eyes ── */}
       <group position={[-0.22, 0.15, 0.58]}>
-        {/* Eye socket indent */}
         <mesh material={darkMat}>
           <sphereGeometry args={[0.16, 12, 12]} />
         </mesh>
-        {/* Eye ball */}
         <mesh material={eyeMat} position={[0, 0, 0.03]}>
           <sphereGeometry args={[0.12, 12, 12]} />
         </mesh>
-        {/* Pupil */}
         <mesh ref={leftPupilRef} material={pupilMat} position={[0, 0, 0.08]}>
           <sphereGeometry args={[0.06, 8, 8]} />
         </mesh>
-        {/* Eyelid */}
-        <mesh ref={leftLidRef} material={lidMat} position={[0, 0.12, 0.04]} scale={[1.1, 0.01, 0.8]}>
-          <boxGeometry args={[0.18, 0.12, 0.06]} />
+        {/* Eyelid: sits above eye, scales DOWN to cover */}
+        <mesh ref={leftLidRef} material={lidMat} position={[0, 0.26, 0.04]} scale={[1.1, 0.01, 0.9]}>
+          <boxGeometry args={[0.22, 0.26, 0.08]} />
         </mesh>
       </group>
 
       <group position={[0.22, 0.15, 0.58]}>
-        {/* Eye socket indent */}
         <mesh material={darkMat}>
           <sphereGeometry args={[0.16, 12, 12]} />
         </mesh>
-        {/* Eye ball */}
         <mesh material={eyeMat} position={[0, 0, 0.03]}>
           <sphereGeometry args={[0.12, 12, 12]} />
         </mesh>
-        {/* Pupil */}
         <mesh ref={rightPupilRef} material={pupilMat} position={[0, 0, 0.08]}>
           <sphereGeometry args={[0.06, 8, 8]} />
         </mesh>
-        {/* Eyelid */}
-        <mesh ref={rightLidRef} material={lidMat} position={[0, 0.12, 0.04]} scale={[1.1, 0.01, 0.8]}>
-          <boxGeometry args={[0.18, 0.12, 0.06]} />
+        <mesh ref={rightLidRef} material={lidMat} position={[0, 0.26, 0.04]} scale={[1.1, 0.01, 0.9]}>
+          <boxGeometry args={[0.22, 0.26, 0.08]} />
         </mesh>
       </group>
 
-      {/* ── Nose (small pink prism) ── */}
+      {/* ── Nose ── */}
       <mesh position={[0, -0.12, 0.66]} material={noseMat}>
         <sphereGeometry args={[0.07, 8, 6]} scale={[1.2, 0.7, 1]} />
       </mesh>
 
-      {/* ── Mouth (lines extending down from nose) ── */}
+      {/* ── Mouth (angled lines below nose) ── */}
       <mesh position={[-0.06, -0.22, 0.65]} rotation={[0, 0, -0.35]} material={darkMat}>
         <boxGeometry args={[0.12, 0.02, 0.03]} />
       </mesh>
@@ -169,17 +153,22 @@ function CatHead({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
         <boxGeometry args={[0.12, 0.02, 0.03]} />
       </mesh>
 
-      {/* ── Whiskers (thin angular, extruding from cheeks) ── */}
-      {([
-        { pos: [-0.62, -0.02, 0.30] as [number, number, number], rot: [0, 0.15, 0.6] as [number, number, number] },
-        { pos: [-0.65, -0.14, 0.26] as [number, number, number], rot: [0, 0.08, 0.8] as [number, number, number] },
-        { pos: [0.62, -0.02, 0.30] as [number, number, number], rot: [0, -0.15, -0.6] as [number, number, number] },
-        { pos: [0.65, -0.14, 0.26] as [number, number, number], rot: [0, -0.08, -0.8] as [number, number, number] },
-      ] as const).map((w, i) => (
-        <mesh key={i} position={w.pos} rotation={w.rot} material={darkMat}>
-          <cylinderGeometry args={[0.015, 0.015, 0.45, 6]} />
-        </mesh>
-      ))}
+      {/* ── Whiskers: thin boxes on cheek surface pointing outward ── */}
+      {/* Left side */}
+      <mesh position={[-0.38, -0.02, 0.30]} rotation={[0, 0, 0.85]} material={whiskerMat}>
+        <boxGeometry args={[0.45, 0.012, 0.012]} />
+      </mesh>
+      <mesh position={[-0.42, -0.10, 0.22]} rotation={[0.1, 0.1, 0.7]} material={whiskerMat}>
+        <boxGeometry args={[0.4, 0.012, 0.012]} />
+      </mesh>
+
+      {/* Right side */}
+      <mesh position={[0.38, -0.02, 0.30]} rotation={[0, 0, -0.85]} material={whiskerMat}>
+        <boxGeometry args={[0.45, 0.012, 0.012]} />
+      </mesh>
+      <mesh position={[0.42, -0.10, 0.22]} rotation={[0.1, -0.1, -0.7]} material={whiskerMat}>
+        <boxGeometry args={[0.4, 0.012, 0.012]} />
+      </mesh>
     </group>
   );
 }
