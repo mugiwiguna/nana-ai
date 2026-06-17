@@ -157,27 +157,27 @@ function CatHead({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
       </group>
 
       {/* ── Nose (small pink prism) ── */}
-      <mesh position={[0, -0.1, 0.62]} material={noseMat}>
+      <mesh position={[0, -0.12, 0.66]} material={noseMat}>
         <sphereGeometry args={[0.07, 8, 6]} scale={[1.2, 0.7, 1]} />
       </mesh>
 
-      {/* ── Mouth ── */}
-      <mesh position={[-0.05, -0.18, 0.58]} rotation={[0, 0, -0.35]} material={darkMat}>
-        <boxGeometry args={[0.1, 0.015, 0.02]} />
+      {/* ── Mouth (lines extending down from nose) ── */}
+      <mesh position={[-0.06, -0.22, 0.65]} rotation={[0, 0, -0.35]} material={darkMat}>
+        <boxGeometry args={[0.12, 0.02, 0.03]} />
       </mesh>
-      <mesh position={[0.05, -0.18, 0.58]} rotation={[0, 0, 0.35]} material={darkMat}>
-        <boxGeometry args={[0.1, 0.015, 0.02]} />
+      <mesh position={[0.06, -0.22, 0.65]} rotation={[0, 0, 0.35]} material={darkMat}>
+        <boxGeometry args={[0.12, 0.02, 0.03]} />
       </mesh>
 
-      {/* ── Whiskers (thin angular) ── */}
+      {/* ── Whiskers (thin angular, extruding from cheeks) ── */}
       {([
-        { pos: [-0.65, -0.02, 0.25] as [number, number, number], rot: [0, 0.15, 0.5] as [number, number, number] },
-        { pos: [-0.67, -0.12, 0.22] as [number, number, number], rot: [0, 0.1, 0.7] as [number, number, number] },
-        { pos: [0.65, -0.02, 0.25] as [number, number, number], rot: [0, -0.15, -0.5] as [number, number, number] },
-        { pos: [0.67, -0.12, 0.22] as [number, number, number], rot: [0, -0.1, -0.7] as [number, number, number] },
+        { pos: [-0.62, -0.02, 0.30] as [number, number, number], rot: [0, 0.15, 0.6] as [number, number, number] },
+        { pos: [-0.65, -0.14, 0.26] as [number, number, number], rot: [0, 0.08, 0.8] as [number, number, number] },
+        { pos: [0.62, -0.02, 0.30] as [number, number, number], rot: [0, -0.15, -0.6] as [number, number, number] },
+        { pos: [0.65, -0.14, 0.26] as [number, number, number], rot: [0, -0.08, -0.8] as [number, number, number] },
       ] as const).map((w, i) => (
         <mesh key={i} position={w.pos} rotation={w.rot} material={darkMat}>
-          <cylinderGeometry args={[0.01, 0.01, 0.4, 6]} />
+          <cylinderGeometry args={[0.015, 0.015, 0.45, 6]} />
         </mesh>
       ))}
     </group>
@@ -188,7 +188,7 @@ export default function ThreeDCat({ mouseX, mouseY }: { mouseX: number; mouseY: 
   return (
     <div className="w-28 h-28 md:w-36 md:h-36">
       <Canvas
-        camera={{ position: [0, -0.1, 3.5], fov: 35 }}
+        camera={{ position: [0, 0.2, 4.5], fov: 38 }}
         gl={{ antialias: true, alpha: true }}
         style={{ background: "transparent" }}
       >
