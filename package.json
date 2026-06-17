@@ -9,6 +9,8 @@
     "db:migrate": "node scripts/migrate.js"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
     "@tailwindcss/postcss": "^4.3.1",
     "bcryptjs": "^2.4.3",
     "framer-motion": "^12.40.0",
@@ -19,6 +21,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "recharts": "^3.8.1",
+    "three": "^0.184.0",
     "uuid": "^11.0.0"
   },
   "devDependencies": {

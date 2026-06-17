@@ -1,8 +1,11 @@
 "use client";
 
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState, useCallback, lazy, Suspense } from "react";
 import Link from "next/link";
 import { motion, useMotionValue, useTransform, useScroll, useSpring, useInView } from "framer-motion";
+import dynamic from "next/dynamic";
+
+const ThreeDCat = dynamic(() => import("@/components/ThreeDCat"), { ssr: false, loading: () => <div className="w-28 h-28 md:w-36 md:h-36" /> });
 
 /* ─── Pricing data ─── */
 const PRICING_ROWS = [
@@ -226,12 +229,20 @@ export default function HomePage() {
   const springX = useSpring(orbX, { stiffness: 80, damping: 25 });
   const springY = useSpring(orbY, { stiffness: 80, damping: 25 });
 
+  // ── 3D cat cursor tracking ──
+  const [catMouse, setCatMouse] = useState({ x: 0.5, y: 0.5 });
+
+  const catMouseRef = useRef({ x: 0.5, y: 0.5 });
+
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
       const rect = heroRef.current?.getBoundingClientRect();
       if (!rect) return;
-      mouseX.set((e.clientX - rect.left) / rect.width);
-      mouseY.set((e.clientY - rect.top) / rect.height);
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      mouseX.set(x);
+      mouseY.set(y);
+      catMouseRef.current = { x, y };
     },
     [mouseX, mouseY]
   );
@@ -244,13 +255,31 @@ export default function HomePage() {
     const handler = (e: DeviceOrientationEvent) => {
       const gx = (e.gamma ?? 0) / 45; // -1 to 1
       const gy = (e.beta ?? 0) / 90;  // -1 to 1
-      mouseX.set(Math.min(1, Math.max(0, 0.5 + gx * 0.5)));
-      mouseY.set(Math.min(1, Math.max(0, 0.5 + gy * 0.5)));
+      const x = Math.min(1, Math.max(0, 0.5 + gx * 0.5));
+      const y = Math.min(1, Math.max(0, 0.5 + gy * 0.5));
+      mouseX.set(x);
+      mouseY.set(y);
+      catMouseRef.current = { x, y };
     };
 
     window.addEventListener("deviceorientation", handler);
     return () => window.removeEventListener("deviceorientation", handler);
   }, [mouseX, mouseY]);
+
+  // Throttle cat mouse updates for 3D rendering
+  useEffect(() => {
+    let raf: number;
+    const tick = () => {
+      setCatMouse((prev) => {
+        const { x, y } = catMouseRef.current;
+        if (Math.abs(prev.x - x) < 0.001 && Math.abs(prev.y - y) < 0.001) return prev;
+        return { x, y };
+      });
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   // ── Parallax ──
   const { scrollYProgress } = useScroll();
@@ -311,43 +340,14 @@ export default function HomePage() {
             opacity: parallaxOpacity,
           }}
         >
-          {/* Cat logo - motion tracked */}
+          {/* 3D Cat logo - motion tracked */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="mb-6 flex justify-center"
-            style={{
-              x: useTransform(mouseX, [0, 1], [-12, 12]),
-              y: useTransform(mouseY, [0, 1], [-8, 8]),
-              rotateX: useTransform(mouseY, [0, 1], [10, -10]),
-              rotateY: useTransform(mouseX, [0, 1], [-10, 10]),
-            }}
           >
-            <svg className="w-20 h-20 md:w-28 md:h-28 drop-shadow-lg" viewBox="0 0 120 120" fill="none">
-              {/* Left ear */}
-              <path d="M30 52 L18 18 L42 38 Z" stroke="#16a34a" strokeWidth="2.5" strokeLinejoin="miter" fill="none"/>
-              {/* Right ear */}
-              <path d="M90 52 L102 18 L78 38 Z" stroke="#16a34a" strokeWidth="2.5" strokeLinejoin="miter" fill="none"/>
-              {/* Head */}
-              <path d="M35 42 L28 58 L32 80 L60 92 L88 80 L92 58 L85 42 Z" stroke="#16a34a" strokeWidth="2.5" strokeLinejoin="miter" fill="none"/>
-              {/* Left eye */}
-              <path d="M44 60 L50 54 L56 60 L50 66 Z" stroke="#16a34a" strokeWidth="2" fill="none"/>
-              <line x1="50" y1="56" x2="50" y2="64" stroke="#16a34a" strokeWidth="1.5"/>
-              {/* Right eye */}
-              <path d="M64 60 L70 54 L76 60 L70 66 Z" stroke="#16a34a" strokeWidth="2" fill="none"/>
-              <line x1="70" y1="56" x2="70" y2="64" stroke="#16a34a" strokeWidth="1.5"/>
-              {/* Nose */}
-              <path d="M57 72 L63 72 L60 76 Z" stroke="#16a34a" strokeWidth="1.5" strokeLinejoin="miter" fill="none"/>
-              {/* Mouth */}
-              <line x1="60" y1="76" x2="54" y2="82" stroke="#16a34a" strokeWidth="1.5" strokeLinecap="round"/>
-              <line x1="60" y1="76" x2="66" y2="82" stroke="#16a34a" strokeWidth="1.5" strokeLinecap="round"/>
-              {/* Whiskers */}
-              <line x1="28" y1="66" x2="44" y2="70" stroke="#16a34a" strokeWidth="1.2" strokeLinecap="round"/>
-              <line x1="26" y1="74" x2="44" y2="74" stroke="#16a34a" strokeWidth="1.2" strokeLinecap="round"/>
-              <line x1="92" y1="66" x2="76" y2="70" stroke="#16a34a" strokeWidth="1.2" strokeLinecap="round"/>
-              <line x1="94" y1="74" x2="76" y2="74" stroke="#16a34a" strokeWidth="1.2" strokeLinecap="round"/>
-            </svg>
+            <ThreeDCat mouseX={catMouse.x} mouseY={catMouse.y} />
           </motion.div>
 
           {/* Announcement pill */}
