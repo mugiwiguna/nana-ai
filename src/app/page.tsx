@@ -7,6 +7,20 @@ import dynamic from "next/dynamic";
 
 const ThreeDCat = dynamic(() => import("@/components/ThreeDCat"), { ssr: false, loading: () => <div className="w-28 h-28 md:w-36 md:h-36" /> });
 
+const AnimatedHeroText = dynamic(() => import("@/components/AnimatedHeroText"), {
+  ssr: false,
+  loading: () => (
+    <div className="text-center">
+      <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.05] mb-6">
+        <span className="gradient-text">API Key AI,</span><br /><span>Akses Instan</span>
+      </h1>
+      <p className="text-lg md:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto mb-10">
+        Isi saldo, dapatkan API key, langsung bangun. Bayar sesuai pemakaian Anda.
+      </p>
+    </div>
+  ),
+});
+
 /* ─── Pricing data ─── */
 const PRICING_ROWS = [
   { model: "GPT-4o", input: "$0.0025", output: "$0.01", popular: true },
@@ -364,26 +378,7 @@ export default function HomePage() {
           </motion.div>
 
           {/* Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.05] mb-6"
-          >
-            <span className="gradient-text">API Key AI,</span>
-            <br />
-            <span>Akses Instan</span>
-          </motion.h1>
-
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg md:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto mb-10 leading-relaxed"
-          >
-            Isi saldo, dapatkan API key, langsung bangun. Bayar sesuai pemakaian Anda.
-          </motion.p>
+          <AnimatedHeroText mouseX={catMouse.x} mouseY={catMouse.y} />
 
           {/* CTA Buttons */}
           <motion.div

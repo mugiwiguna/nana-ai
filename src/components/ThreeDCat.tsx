@@ -79,7 +79,7 @@ function CatHead({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
   const noseMat = useMemo(() => new THREE.MeshStandardMaterial({ color: noseColor, roughness: 0.15, metalness: 0.1 }), []);
   const innerEarMat = useMemo(() => new THREE.MeshStandardMaterial({ color: innerEarColor, roughness: 0.25, flatShading: true }), []);
   const lidMat = useMemo(() => new THREE.MeshStandardMaterial({ color: lidColor, roughness: 0.3, metalness: 0.1, flatShading: true }), []);
-  const whiskerMat = useMemo(() => new THREE.MeshStandardMaterial({ color: "#f0f0f0", roughness: 0.3, metalness: 0.1 }), []);
+  const whiskerMat = useMemo(() => new THREE.MeshStandardMaterial({ color: "#f0f0f0", roughness: 0.3, metalness: 0.1, depthWrite: false }), []);
 
   return (
     <group ref={groupRef}>
@@ -119,9 +119,9 @@ function CatHead({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
         <mesh ref={leftPupilRef} material={pupilMat} position={[0, 0, 0.08]}>
           <sphereGeometry args={[0.06, 8, 8]} />
         </mesh>
-        {/* Eyelid: sits above eye, scales DOWN to cover */}
-        <mesh ref={leftLidRef} material={lidMat} position={[0, 0.26, 0.04]} scale={[1.1, 0.01, 0.9]}>
-          <boxGeometry args={[0.22, 0.26, 0.08]} />
+        {/* Eyelid: centered on eye, covers it when scale.y=1 */}
+        <mesh ref={leftLidRef} material={lidMat} position={[0, 0, 0.05]} scale={[1.1, 0.01, 0.9]}>
+          <boxGeometry args={[0.22, 0.34, 0.08]} />
         </mesh>
       </group>
 
@@ -135,8 +135,8 @@ function CatHead({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
         <mesh ref={rightPupilRef} material={pupilMat} position={[0, 0, 0.08]}>
           <sphereGeometry args={[0.06, 8, 8]} />
         </mesh>
-        <mesh ref={rightLidRef} material={lidMat} position={[0, 0.26, 0.04]} scale={[1.1, 0.01, 0.9]}>
-          <boxGeometry args={[0.22, 0.26, 0.08]} />
+        <mesh ref={rightLidRef} material={lidMat} position={[0, 0, 0.05]} scale={[1.1, 0.01, 0.9]}>
+          <boxGeometry args={[0.22, 0.34, 0.08]} />
         </mesh>
       </group>
 
@@ -153,21 +153,21 @@ function CatHead({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
         <boxGeometry args={[0.12, 0.02, 0.03]} />
       </mesh>
 
-      {/* ── Whiskers: thin boxes on cheek surface pointing outward ── */}
-      {/* Left side */}
-      <mesh position={[-0.38, -0.02, 0.30]} rotation={[0, 0, 0.85]} material={whiskerMat}>
-        <boxGeometry args={[0.45, 0.012, 0.012]} />
+      {/* ── Whiskers: protruding from cheeks with renderOrder override ── */}
+      {/* Left side — point outward along -X */}
+      <mesh position={[-0.32, -0.02, 0.44]} rotation={[0, 0, 0.15]} material={whiskerMat} renderOrder={1}>
+        <boxGeometry args={[0.5, 0.04, 0.06]} />
       </mesh>
-      <mesh position={[-0.42, -0.10, 0.22]} rotation={[0.1, 0.1, 0.7]} material={whiskerMat}>
-        <boxGeometry args={[0.4, 0.012, 0.012]} />
+      <mesh position={[-0.34, -0.12, 0.38]} rotation={[0.05, 0, 0.25]} material={whiskerMat} renderOrder={1}>
+        <boxGeometry args={[0.45, 0.035, 0.05]} />
       </mesh>
 
-      {/* Right side */}
-      <mesh position={[0.38, -0.02, 0.30]} rotation={[0, 0, -0.85]} material={whiskerMat}>
-        <boxGeometry args={[0.45, 0.012, 0.012]} />
+      {/* Right side — point outward along +X */}
+      <mesh position={[0.32, -0.02, 0.44]} rotation={[0, 0, -0.15]} material={whiskerMat} renderOrder={1}>
+        <boxGeometry args={[0.5, 0.04, 0.06]} />
       </mesh>
-      <mesh position={[0.42, -0.10, 0.22]} rotation={[0.1, -0.1, -0.7]} material={whiskerMat}>
-        <boxGeometry args={[0.4, 0.012, 0.012]} />
+      <mesh position={[0.34, -0.12, 0.38]} rotation={[0.05, 0, -0.25]} material={whiskerMat} renderOrder={1}>
+        <boxGeometry args={[0.45, 0.035, 0.05]} />
       </mesh>
     </group>
   );
