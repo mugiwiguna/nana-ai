@@ -92,12 +92,12 @@ export default function SubscriptionPage() {
   const hasActivePlan = sub?.active != null;
 
   return (
-    <div className="space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16 space-y-8">
       {/* Message */}
       {msg && (
         <div className={`p-4 rounded-xl text-sm font-medium ${
           msg.ok
-            ? "bg-green-500/10 text-green-500 border border-green-500/20"
+            ? "bg-[var(--gradient-start)]/10 text-[var(--gradient-start)] border border-[var(--gradient-start)]/20"
             : "bg-red-500/10 text-red-500 border border-red-500/20"
         }`}>
           {msg.text}
@@ -184,7 +184,7 @@ export default function SubscriptionPage() {
                 <p className="text-xs text-[var(--text-secondary)]">Credit</p>
                 <p className="text-sm font-bold text-[var(--gradient-start)]">
                   Rp {Number(plan.credits).toLocaleString("id-ID")}
-                  <span className="text-[10px] font-normal text-green-500 ml-1">
+                  <span className="text-[10px] font-normal text-[var(--gradient-start)] ml-1">
                     +{Math.round(((Number(plan.credits) - Number(plan.price)) / Number(plan.price)) * 100)}%
                   </span>
                 </p>
@@ -232,7 +232,7 @@ export default function SubscriptionPage() {
                   <p className="text-sm font-medium">Rp {Number(item.price).toLocaleString("id-ID")}</p>
                   <span className={`text-[10px] px-2 py-0.5 rounded-full ${
                     item.status === "active"
-                      ? "bg-green-500/10 text-green-500"
+                      ? "bg-[var(--gradient-start)]/10 text-[var(--gradient-start)]"
                       : item.status === "pending"
                         ? "bg-yellow-500/10 text-yellow-500"
                         : "bg-zinc-500/10 text-zinc-400"

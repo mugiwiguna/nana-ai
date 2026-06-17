@@ -211,7 +211,7 @@ function CodeBlock({ code, lang }: { code: string; lang?: string }) {
 
 function InlineCode({ children }: { children: string }) {
   return (
-    <code className="inline-block text-sm font-mono bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-1.5 text-emerald-700 dark:text-emerald-400 mt-1">
+    <code className="inline-block text-sm font-mono bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-3 py-1.5 gradient-text mt-1">
       {children}
     </code>
   );
@@ -236,7 +236,7 @@ export default function DocsPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">Dokumentasi</h1>
         <p className="text-[var(--text-secondary)] mt-1">Panduan lengkap nanaAI API</p>
@@ -288,7 +288,7 @@ export default function DocsPage() {
                         <ul className="mt-2 space-y-1">
                           {item.checklist.map((label: string, ci: number) => (
                             <li key={ci} className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
-                              <svg className="w-3.5 h-3.5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                              <svg className="w-3.5 h-3.5 text-[var(--gradient-start)] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                               </svg>
                               {label}
@@ -317,7 +317,7 @@ export default function DocsPage() {
                             <tbody className="divide-y divide-[var(--border-color)]">
                               {item.params.map((p: any, pi: number) => (
                                 <tr key={pi}>
-                                  <td className="px-3 py-2 font-mono text-emerald-700 dark:text-emerald-400">{p.name}</td>
+                                  <td className="px-3 py-2 font-mono gradient-text">{p.name}</td>
                                   <td className="px-3 py-2 font-mono text-xs text-[var(--text-secondary)]">{p.type}</td>
                                   <td className="px-3 py-2">
                                     {p.req

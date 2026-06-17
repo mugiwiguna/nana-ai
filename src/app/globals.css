@@ -15,22 +15,24 @@
   --glass-bg: rgba(255, 255, 255, 0.6);
   --glass-border: rgba(255, 255, 255, 0.8);
   --glass-shadow: rgba(0, 0, 0, 0.05);
-  --gradient-start: #16a34a;
-  --gradient-end: #16a34a;
+  --gradient-start: #8b5cf6;
+  --gradient-end: #6366f1;
+  --accent-glow: rgba(139, 92, 246, 0.15);
 }
 
 .dark {
-  --bg-primary: #09090b;
-  --bg-secondary: #18181b;
-  --bg-card: rgba(24, 24, 27, 0.7);
-  --text-primary: #fafafa;
-  --text-secondary: #a1a1aa;
+  --bg-primary: #050508;
+  --bg-secondary: #0c0c14;
+  --bg-card: rgba(12, 12, 24, 0.6);
+  --text-primary: #ededf0;
+  --text-secondary: #8b8b9e;
   --border-color: rgba(255, 255, 255, 0.06);
-  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-bg: rgba(12, 12, 24, 0.4);
   --glass-border: rgba(255, 255, 255, 0.06);
-  --glass-shadow: rgba(0, 0, 0, 0.2);
-  --gradient-start: #22c55e;
-  --gradient-end: #22c55e;
+  --glass-shadow: rgba(0, 0, 0, 0.3);
+  --gradient-start: #a78bfa;
+  --gradient-end: #6366f1;
+  --accent-glow: rgba(139, 92, 246, 0.12);
 }
 
 body {
@@ -39,20 +41,65 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Background glow orbs */
+.bg-glow {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-glow::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
+  filter: blur(100px);
+  animation: orb-drift-1 20s ease-in-out infinite;
+}
+
+.bg-glow::after {
+  content: "";
+  position: absolute;
+  bottom: -20%;
+  right: -10%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+  filter: blur(100px);
+  animation: orb-drift-2 25s ease-in-out infinite;
+}
+
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(5%, 3%) scale(1.05); }
+  66% { transform: translate(-2%, 5%) scale(0.95); }
+}
+
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-5%, -3%) scale(1.08); }
+}
+
 /* Glassmorphism card */
 .glass-card {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px var(--glass-shadow);
+  box-shadow: 0 4px 24px var(--glass-shadow);
   transition: all 0.3s ease;
 }
 
 .glass-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px var(--glass-shadow);
-  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 8px 32px var(--glass-shadow),
+              0 0 0 1px rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.2);
 }
 
 /* Gradient text */
@@ -63,17 +110,22 @@ body {
   background-clip: text;
 }
 
-/* Gradient glow orb */
-.gradient-orb {
-  background: radial-gradient(
-    circle at center,
-    var(--gradient-start) 0%,
-    var(--gradient-end) 50%,
-    transparent 70%
-  );
-  filter: blur(80px);
-  opacity: 0.3;
-  pointer-events: none;
+/* Gradient button base */
+.btn-gradient {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.btn-gradient:hover {
+  opacity: 0.9;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+/* Gradient border ring for active/selected states */
+.ring-accent {
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.3),
+              inset 0 0 0 1px rgba(139, 92, 246, 0.1);
 }
 
 /* Table styles */
@@ -150,7 +202,7 @@ section {
   margin: 0 auto;
 }
 
-/* Shimmer animation for liquid glass buttons */
+/* Shimmer animation */
 @keyframes shimmer {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }

@@ -27,7 +27,7 @@ export default function Navbar() {
   const isDashboard = pathname?.startsWith("/dashboard") || pathname?.startsWith("/admin");
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border-color)] bg-[var(--bg-primary)]/80 backdrop-blur-xl">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border-color)] bg-[var(--bg-primary)]/70 backdrop-blur-2xl supports-[backdrop-filter]:bg-[var(--bg-primary)]/60">
       <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
         {/* Left side */}
         <div className="flex items-center gap-3">

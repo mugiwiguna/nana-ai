@@ -34,12 +34,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`dark ${spaceGrotesk.variable} ${inter.variable}`} suppressHydrationWarning>
-      <body className="min-h-screen antialiased">
+      <body className="min-h-screen antialiased relative">
+        <div className="bg-glow" aria-hidden="true" />
         <ThemeProvider>
           <AuthProvider>
             <SidebarProvider>
               <Navbar />
-              {children}
+              <main className="relative z-10">{children}</main>
             </SidebarProvider>
           </AuthProvider>
         </ThemeProvider>

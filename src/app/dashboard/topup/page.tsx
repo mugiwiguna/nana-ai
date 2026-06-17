@@ -44,7 +44,7 @@ export default function TopupPage() {
   };
 
   return (
-    <div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16">
       <h1 className="text-3xl font-bold text-[var(--text-primary)] mb-2">Top Up Saldo</h1>
       <p className="text-xs text-[var(--text-secondary)] mb-6">
         Kurs: 1 USD = Rp {rate ? new Intl.NumberFormat("id-ID").format(rate) : "..."} &middot; Harga realtime dari open.er-api.com
@@ -70,14 +70,14 @@ export default function TopupPage() {
             placeholder="Contoh: 3.50"
             className="w-full bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]" />
         </div>
-        <div className="bg-[var(--bg-card)] backdrop-blur-xl border border-[var(--border-color)] rounded-xl p-4 mb-4">
+        <div className="glass-card rounded-xl p-4 mb-4">
           <div className="flex items-center justify-between text-sm">
             <span className="text-[var(--text-secondary)]">USD</span>
             <span className="text-[var(--text-primary)] font-semibold font-mono">${validAmount.toFixed(2)}</span>
           </div>
           <div className="flex items-center justify-between text-sm mt-2 pt-2 border-t border-[var(--border-color)]">
             <span className="text-[var(--text-secondary)]">IDR (Rp)</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-semibold font-mono">Rp {formattedIdr}</span>
+            <span className="gradient-text font-semibold font-mono">Rp {formattedIdr}</span>
           </div>
         </div>
         <button onClick={handleTopup} disabled={loading}
@@ -87,7 +87,7 @@ export default function TopupPage() {
         {result && (
           <div className={`mt-4 p-4 rounded-xl text-sm ${
             result.status === "success"
-              ? "bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400"
+              ? "bg-[var(--gradient-start)]/10 border border-[var(--gradient-start)]/20 text-[var(--gradient-start)]"
               : "bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400"
           }`}>
             {result.status === "success"

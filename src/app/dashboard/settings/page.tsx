@@ -42,11 +42,11 @@ export default function SettingsPage() {
   if (status === "loading") return <p className="text-center mt-20 text-[var(--text-secondary)]">Loading...</p>;
 
   return (
-    <div className="max-w-2xl mx-auto space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16 space-y-8">
       <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">Pengaturan</h1>
 
       {/* Info Akun */}
-      <div className="bg-[var(--bg-card)] backdrop-blur-xl border border-[var(--border-color)] rounded-xl p-6">
+      <div className="glass-card rounded-xl p-6">
         <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Informasi Akun</h2>
         <div className="space-y-3 text-sm">
           <div className="flex justify-between border-b border-[var(--border-color)] pb-2">
@@ -59,7 +59,7 @@ export default function SettingsPage() {
           </div>
           <div className="flex justify-between border-b border-[var(--border-color)] pb-2">
             <span className="text-[var(--text-secondary)]">Saldo</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-medium">${Number(user?.balance || 0).toFixed(2)}</span>
+            <span className="gradient-text font-medium">${Number(user?.balance || 0).toFixed(2)}</span>
           </div>
           <div className="flex justify-between border-b border-[var(--border-color)] pb-2">
             <span className="text-[var(--text-secondary)]">Login via</span>
@@ -67,7 +67,7 @@ export default function SettingsPage() {
           </div>
           <div className="flex justify-between">
             <span className="text-[var(--text-secondary)]">Status</span>
-            <span className={`font-medium ${user?.status === "active" ? "text-emerald-600 dark:text-emerald-400" : "text-red-500"}`}>
+            <span className={`font-medium ${user?.status === "active" ? "gradient-text" : "text-red-400"}`}>
               {user?.email === "admin@nanaai.id" ? "Admin" : user?.status === "active" ? "Aktif" : user?.status === "suspended" ? "Suspend" : "Banned"}
             </span>
           </div>
@@ -75,7 +75,7 @@ export default function SettingsPage() {
       </div>
 
       {/* History Topup */}
-      <div className="bg-[var(--bg-card)] backdrop-blur-xl border border-[var(--border-color)] rounded-xl p-6">
+      <div className="glass-card rounded-xl p-6">
         <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Riwayat Top-up</h2>
         {topups.length === 0 ? (
           <p className="text-sm text-[var(--text-secondary)]">Belum ada transaksi top-up.</p>
@@ -86,7 +86,7 @@ export default function SettingsPage() {
                 <div>
                   <span className="text-[var(--text-primary)]">${Number(t.amount).toFixed(2)}</span>
                   <span className={`ml-2 text-xs px-2 py-0.5 rounded ${
-                    t.status === "success" ? "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400" :
+                    t.status === "success" ? "bg-[var(--gradient-start)]/10 text-[var(--gradient-start)] border border-[var(--gradient-start)]/20" :
                     t.status === "pending" ? "bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400" :
                     "bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400"
                   }`}>{t.status === "success" ? "Sukses" : t.status === "pending" ? "Pending" : "Gagal"}</span>
@@ -99,7 +99,7 @@ export default function SettingsPage() {
       </div>
 
       {/* Change Password */}
-      <div className="bg-[var(--bg-card)] backdrop-blur-xl border border-[var(--border-color)] rounded-xl p-6">
+      <div className="glass-card rounded-xl p-6">
         <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Ubah Password</h2>
         {isGoogle ? (
           <div className="text-sm text-[var(--text-secondary)] bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg px-4 py-3">
@@ -123,7 +123,7 @@ export default function SettingsPage() {
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)]" />
             </div>
             {pwMsg && (
-              <div className={`text-xs px-3 py-2 rounded-lg ${pwMsg.startsWith("✅") ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800" : "bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800"}`}>
+              <div className={`text-xs px-3 py-2 rounded-lg ${pwMsg.startsWith("✅") ? "bg-[var(--gradient-start)]/10 text-[var(--gradient-start)] border border-[var(--gradient-start)]/20" : "bg-red-500/10 text-red-400 border border-red-500/20"}`}>
                 {pwMsg}
               </div>
             )}

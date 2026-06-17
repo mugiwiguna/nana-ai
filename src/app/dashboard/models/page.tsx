@@ -21,6 +21,13 @@ const MODELS = [
 
 const PROVIDERS = [...new Set(MODELS.map(m => m.provider))];
 
+const PROVIDER_ICONS: Record<string, string> = {
+  OpenAI: "⚡",
+  Anthropic: "🧠",
+  Google: "🔮",
+  DeepSeek: "🐋",
+};
+
 export default function ModelsPage() {
   const { status } = useSession();
   const router = useRouter();
@@ -31,14 +38,16 @@ export default function ModelsPage() {
   }, [status, router]);
 
   const copyModel = (id: string) => {
-    const ta = document.createElement("textarea");
-    ta.value = id;
-    ta.style.position = "fixed";
-    ta.style.opacity = "0";
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    document.body.removeChild(ta);
+    navigator.clipboard.writeText(id).catch(() => {
+      const ta = document.createElement("textarea");
+      ta.value = id;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    });
     setCopied(id);
     setTimeout(() => setCopied(""), 2000);
   };
@@ -46,15 +55,17 @@ export default function ModelsPage() {
   if (status === "loading") return <p className="text-center mt-20 text-[var(--text-secondary)]">Loading...</p>;
 
   return (
-    <div className="space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16 space-y-8">
       <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">Model & Harga</h1>
 
       {PROVIDERS.map(provider => {
         const models = MODELS.filter(m => m.provider === provider);
         return (
-          <div key={provider} className="bg-[var(--bg-card)] backdrop-blur-xl border border-[var(--border-color)] rounded-xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-[var(--border-color)] bg-[var(--bg-primary)]/50">
-              <h2 className="text-sm font-semibold text-[var(--text-primary)]">{provider}</h2>
+          <div key={provider} className="glass-card rounded-xl overflow-hidden">
+            <div className="px-5 py-4 border-b border-[var(--border-color)] bg-[var(--bg-primary)]/30">
+              <h2 className="text-sm font-semibold text-[var(--text-primary)] flex items-center gap-2">
+                <span>{PROVIDER_ICONS[provider] || "📦"}</span> {provider}
+              </h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -68,12 +79,12 @@ export default function ModelsPage() {
                 </thead>
                 <tbody>
                   {models.map(m => (
-                    <tr key={m.id} className="border-b border-[var(--border-color)] group">
+                    <tr key={m.id} className="border-b border-[var(--border-color)] hover:bg-[var(--bg-secondary)]/50 transition-colors">
                       <td className="py-3 px-4">
                         <span className="text-[var(--text-primary)] font-medium">{m.name}</span>
-                        <span className="text-[var(--text-secondary)] text-xs ml-2 font-mono">{m.id}</span>
+                        <span className="text-[var(--text-secondary)] text-xs ml-2 font-mono opacity-60">{m.id}</span>
                         <button onClick={() => copyModel(m.id)}
-                          className="ml-2 text-xs px-2 py-0.5 rounded border border-[var(--border-color)] text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] transition align-middle">
+                          className="ml-2 text-xs px-2 py-0.5 rounded border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-[var(--gradient-start)]/30 hover:text-[var(--gradient-start)] transition align-middle">
                           {copied === m.id ? "✓" : "Salin"}
                         </button>
                       </td>
@@ -83,7 +94,11 @@ export default function ModelsPage() {
                       <td className="py-3 px-4 text-right text-[var(--text-secondary)] font-mono">
                         ${m.output.toFixed(7).replace(/0+$/, "").replace(/\.$/, "")}
                       </td>
-                      <td className="py-3 px-4 text-right text-[var(--text-secondary)]">{m.context}</td>
+                      <td className="py-3 px-4 text-right">
+                        <span className="px-2 py-0.5 rounded text-xs bg-[var(--gradient-start)]/10 text-[var(--gradient-start)] border border-[var(--gradient-start)]/20 font-medium">
+                          {m.context}
+                        </span>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
