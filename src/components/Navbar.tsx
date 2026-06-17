@@ -51,7 +51,7 @@ export default function Navbar() {
               <path d="M64 60 L70 54 L76 60 L70 66 Z" stroke="var(--gradient-start)" strokeWidth="2.5" fill="none"/>
               <path d="M57 72 L63 72 L60 76 Z" fill="var(--gradient-start)" fillOpacity="0.3"/>
             </svg>
-            <span className="font-bold text-lg gradient-text">nanaAI</span>
+            <span className="font-bold text-lg text-zinc-400">nana<span className="text-red-500">AI</span><span className="text-zinc-400">.</span></span>
           </Link>
 
           {/* Dashboard page links inline */}
