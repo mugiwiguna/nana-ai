@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, useSpring, useMotionValue } from "framer-motion";
 
 /* ─── Character with individual cursor parallax ─── */
@@ -34,19 +34,17 @@ function Char({ ch, index, total, mouseX, mouseY }: {
 
 /* ─── Typewriter line that cycles through phrases ─── */
 function TypewriterLine({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
-  const phrases = [
+  const phrases = useMemo(() => [
     "Akses Instan",
     "Tanpa Ribet",
     "AI Apa Saja",
     "Langsung Jalan",
     "Bayar Sekali",
-  ];
+  ], []);
 
   const [display, setDisplay] = useState("");
-  const [phraseIdx, setPhraseIdx] = useState(0);
-  const [mode, setMode] = useState<"type" | "wait" | "erase">("type");
-  const [pos, setPos] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
+  const stateRef = useRef({ phraseIdx: 0, pos: 0, mode: "type" as "type" | "wait" | "erase" });
 
   // Blink cursor
   useEffect(() => {
@@ -56,34 +54,42 @@ function TypewriterLine({ mouseX, mouseY }: { mouseX: number; mouseY: number }) 
 
   // Typing / erasing logic
   useEffect(() => {
-    const phrase = phrases[phraseIdx];
-    if (mode === "type") {
-      if (pos < phrase.length) {
-        const t = setTimeout(() => {
-          setPos((p) => p + 1);
-          setDisplay(phrase.slice(0, pos + 1));
-        }, 80);
-        return () => clearTimeout(t);
-      } else {
-        setMode("wait");
-        setPos(0);
-      }
-    } else if (mode === "wait") {
-      const t = setTimeout(() => setMode("erase"), 2200);
-      return () => clearTimeout(t);
-    } else if (mode === "erase") {
-      if (display.length > 0) {
-        const t = setTimeout(() => {
-          setDisplay((d) => d.slice(0, -1));
-        }, 40);
-        return () => clearTimeout(t);
-      } else {
-        setPhraseIdx((i) => (i + 1) % phrases.length);
-        setMode("type");
-        setPos(0);
+    let active = true;
+    let timeout: ReturnType<typeof setTimeout>;
+
+    function tick() {
+      if (!active) return;
+      const s = stateRef.current;
+      const phrase = phrases[s.phraseIdx];
+
+      if (s.mode === "type") {
+        if (s.pos < phrase.length) {
+          s.pos++;
+          setDisplay(phrase.slice(0, s.pos));
+          timeout = setTimeout(tick, 80);
+        } else {
+          s.mode = "wait";
+          timeout = setTimeout(tick, 2200);
+        }
+      } else if (s.mode === "wait") {
+        s.mode = "erase";
+        timeout = setTimeout(tick, 0);
+      } else if (s.mode === "erase") {
+        if (s.pos > 0) {
+          s.pos--;
+          setDisplay(phrase.slice(0, s.pos));
+          timeout = setTimeout(tick, 35);
+        } else {
+          s.phraseIdx = (s.phraseIdx + 1) % phrases.length;
+          s.mode = "type";
+          timeout = setTimeout(tick, 200);
+        }
       }
     }
-  }, [display, mode, pos, phraseIdx, phrases]);
+
+    timeout = setTimeout(tick, 0);
+    return () => { active = false; clearTimeout(timeout); };
+  }, [phrases]);
 
   // Cursor parallax on each character
   const chars = display.split("");
@@ -119,7 +125,7 @@ export default function AnimatedHeroText({ mouseX, mouseY }: { mouseX: number; m
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.05] mb-6"
+        className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.05] mb-6 font-space"
       >
         <span className="gradient-text">
           {headline1.split("").map((ch, i) => (
