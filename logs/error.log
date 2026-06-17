@@ -269,3 +269,21 @@
 2026-06-17 08:28:20:     at ignore-listed frames
 2026-06-17 08:28:21: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
 2026-06-17 08:28:21:     at ignore-listed frames
+2026-06-17 10:54:17: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-17 10:54:17: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-17 10:54:17:     at ignore-listed frames
+2026-06-17 10:54:19: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-17 10:54:19: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-17 10:54:19:     at ignore-listed frames
+2026-06-17 10:54:20: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-17 10:54:20: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-17 10:54:20:     at ignore-listed frames
+2026-06-17 10:54:21: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-17 10:54:21: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-17 10:54:21:     at ignore-listed frames
+2026-06-17 10:54:21: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-17 10:54:21: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-17 10:54:21:     at ignore-listed frames
+2026-06-17 10:54:22: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-17 10:54:22: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-17 10:54:22:     at ignore-listed frames
