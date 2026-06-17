@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import Modal from "@/components/Modal";
 
 const COLORS = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6"];
 
@@ -17,7 +18,6 @@ export default function KeysPage() {
   const [newKey, setNewKey] = useState("");
   const [copiedKey, setCopiedKey] = useState("");
   const [regeneratedKey, setRegeneratedKey] = useState<{ key: string; name: string } | null>(null);
-  const regenRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
@@ -48,14 +48,16 @@ export default function KeysPage() {
   };
 
   const copyToClipboard = (key: string) => {
-    const ta = document.createElement("textarea");
-    ta.value = key;
-    ta.style.position = "fixed";
-    ta.style.opacity = "0";
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    document.body.removeChild(ta);
+    navigator.clipboard.writeText(key).catch(() => {
+      const ta = document.createElement("textarea");
+      ta.value = key;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    });
     setCopiedKey(key);
     setTimeout(() => setCopiedKey(""), 2500);
   };
@@ -69,9 +71,6 @@ export default function KeysPage() {
       setRegeneratedKey({ key: data.key, name: data.name });
       setNewKey("");
       loadKeys();
-      setTimeout(() => {
-        regenRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-      }, 100);
     }
   };
 
@@ -122,7 +121,6 @@ export default function KeysPage() {
             <p className="text-xs text-[var(--text-secondary)] mt-2">Key hanya ditampilkan sekali. Simpan di tempat aman.</p>
           </div>
         )}
-
       </div>
 
       {/* Charts */}
@@ -156,39 +154,7 @@ export default function KeysPage() {
       </div>
 
       {/* Key list */}
-      <div ref={regenRef}>
-        {/* Regenerated key banner */}
-        {regeneratedKey && (
-          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mb-4">
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-amber-700 dark:text-amber-400 mb-2">
-                  Key regenerated untuk: {regeneratedKey.name}
-                </p>
-                <div className="flex items-center gap-2">
-                  <code className="text-xs bg-white dark:bg-[var(--bg-primary)] border border-[var(--border-color)] px-3 py-2 rounded flex-1 break-all select-all text-[var(--text-primary)]">
-                    {regeneratedKey.key}
-                  </code>
-                  <button onClick={() => copyToClipboard(regeneratedKey.key)}
-                    className="shrink-0 text-xs px-3 py-2 rounded-lg bg-white dark:bg-neutral-800 border border-[var(--border-color)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition font-medium">
-                    {copiedKey === regeneratedKey.key ? "✓ Tersalin" : "Salin"}
-                  </button>
-                </div>
-                <p className="text-xs text-amber-600 dark:text-amber-500 mt-2">
-                  Key lama sudah dicabut. Simpan key baru ini.
-                </p>
-              </div>
-              <button onClick={() => setRegeneratedKey(null)}
-                className="shrink-0 text-[var(--text-secondary)] hover:text-[var(--text-primary)] p-1"
-                title="Tutup">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        )}
-        <div className="bg-[var(--bg-card)] backdrop-blur-xl border border-[var(--border-color)] rounded-xl p-5">
+      <div className="bg-[var(--bg-card)] backdrop-blur-xl border border-[var(--border-color)] rounded-xl p-5">
         <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Daftar API Key</h3>
         {keys.length === 0 ? (
           <p className="text-sm text-[var(--text-secondary)] py-4">Belum ada API key.</p>
@@ -238,7 +204,35 @@ export default function KeysPage() {
           </div>
         )}
       </div>
-    </div>
+
+      {/* Regenerate key modal */}
+      <Modal open={!!regeneratedKey} onClose={() => setRegeneratedKey(null)} title="Key Diregenerasi">
+        {regeneratedKey && (
+          <div className="space-y-4">
+            <div>
+              <p className="text-xs font-medium text-[var(--text-secondary)] mb-1">Nama key</p>
+              <p className="text-sm font-semibold text-[var(--text-primary)]">{regeneratedKey.name}</p>
+            </div>
+            <div>
+              <p className="text-xs font-medium text-[var(--text-secondary)] mb-1">Key baru</p>
+              <div className="flex items-center gap-2">
+                <code className="text-xs bg-[var(--bg-primary)] border border-[var(--border-color)] px-3 py-2 rounded flex-1 break-all select-all text-[var(--text-primary)]">
+                  {regeneratedKey.key}
+                </code>
+                <button onClick={() => copyToClipboard(regeneratedKey.key)}
+                  className="shrink-0 text-xs px-3 py-2 rounded-lg bg-white dark:bg-neutral-800 border border-[var(--border-color)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition font-medium">
+                  {copiedKey === regeneratedKey.key ? "✓ Tersalin" : "Salin"}
+                </button>
+              </div>
+            </div>
+            <div className="p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+              <p className="text-xs text-amber-700 dark:text-amber-400">
+                ⚠️ Key lama sudah dicabut. Simpan key baru ini — hanya muncul sekali.
+              </p>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }
