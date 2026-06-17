@@ -1,11 +1,9 @@
 "use client";
 
-import { useRef, useEffect, useState, useCallback, lazy, Suspense } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { motion, useMotionValue, useTransform, useScroll, useSpring, useInView } from "framer-motion";
 import dynamic from "next/dynamic";
-
-const ThreeDCat = dynamic(() => import("@/components/ThreeDCat"), { ssr: false, loading: () => <div className="w-28 h-28 md:w-36 md:h-36" /> });
 
 const AnimatedHeroText = dynamic(() => import("@/components/AnimatedHeroText"), {
   ssr: false,
@@ -354,16 +352,6 @@ export default function HomePage() {
             opacity: parallaxOpacity,
           }}
         >
-          {/* 3D Cat logo - motion tracked */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-6 flex justify-center"
-          >
-            <ThreeDCat mouseX={catMouse.x} mouseY={catMouse.y} />
-          </motion.div>
-
           {/* Announcement pill */}
           <motion.div
             initial={{ opacity: 0, y: -10, scale: 0.95 }}
