@@ -149,3 +149,13 @@ section {
   background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
   margin: 0 auto;
 }
+
+/* Shimmer animation for liquid glass buttons */
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}
