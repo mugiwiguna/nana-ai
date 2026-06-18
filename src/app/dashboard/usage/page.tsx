@@ -66,7 +66,7 @@ export default function UsagePage() {
                 <XAxis dataKey="day" tick={{ fontSize: 10, fill: "var(--text-secondary)" }} tickFormatter={(v) => v?.slice(5) || ""} />
                 <YAxis tick={{ fontSize: 10, fill: "var(--text-secondary)" }} />
                 <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, background: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} />
-                <Bar dataKey="requests" fill="#a78bfa" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="requests" fill="#526477" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -78,7 +78,7 @@ export default function UsagePage() {
                 <XAxis dataKey="day" tick={{ fontSize: 10, fill: "var(--text-secondary)" }} tickFormatter={(v) => v?.slice(5) || ""} />
                 <YAxis tick={{ fontSize: 10, fill: "var(--text-secondary)" }} />
                 <Tooltip formatter={(v: any) => "$" + Number(v).toFixed(6)} contentStyle={{ fontSize: 12, borderRadius: 8, background: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} />
-                <Line type="monotone" dataKey="cost" stroke="#c084fc" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="cost" stroke="#3b82f6" strokeWidth={2} dot={false} />
               </LineChart>
             </ResponsiveContainer>
           )}
@@ -178,7 +178,7 @@ export default function UsagePage() {
 }
 
 function StatCard({ title, value, accent }: { title: string; value: string | number; accent?: string }) {
-  const colors: Record<string, string> = { violet: "#a78bfa", indigo: "#818cf8", purple: "#8b5cf6", fuchsia: "#c084fc" };
+  const colors: Record<string, string> = { violet: "#526477", indigo: "#6366f1", purple: "#475569", fuchsia: "#3b82f6" };
   return (
     <div className="glass-card rounded-xl p-5">
       <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider mb-1">{title}</p>

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import Modal from "@/components/Modal";
 
-const COLORS = ["#a78bfa", "#818cf8", "#8b5cf6", "#c084fc", "#6366f1"];
+const COLORS = ["#526477", "#3b82f6", "#6366f1", "#475569", "#1e40af"];
 
 export default function KeysPage() {
   const { data: session, status } = useSession();
@@ -170,7 +170,7 @@ export default function KeysPage() {
                 <XAxis dataKey="day" tick={{ fontSize: 10, fill: "var(--text-secondary)" }} tickFormatter={(v) => v?.slice(5) || ""} />
                 <YAxis tick={{ fontSize: 10, fill: "var(--text-secondary)" }} />
                 <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, background: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} />
-                <Bar dataKey="requests" fill="#a78bfa" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="requests" fill="#526477" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -276,7 +276,7 @@ export default function KeysPage() {
 }
 
 function StatCard({ title, value, accent }: { title: string; value: string | number; accent?: string }) {
-  const colors: Record<string, string> = { violet: "#a78bfa", indigo: "#818cf8", purple: "#8b5cf6" };
+  const colors: Record<string, string> = { violet: "#526477", indigo: "#6366f1", purple: "#475569" };
   return (
     <div className="glass-card rounded-xl p-5">
       <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider mb-1">{title}</p>
