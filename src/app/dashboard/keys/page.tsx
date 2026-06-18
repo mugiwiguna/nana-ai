@@ -3,17 +3,13 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import Modal from "@/components/Modal";
-
-const COLORS = ["#526477", "#3b82f6", "#6366f1", "#475569", "#1e40af"];
 
 export default function KeysPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [keys, setKeys] = useState<any[]>([]);
   const [usage, setUsage] = useState<any[]>([]);
-  const [daily, setDaily] = useState<any[]>([]);
   const [newName, setNewName] = useState("");
   const [newKey, setNewKey] = useState("");
   const [copiedKey, setCopiedKey] = useState("");
@@ -23,7 +19,7 @@ export default function KeysPage() {
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
-    if (status === "authenticated") { loadKeys(); loadCharts(); }
+    if (status === "authenticated") { loadKeys(); }
   }, [status, router]);
 
   const loadKeys = async () => {
@@ -33,11 +29,6 @@ export default function KeysPage() {
     ]);
     setKeys(kRes.keys || []);
     setUsage(uRes.usage || []);
-  };
-
-  const loadCharts = async () => {
-    const d = await fetch("/api/usage/daily").then(r => r.json());
-    setDaily(d.days || []);
   };
 
   const generateKey = async () => {
@@ -75,15 +66,6 @@ export default function KeysPage() {
       loadKeys();
     }
   };
-
-  const keyUsageMap: Record<string, { requests: number; tokens: number; cost: number }> = {};
-  for (const u of usage) {
-    if (!keyUsageMap[u.model]) keyUsageMap[u.model] = { requests: 0, tokens: 0, cost: 0 };
-    keyUsageMap[u.model].requests++;
-    keyUsageMap[u.model].tokens += u.tokens_in + u.tokens_out;
-    keyUsageMap[u.model].cost += Number(u.cost);
-  }
-  const modelData = Object.entries(keyUsageMap).map(([model, d]) => ({ model: model.split("/")[1] || model, ...d }));
 
   if (status === "loading") return <p className="text-center mt-20 text-[var(--text-secondary)]">Loading...</p>;
 
@@ -159,36 +141,6 @@ export default function KeysPage() {
             <p className="text-xs text-[var(--text-secondary)] mt-2">Key hanya ditampilkan sekali. Simpan di tempat aman.</p>
           </div>
         )}
-      </div>
-
-      {/* Charts */}
-      <div className="grid md:grid-cols-2 gap-6">
-        <ChartCard title="Request per Hari">
-          {daily.length === 0 ? <Empty /> : (
-            <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={daily}>
-                <XAxis dataKey="day" tick={{ fontSize: 10, fill: "var(--text-secondary)" }} tickFormatter={(v) => v?.slice(5) || ""} />
-                <YAxis tick={{ fontSize: 10, fill: "var(--text-secondary)" }} />
-                <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, background: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} />
-                <Bar dataKey="requests" fill="#526477" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          )}
-        </ChartCard>
-        <ChartCard title="Request per Model">
-          {modelData.length === 0 ? <Empty /> : (
-            <ResponsiveContainer width="100%" height={200}>
-              <PieChart>
-                <Pie data={modelData} dataKey="requests" nameKey="model" cx="50%" cy="50%" outerRadius={70} innerRadius={30}
-                  label={({ payload }) => (payload?.model || "").split("/").pop()}
-                  labelLine={false}>
-                  {modelData.map((_: any, i: number) => (<Cell key={i} fill={COLORS[i % COLORS.length]} />))}
-                </Pie>
-                <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, background: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }} />
-              </PieChart>
-            </ResponsiveContainer>
-          )}
-        </ChartCard>
       </div>
 
       {/* Key list */}
@@ -284,14 +236,3 @@ function StatCard({ title, value, accent }: { title: string; value: string | num
     </div>
   );
 }
-
-function ChartCard({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="glass-card rounded-xl p-5">
-      <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">{title}</h3>
-      {children}
-    </div>
-  );
-}
-
-function Empty() { return <p className="text-sm text-[var(--text-secondary)] py-8 text-center">Belum ada data</p>; }
