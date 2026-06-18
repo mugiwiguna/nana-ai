@@ -30,17 +30,23 @@ export default function DashboardPage() {
   const [dailyModels, setDailyModels] = useState<any[]>([]);
   const [modelBreakdown, setModelBreakdown] = useState<any[]>([]);
   const [daily, setDaily] = useState<any[]>([]);
+  const [fetchErr, setFetchErr] = useState("");
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
     if (status !== "authenticated") return;
     Promise.all([
-      fetch("/api/keys/count").then(r => r.json()),
-      fetch("/api/usage?limit=10").then(r => r.json()),
-      fetch("/api/usage/daily").then(r => r.json()),
-      fetch("/api/usage/daily-models").then(r => r.json()),
-      fetch("/api/usage/models").then(r => r.json()),
+      fetch("/api/keys/count").then(r => r.json()).catch(e => ({ error: e.message })),
+      fetch("/api/usage?limit=10").then(r => r.json()).catch(e => ({ error: e.message })),
+      fetch("/api/usage/daily").then(r => r.json()).catch(e => ({ error: e.message })),
+      fetch("/api/usage/daily-models").then(r => r.json()).catch(e => ({ error: e.message })),
+      fetch("/api/usage/models").then(r => r.json()).catch(e => ({ error: e.message })),
     ]).then(([keyCount, recent, dailyData, dailyModelsData, modelsRes]) => {
+      if (keyCount.error || recent.error || dailyData.error || dailyModelsData.error || modelsRes.error) {
+        const errs = [keyCount, recent, dailyData, dailyModelsData, modelsRes]
+          .map((r:any,i) => r.error ? ["keys/count","usage","usage/daily","usage/daily-models","usage/models"][i]+": "+r.error : null).filter(Boolean);
+        setFetchErr(errs.join(" | "));
+      }
       const d = dailyData.days || [];
       setDaily(d);
       setDailyModels(dailyModelsData.days || []);
@@ -90,6 +96,11 @@ export default function DashboardPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16 space-y-8">
+      {/* Fetch error */}
+      {fetchErr && (
+        <div className="p-3 rounded-lg border border-red-500/30 bg-red-500/5 text-xs text-red-400">{fetchErr}</div>
+      )}
+
       {/* Suspended warning */}
       {((session.user as any)?.status === "suspended" || (session.user as any)?.status === "banned") && (
         <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-500/5">
