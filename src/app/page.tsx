@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { motion, useMotionValue, useTransform, useScroll, useSpring, useInView } from "framer-motion";
 import dynamic from "next/dynamic";
 
@@ -231,6 +232,7 @@ function StatsBar() {
 
 /* ─── Main page ─── */
 export default function HomePage() {
+  const { data: session } = useSession();
   const heroRef = useRef<HTMLDivElement>(null);
 
   // ── Cursor-tracking motion values ──
@@ -377,7 +379,7 @@ export default function HomePage() {
           >
             {/* Primary — liquid glass + gradient */}
             <Link
-              href="/register"
+              href={session ? "/dashboard" : "/register"}
               className="group relative overflow-hidden inline-flex items-center gap-2.5 text-white font-semibold px-5 py-2.5 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-500 hover:scale-[1.03] active:scale-[0.98]"
             >
               {/* Animated gradient bg */}
@@ -388,7 +390,7 @@ export default function HomePage() {
               <span className="absolute inset-0 rounded-xl sm:rounded-2xl ring-1 ring-inset ring-white/20" />
               {/* Bottom highlight */}
               <span className="absolute bottom-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-              <span className="relative z-10">Mulai Gratis</span>
+              <span className="relative z-10">{session ? "Akses Dashboard" : "Mulai Gratis"}</span>
               <svg className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
@@ -608,14 +610,14 @@ export default function HomePage() {
               <div className="flex flex-row flex-wrap gap-3 sm:gap-4 justify-center">
                 {/* Primary liquid glass */}
                 <Link
-                  href="/register"
+                  href={session ? "/dashboard" : "/register"}
                   className="group relative overflow-hidden inline-flex items-center gap-2.5 text-white font-semibold px-5 py-2.5 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-500 hover:scale-[1.03] active:scale-[0.98]"
                 >
-                  <span className="absolute inset-0 bg-gradient-to-r from-[var(--gradient-start)] via-emerald-400 to-[var(--gradient-start)] bg-[length:200%_100%] animate-shimmer" />
+                  <span className="absolute inset-0 bg-gradient-to-r from-[var(--gradient-start)] via-[var(--gradient-mid)] to-[var(--gradient-end)] bg-[length:200%_100%] animate-shimmer" />
                   <span className="absolute inset-0 bg-white/10 backdrop-blur-[2px]" />
                   <span className="absolute inset-0 rounded-xl sm:rounded-2xl ring-1 ring-inset ring-white/20" />
                   <span className="absolute bottom-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-                  <span className="relative z-10">Mulai Gratis</span>
+                  <span className="relative z-10">{session ? "Akses Dashboard" : "Mulai Gratis"}</span>
                 </Link>
                 {/* Secondary glass ghost */}
                 <Link
