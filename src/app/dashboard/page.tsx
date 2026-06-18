@@ -67,30 +67,6 @@ export default function DashboardPage() {
 
   const { balance, activeKeys, totalReqs, totalTokens, totalCost } = cardData;
 
-  const modelNames = [...new Set(dailyModels.map((d: any) => d.model))];
-  const dayMap: Record<string, any> = {};
-  for (const dm of dailyModels) {
-    const day = dm.day;
-    if (!dayMap[day]) dayMap[day] = { day, reqs: {} };
-    dayMap[day].reqs[dm.model] = Number(dm.requests);
-  }
-  const stackedReqs = Object.values(dayMap).map((d: any) => {
-    const entry: any = { day: d.day };
-    for (const m of modelNames) entry[m] = d.reqs[m] || 0;
-    return entry;
-  });
-
-  const costDayMap: Record<string, any> = {};
-  for (const dm of dailyModels) {
-    const day = dm.day;
-    if (!costDayMap[day]) costDayMap[day] = { day, costs: {} };
-    costDayMap[day].costs[dm.model] = (costDayMap[day].costs[dm.model] || 0) + Number(dm.cost);
-  }
-  const stackedCosts = Object.values(costDayMap).map((d: any) => {
-    const entry: any = { day: d.day };
-    for (const m of modelNames) entry[m] = d.costs[m] || 0;
-    return entry;
-  });
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16 space-y-8">
       {/* Fetch error */}
@@ -157,46 +133,10 @@ export default function DashboardPage() {
         />
       </div>
 
-      {/* Charts row */}
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Request per Hari (by Model) */}
-        <div className="glass-card rounded-xl p-5">
-          <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Request per Hari (by Model)</h3>
-          {stackedReqs.length === 0 ? <Empty /> : (
-            <div className="space-y-2">
-              {stackedReqs.slice(-10).map((d: any, di: number) => {
-                const barTotal = Object.keys(d).filter(k => k !== 'day' && k !== 'reqs').reduce((s,k) => s + Number(d[k]||0), 0);
-                return (
-                <div key={di}>
-                  <div className="flex justify-between items-center mb-0.5">
-                    <span className="text-xs text-[var(--text-secondary)]">{d.day?.slice(5) || d.day}</span>
-                    <span className="text-xs text-[var(--text-secondary)] tabular-nums">{barTotal}</span>
-                  </div>
-                  <div className="flex h-4 rounded-full overflow-hidden bg-[var(--bg-primary)] border border-[var(--border-color)]">
-                    {modelNames.map((m: string, mi: number) => {
-                      const w = Number(d[m]) || 0;
-                      return w > 0 ? (
-                        <span key={mi} style={{ width: barTotal > 0 ? (w/barTotal*100)+'%' : '0%', backgroundColor: MODEL_COLORS[m] || COLORS[mi % COLORS.length] }} className="h-full min-w-[3px]" title={`${m.split("/")[1]||m}: ${w}`} />
-                      ) : null;
-                    })}
-                  </div>
-                </div>
-              )})}
-              <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
-                {modelNames.map((m, i) => (
-                  <span key={i} className="inline-flex items-center gap-1 text-xs text-[var(--text-secondary)]">
-                    <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: MODEL_COLORS[m] || COLORS[i % COLORS.length] }} />{m.split("/")[1] || m}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Model Breakdown */}
-        <div className="glass-card rounded-xl p-5">
-          <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Model Breakdown</h3>
-          {modelBreakdown.length === 0 ? <Empty /> : (
+      {/* Model Breakdown */}
+      <div className="glass-card rounded-xl p-5">
+        <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Model Breakdown</h3>
+        {modelBreakdown.length === 0 ? <Empty /> : (
             <div className="space-y-3">
               {modelBreakdown.map((m: any, i: number) => {
                 const total = modelBreakdown.reduce((s:number, x:any) => s + Number(x.requests||0), 0);
@@ -218,41 +158,6 @@ export default function DashboardPage() {
             </div>
           )}
         </div>
-      </div>
-
-      {/* Cost stacked */}
-      {stackedCosts.length > 0 && (
-        <div className="glass-card rounded-xl p-5">
-          <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Biaya Harian (by Model)</h3>
-          <div className="space-y-2">
-            {stackedCosts.slice(-10).map((d: any, di: number) => {
-              const barTotal = Object.keys(d).filter(k => k !== 'day' && k !== 'costs').reduce((s,k) => s + Number(d[k]||0), 0);
-              return (
-              <div key={di}>
-                <div className="flex justify-between items-center mb-0.5">
-                  <span className="text-xs text-[var(--text-secondary)]">{d.day?.slice(5) || d.day}</span>
-                  <span className="text-xs text-[var(--text-secondary)] tabular-nums">${barTotal.toFixed(4)}</span>
-                </div>
-                <div className="flex h-4 rounded-full overflow-hidden bg-[var(--bg-primary)] border border-[var(--border-color)]">
-                  {modelNames.map((m: string, mi: number) => {
-                    const v = Number(d[m]) || 0;
-                    return v > 0 ? (
-                      <span key={mi} style={{ width: barTotal > 0 ? (v/barTotal*100)+'%' : '0%', backgroundColor: MODEL_COLORS[m] || COLORS[mi % COLORS.length] }} className="h-full min-w-[3px]" title={`${m.split("/")[1]||m}: $${v.toFixed(6)}`} />
-                    ) : null;
-                  })}
-                </div>
-              </div>
-            )})}
-            <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
-              {modelNames.map((m, i) => (
-                <span key={i} className="inline-flex items-center gap-1 text-xs text-[var(--text-secondary)]">
-                  <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: MODEL_COLORS[m] || COLORS[i % COLORS.length] }} />{m.split("/")[1] || m}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Recent usage */}
       <div className="glass-card rounded-xl p-5">
