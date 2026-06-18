@@ -381,7 +381,7 @@ export default function HomePage() {
               className="group relative overflow-hidden inline-flex items-center gap-2.5 text-white font-semibold px-5 py-2.5 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-500 hover:scale-[1.03] active:scale-[0.98]"
             >
               {/* Animated gradient bg */}
-              <span className="absolute inset-0 bg-gradient-to-r from-[var(--gradient-start)] via-emerald-400 to-[var(--gradient-start)] bg-[length:200%_100%] animate-shimmer" />
+              <span className="absolute inset-0 bg-gradient-to-r from-[var(--gradient-start)] via-[var(--gradient-mid)] to-[var(--gradient-end)] bg-[length:200%_100%] animate-shimmer" />
               {/* Glass overlay */}
               <span className="absolute inset-0 bg-white/10 backdrop-blur-[2px]" />
               {/* Inner glow ring */}

@@ -10,9 +10,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <>
       <Sidebar isOpen={sidebar.isOpen} onClose={sidebar.close} />
 
-      {/* Main content */}
-      <div className="pt-14 min-h-screen">
-        <main className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
+      {/* Main content — offset for fixed sidebar on desktop */}
+      <div className="pt-14 min-h-screen lg:pl-64">
+        <main className="p-4 md:p-6 lg:p-8">
           {children}
         </main>
       </div>

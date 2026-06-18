@@ -22,9 +22,9 @@ export default function Navbar() {
   const [showNotifs, setShowNotifs] = useState(false);
   const sidebar = useSidebar();
 
-  useEffect(() => setMounted(true), []);
-
   const isDashboard = pathname?.startsWith("/dashboard") || pathname?.startsWith("/admin");
+
+  useEffect(() => setMounted(true), []);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[var(--border-color)] bg-[var(--bg-primary)]/70 backdrop-blur-2xl supports-[backdrop-filter]:bg-[var(--bg-primary)]/60">
@@ -54,21 +54,6 @@ export default function Navbar() {
             <span className="font-bold text-lg text-zinc-400">nana<span className="text-red-500">AI</span><span className="text-zinc-400">.</span></span>
           </Link>
 
-          {/* Dashboard page links inline */}
-          {isDashboard && session && (
-            <div className="hidden md:flex items-center gap-1 ml-4">
-              <NavLink href="/dashboard" active={pathname === "/dashboard"}>Dashboard</NavLink>
-              <NavLink href="/dashboard/keys" active={pathname.startsWith("/dashboard/keys")}>Key API</NavLink>
-              <NavLink href="/dashboard/usage" active={pathname.startsWith("/dashboard/usage")}>Pemakaian</NavLink>
-              <NavLink href="/dashboard/models" active={pathname.startsWith("/dashboard/models")}>Model</NavLink>
-              <NavLink href="/dashboard/topup" active={pathname.startsWith("/dashboard/topup")}>Isi Saldo</NavLink>
-              <NavLink href="/dashboard/docs" active={pathname.startsWith("/dashboard/docs")}>Dokumen</NavLink>
-              <NavLink href="/dashboard/settings" active={pathname.startsWith("/dashboard/settings")}>Setelan</NavLink>
-              {session.user?.email === "admin@nanaai.id" && (
-                <NavLink href="/admin" active={pathname.startsWith("/admin")} admin>Admin</NavLink>
-              )}
-            </div>
-          )}
         </div>
 
         {/* Right side */}
@@ -164,20 +149,5 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
-  );
-}
-
-function NavLink({ href, active, children, admin }: { href: string; active: boolean; children: React.ReactNode; admin?: boolean }) {
-  return (
-    <Link href={href}
-      className={`px-2.5 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-        active
-          ? "bg-[var(--gradient-start)]/10 text-[var(--gradient-start)]"
-          : admin
-            ? "text-amber-500 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20"
-            : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]"
-      }`}>
-      {children}
-    </Link>
   );
 }
