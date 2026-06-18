@@ -163,22 +163,26 @@ export default function DashboardPage() {
         <div className="glass-card rounded-xl p-5">
           <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Request per Hari (by Model)</h3>
           {stackedReqs.length === 0 ? <Empty /> : (
-            <div>
-              {stackedReqs.slice(-10).map((d: any, di: number) => (
-                <div key={di} className="mb-3">
-                  <p className="text-xs text-[var(--text-secondary)] mb-1">{d.day?.slice(5) || d.day}</p>
-                  <div className="flex h-3 rounded-full overflow-hidden bg-[var(--bg-primary)] border border-[var(--border-color)]">
+            <div className="space-y-2">
+              {stackedReqs.slice(-10).map((d: any, di: number) => {
+                const barTotal = Object.keys(d).filter(k => k !== 'day' && k !== 'reqs').reduce((s,k) => s + Number(d[k]||0), 0);
+                return (
+                <div key={di}>
+                  <div className="flex justify-between items-center mb-0.5">
+                    <span className="text-xs text-[var(--text-secondary)]">{d.day?.slice(5) || d.day}</span>
+                    <span className="text-xs text-[var(--text-secondary)] tabular-nums">{barTotal}</span>
+                  </div>
+                  <div className="flex h-4 rounded-full overflow-hidden bg-[var(--bg-primary)] border border-[var(--border-color)]">
                     {modelNames.map((m: string, mi: number) => {
-                      const w = Math.max(Number(d[m]) || 0, 0);
-                      const total = stackedReqs[stackedReqs.length-1] ? Object.keys(d).filter(k => k !== 'day' && k !== 'reqs').reduce((s,k) => s + Number(d[k]||0), 0) : 1;
+                      const w = Number(d[m]) || 0;
                       return w > 0 ? (
-                        <span key={mi} style={{ width: total > 0 ? (w/total*100)+'%' : '0%', backgroundColor: MODEL_COLORS[m] || COLORS[mi % COLORS.length] }} className="h-full" title={`${m}: ${w}`} />
+                        <span key={mi} style={{ width: barTotal > 0 ? (w/barTotal*100)+'%' : '0%', backgroundColor: MODEL_COLORS[m] || COLORS[mi % COLORS.length] }} className="h-full min-w-[3px]" title={`${m.split("/")[1]||m}: ${w}`} />
                       ) : null;
                     })}
                   </div>
                 </div>
-              ))}
-              <div className="flex flex-wrap gap-x-3 gap-y-1 mt-3">
+              )})}
+              <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
                 {modelNames.map((m, i) => (
                   <span key={i} className="inline-flex items-center gap-1 text-xs text-[var(--text-secondary)]">
                     <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: MODEL_COLORS[m] || COLORS[i % COLORS.length] }} />{m.split("/")[1] || m}
@@ -193,18 +197,20 @@ export default function DashboardPage() {
         <div className="glass-card rounded-xl p-5">
           <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Model Breakdown</h3>
           {modelBreakdown.length === 0 ? <Empty /> : (
-            <div>
+            <div className="space-y-3">
               {modelBreakdown.map((m: any, i: number) => {
-                const pct = modelBreakdown.reduce((s:number, x:any) => s + Number(x.requests||0), 0);
-                const w = pct > 0 ? (Number(m.requests||0) / pct * 100) : 0;
+                const total = modelBreakdown.reduce((s:number, x:any) => s + Number(x.requests||0), 0);
+                const pct = total > 0 ? (Number(m.requests||0) / total * 100) : 0;
                 return (
-                  <div key={i} className="mb-3">
+                  <div key={i}>
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-xs text-[var(--text-primary)]">{m.model.split("/")[1] || m.model}</span>
-                      <span className="text-xs text-[var(--text-secondary)]">{m.requests} reqs · ${Number(m.cost||0).toFixed(4)}</span>
+                      <span className="text-sm text-[var(--text-primary)]">{m.model.split("/")[1] || m.model}</span>
+                      <span className="text-xs text-[var(--text-secondary)] tabular-nums">
+                        {m.requests} reqs · ${Number(m.cost||0).toFixed(4)}
+                      </span>
                     </div>
-                    <div className="h-2 rounded-full bg-[var(--bg-primary)] border border-[var(--border-color)] overflow-hidden">
-                      <span className="block h-full rounded-full transition-all duration-500" style={{ width: w+'%', backgroundColor: COLORS[i % COLORS.length] }} />
+                    <div className="h-3 rounded-full bg-[var(--bg-primary)] border border-[var(--border-color)] overflow-hidden">
+                      <span className="block h-full rounded-full" style={{ width: pct+'%', backgroundColor: COLORS[i % COLORS.length] }} />
                     </div>
                   </div>
                 );
@@ -218,26 +224,32 @@ export default function DashboardPage() {
       {stackedCosts.length > 0 && (
         <div className="glass-card rounded-xl p-5">
           <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Biaya Harian (by Model)</h3>
-          {stackedCosts.slice(-10).map((d: any, di: number) => (
-            <div key={di} className="mb-3">
-              <p className="text-xs text-[var(--text-secondary)] mb-1">{d.day?.slice(5) || d.day}</p>
-              <div className="flex h-3 rounded-full overflow-hidden bg-[var(--bg-primary)] border border-[var(--border-color)]">
-                {modelNames.map((m: string, mi: number) => {
-                  const v = Math.max(Number(d[m]) || 0, 0);
-                  const total = Object.keys(d).filter(k => k !== 'day' && k !== 'costs').reduce((s,k) => s + Number(d[k]||0), 0);
-                  return v > 0 ? (
-                    <span key={mi} style={{ width: total > 0 ? (v/total*100)+'%' : '0%', backgroundColor: MODEL_COLORS[m] || COLORS[mi % COLORS.length] }} className="h-full" title={`${m}: $${v.toFixed(6)}`} />
-                  ) : null;
-                })}
+          <div className="space-y-2">
+            {stackedCosts.slice(-10).map((d: any, di: number) => {
+              const barTotal = Object.keys(d).filter(k => k !== 'day' && k !== 'costs').reduce((s,k) => s + Number(d[k]||0), 0);
+              return (
+              <div key={di}>
+                <div className="flex justify-between items-center mb-0.5">
+                  <span className="text-xs text-[var(--text-secondary)]">{d.day?.slice(5) || d.day}</span>
+                  <span className="text-xs text-[var(--text-secondary)] tabular-nums">${barTotal.toFixed(4)}</span>
+                </div>
+                <div className="flex h-4 rounded-full overflow-hidden bg-[var(--bg-primary)] border border-[var(--border-color)]">
+                  {modelNames.map((m: string, mi: number) => {
+                    const v = Number(d[m]) || 0;
+                    return v > 0 ? (
+                      <span key={mi} style={{ width: barTotal > 0 ? (v/barTotal*100)+'%' : '0%', backgroundColor: MODEL_COLORS[m] || COLORS[mi % COLORS.length] }} className="h-full min-w-[3px]" title={`${m.split("/")[1]||m}: $${v.toFixed(6)}`} />
+                    ) : null;
+                  })}
+                </div>
               </div>
+            )})}
+            <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2">
+              {modelNames.map((m, i) => (
+                <span key={i} className="inline-flex items-center gap-1 text-xs text-[var(--text-secondary)]">
+                  <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: MODEL_COLORS[m] || COLORS[i % COLORS.length] }} />{m.split("/")[1] || m}
+                </span>
+              ))}
             </div>
-          ))}
-          <div className="flex flex-wrap gap-x-3 gap-y-1 mt-3">
-            {modelNames.map((m, i) => (
-              <span key={i} className="inline-flex items-center gap-1 text-xs text-[var(--text-secondary)]">
-                <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: MODEL_COLORS[m] || COLORS[i % COLORS.length] }} />{m.split("/")[1] || m}
-              </span>
-            ))}
           </div>
         </div>
       )}
