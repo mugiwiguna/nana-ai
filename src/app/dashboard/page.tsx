@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Legend } from "recharts";
 
 const COLORS = ["#a78bfa", "#6366f1", "#8b5cf6", "#c084fc", "#818cf8", "#e879f9", "#22d3ee"];
 const MODEL_COLORS: Record<string, string> = {
@@ -92,8 +91,6 @@ export default function DashboardPage() {
     for (const m of modelNames) entry[m] = d.costs[m] || 0;
     return entry;
   });
-  const tickFmt = (v: string) => v?.slice(5) || "";
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16 space-y-8">
       {/* Fetch error */}
@@ -162,55 +159,87 @@ export default function DashboardPage() {
 
       {/* Charts row */}
       <div className="grid md:grid-cols-2 gap-6">
-        <ChartCard title="Request per Hari (by Model)">
+        {/* Request per Hari (by Model) */}
+        <div className="glass-card rounded-xl p-5">
+          <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Request per Hari (by Model)</h3>
           {stackedReqs.length === 0 ? <Empty /> : (
-            <ResponsiveContainer width="100%" height={240}>
-              <BarChart data={stackedReqs}>
-                <XAxis dataKey="day" tick={{ fontSize: 10, fill: "var(--text-secondary)" }} tickFormatter={tickFmt} />
-                <YAxis tick={{ fontSize: 10, fill: "var(--text-secondary)" }} />
-                <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, background: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
-                  formatter={(v: any, name: any) => [v, name.split("/").pop() || name]} />
-                <Legend formatter={(v: string) => v.split("/").pop() || v} wrapperStyle={{ fontSize: 11 }} />
+            <div>
+              {stackedReqs.slice(-10).map((d: any, di: number) => (
+                <div key={di} className="mb-3">
+                  <p className="text-xs text-[var(--text-secondary)] mb-1">{d.day?.slice(5) || d.day}</p>
+                  <div className="flex h-3 rounded-full overflow-hidden bg-[var(--bg-primary)] border border-[var(--border-color)]">
+                    {modelNames.map((m: string, mi: number) => {
+                      const w = Math.max(Number(d[m]) || 0, 0);
+                      const total = stackedReqs[stackedReqs.length-1] ? Object.keys(d).filter(k => k !== 'day' && k !== 'reqs').reduce((s,k) => s + Number(d[k]||0), 0) : 1;
+                      return w > 0 ? (
+                        <span key={mi} style={{ width: total > 0 ? (w/total*100)+'%' : '0%', backgroundColor: MODEL_COLORS[m] || COLORS[mi % COLORS.length] }} className="h-full" title={`${m}: ${w}`} />
+                      ) : null;
+                    })}
+                  </div>
+                </div>
+              ))}
+              <div className="flex flex-wrap gap-x-3 gap-y-1 mt-3">
                 {modelNames.map((m, i) => (
-                  <Bar key={m} dataKey={m} stackId="a" fill={MODEL_COLORS[m] || COLORS[i % COLORS.length]} radius={[4, 4, 0, 0]} />
+                  <span key={i} className="inline-flex items-center gap-1 text-xs text-[var(--text-secondary)]">
+                    <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: MODEL_COLORS[m] || COLORS[i % COLORS.length] }} />{m.split("/")[1] || m}
+                  </span>
                 ))}
-              </BarChart>
-            </ResponsiveContainer>
+              </div>
+            </div>
           )}
-        </ChartCard>
-        <ChartCard title="Model Breakdown">
+        </div>
+
+        {/* Model Breakdown */}
+        <div className="glass-card rounded-xl p-5">
+          <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Model Breakdown</h3>
           {modelBreakdown.length === 0 ? <Empty /> : (
-            <ResponsiveContainer width="100%" height={240}>
-              <PieChart>
-                <Pie data={modelBreakdown} dataKey="requests" nameKey="model" cx="50%" cy="50%" outerRadius={80} innerRadius={40}
-                  label={({ payload }) => (payload?.model || "").split("/")[1] || payload?.model}
-                  labelLine={false}>
-                  {modelBreakdown.map((_: any, i: number) => (<Cell key={i} fill={COLORS[i % COLORS.length]} />))}
-                </Pie>
-                <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, background: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
-                  formatter={(v: any, name: any) => [v, name.split("/").pop() || name]} />
-              </PieChart>
-            </ResponsiveContainer>
+            <div>
+              {modelBreakdown.map((m: any, i: number) => {
+                const pct = modelBreakdown.reduce((s:number, x:any) => s + Number(x.requests||0), 0);
+                const w = pct > 0 ? (Number(m.requests||0) / pct * 100) : 0;
+                return (
+                  <div key={i} className="mb-3">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-xs text-[var(--text-primary)]">{m.model.split("/")[1] || m.model}</span>
+                      <span className="text-xs text-[var(--text-secondary)]">{m.requests} reqs · ${Number(m.cost||0).toFixed(4)}</span>
+                    </div>
+                    <div className="h-2 rounded-full bg-[var(--bg-primary)] border border-[var(--border-color)] overflow-hidden">
+                      <span className="block h-full rounded-full transition-all duration-500" style={{ width: w+'%', backgroundColor: COLORS[i % COLORS.length] }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           )}
-        </ChartCard>
+        </div>
       </div>
 
       {/* Cost stacked */}
       {stackedCosts.length > 0 && (
-        <ChartCard title="Biaya Harian (by Model)">
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={stackedCosts}>
-              <XAxis dataKey="day" tick={{ fontSize: 10, fill: "var(--text-secondary)" }} tickFormatter={tickFmt} />
-              <YAxis tick={{ fontSize: 10, fill: "var(--text-secondary)" }} tickFormatter={(v: number) => "$" + v.toFixed(6)} />
-              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, background: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
-                formatter={(v: any, name: any) => ["$" + Number(v).toFixed(6), name.split("/").pop() || name]} />
-              <Legend formatter={(v: string) => v.split("/").pop() || v} wrapperStyle={{ fontSize: 11 }} />
-              {modelNames.map((m, i) => (
-                <Bar key={m} dataKey={m} stackId="a" fill={MODEL_COLORS[m] || COLORS[i % COLORS.length]} radius={[4, 4, 0, 0]} />
-              ))}
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartCard>
+        <div className="glass-card rounded-xl p-5">
+          <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Biaya Harian (by Model)</h3>
+          {stackedCosts.slice(-10).map((d: any, di: number) => (
+            <div key={di} className="mb-3">
+              <p className="text-xs text-[var(--text-secondary)] mb-1">{d.day?.slice(5) || d.day}</p>
+              <div className="flex h-3 rounded-full overflow-hidden bg-[var(--bg-primary)] border border-[var(--border-color)]">
+                {modelNames.map((m: string, mi: number) => {
+                  const v = Math.max(Number(d[m]) || 0, 0);
+                  const total = Object.keys(d).filter(k => k !== 'day' && k !== 'costs').reduce((s,k) => s + Number(d[k]||0), 0);
+                  return v > 0 ? (
+                    <span key={mi} style={{ width: total > 0 ? (v/total*100)+'%' : '0%', backgroundColor: MODEL_COLORS[m] || COLORS[mi % COLORS.length] }} className="h-full" title={`${m}: $${v.toFixed(6)}`} />
+                  ) : null;
+                })}
+              </div>
+            </div>
+          ))}
+          <div className="flex flex-wrap gap-x-3 gap-y-1 mt-3">
+            {modelNames.map((m, i) => (
+              <span key={i} className="inline-flex items-center gap-1 text-xs text-[var(--text-secondary)]">
+                <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: MODEL_COLORS[m] || COLORS[i % COLORS.length] }} />{m.split("/")[1] || m}
+              </span>
+            ))}
+          </div>
+        </div>
       )}
 
       {/* Recent usage */}
@@ -281,15 +310,6 @@ function Card({ title, value, accent, link, linkText, subtitle, icon }: {
           {linkText}
         </Link>
       )}
-    </div>
-  );
-}
-
-function ChartCard({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="glass-card rounded-xl p-5">
-      <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">{title}</h3>
-      {children}
     </div>
   );
 }
