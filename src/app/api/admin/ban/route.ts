@@ -17,8 +17,8 @@ export async function POST(req: Request) {
 
   await query("UPDATE users SET status = $1 WHERE id = $2", [statusMap[action], userId]);
 
-  // Revoke all active API keys on ban
-  if (action === "ban") {
+  // Revoke all active API keys on ban or suspend
+  if (action === "ban" || action === "suspend") {
     await query("UPDATE api_keys SET is_active = false WHERE user_id = $1 AND is_active = true", [userId]);
   }
 

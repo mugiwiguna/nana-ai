@@ -90,6 +90,25 @@ export default function DashboardPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16 space-y-8">
+      {/* Suspended warning */}
+      {((session.user as any)?.status === "suspended" || (session.user as any)?.status === "banned") && (
+        <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-500/5">
+          <div className="flex items-start gap-3">
+            <svg className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+            <div>
+              <p className="text-sm font-semibold text-amber-400">Akun {(session.user as any)?.status === "banned" ? "Diblokir" : "Disuspend"}</p>
+              <p className="text-xs text-[var(--text-secondary)] mt-1">
+                Akun Anda sedang dalam status {(session.user as any)?.status === "banned" ? "banned" : "suspended"}. Semua API key telah dinonaktifkan.
+                Silakan hubungi admin untuk informasi lebih lanjut:{" "}
+                <a href="mailto:admin@nanaai.id" className="text-[var(--gradient-start)] hover:underline">admin@nanaai.id</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center gap-3 mb-1">
         <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">Dashboard</h1>
         <StatusBadge status={(session.user as any)?.status} email={(session.user as any)?.email} />

@@ -9,7 +9,7 @@ import Modal from "@/components/Modal";
 const COLORS = ["#a78bfa", "#818cf8", "#8b5cf6", "#c084fc", "#6366f1"];
 
 export default function KeysPage() {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [keys, setKeys] = useState<any[]>([]);
   const [usage, setUsage] = useState<any[]>([]);
@@ -18,6 +18,8 @@ export default function KeysPage() {
   const [newKey, setNewKey] = useState("");
   const [copiedKey, setCopiedKey] = useState("");
   const [regeneratedKey, setRegeneratedKey] = useState<{ key: string; name: string } | null>(null);
+  const userStatus = (session?.user as any)?.status;
+  const isBlocked = userStatus === "suspended" || userStatus === "banned";
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
@@ -89,6 +91,24 @@ export default function KeysPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16 space-y-8">
       <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">API Keys</h1>
 
+      {/* Suspended warning */}
+      {isBlocked && (
+        <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-500/5">
+          <div className="flex items-start gap-3">
+            <svg className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+            <div>
+              <p className="text-sm font-semibold text-amber-400">Akun {userStatus === "banned" ? "Diblokir" : "Disuspend"}</p>
+              <p className="text-xs text-[var(--text-secondary)] mt-1">
+                Tidak dapat membuat atau meregenerasi API key saat akun {userStatus}.
+                Hubungi <a href="mailto:admin@nanaai.id" className="text-[var(--gradient-start)] hover:underline">admin@nanaai.id</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Stat cards */}
       <div className="grid grid-cols-3 gap-4">
         <StatCard title="Total Keys" value={keys.length} accent="violet" />
@@ -97,14 +117,16 @@ export default function KeysPage() {
       </div>
 
       {/* Generate */}
-      <div className="glass-card rounded-xl p-5">
+      <div className={`glass-card rounded-xl p-5 ${isBlocked ? "opacity-50 pointer-events-none" : ""}`}>
         <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-3">Buat API Key Baru</h2>
         <div className="flex gap-2">
           <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)}
             placeholder="Nama key (misal: Production)"
-            className="min-w-0 flex-1 bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:border-[var(--gradient-start)] focus:ring-1 focus:ring-[var(--gradient-start)]/30 outline-none transition" />
+            disabled={isBlocked}
+            className="min-w-0 flex-1 bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:border-[var(--gradient-start)] focus:ring-1 focus:ring-[var(--gradient-start)]/30 outline-none transition disabled:opacity-50" />
           <button onClick={generateKey}
-            className="shrink-0 btn-gradient px-4 py-2 rounded-lg text-sm font-medium">
+            disabled={isBlocked}
+            className="shrink-0 btn-gradient px-4 py-2 rounded-lg text-sm font-medium disabled:opacity-50">
             Generate
           </button>
         </div>
@@ -187,7 +209,7 @@ export default function KeysPage() {
                     <td className="py-3 px-4 text-right text-[var(--text-secondary)] text-xs">{new Date(k.created_at).toLocaleDateString()}</td>
                     <td className="py-3 px-4 text-right">
                       <div className="flex items-center justify-end gap-1">
-                        {k.is_active && (
+                        {k.is_active && !isBlocked && (
                           <>
                             <button onClick={() => regenerateKey(k.id)}
                               className="text-xs text-[var(--gradient-start)] hover:text-white hover:bg-[var(--gradient-start)] rounded px-2 py-1 transition-all font-medium" title="Regenerate key baru">↻</button>
