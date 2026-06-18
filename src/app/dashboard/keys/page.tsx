@@ -117,20 +117,36 @@ export default function KeysPage() {
       </div>
 
       {/* Generate */}
-      <div className={`glass-card rounded-xl p-5 ${isBlocked ? "opacity-50 pointer-events-none" : ""}`}>
-        <h2 className="text-sm font-semibold text-[var(--text-primary)] mb-3">Buat API Key Baru</h2>
+      <div className={`glass-card rounded-xl p-5 ${isBlocked ? "opacity-60" : ""}`}>
+        <div className="flex items-center gap-2 mb-3">
+          {isBlocked ? (
+            <svg className="w-4 h-4 text-red-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+            </svg>
+          ) : null}
+          <h2 className="text-sm font-semibold text-[var(--text-primary)]">Buat API Key Baru</h2>
+        </div>
         <div className="flex gap-2">
           <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)}
             placeholder="Nama key (misal: Production)"
             disabled={isBlocked}
-            className="min-w-0 flex-1 bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:border-[var(--gradient-start)] focus:ring-1 focus:ring-[var(--gradient-start)]/30 outline-none transition disabled:opacity-50" />
-          <button onClick={generateKey}
-            disabled={isBlocked}
-            className="shrink-0 btn-gradient px-4 py-2 rounded-lg text-sm font-medium disabled:opacity-50">
-            Generate
-          </button>
+            className="min-w-0 flex-1 bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:border-[var(--gradient-start)] focus:ring-1 focus:ring-[var(--gradient-start)]/30 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed" />
+          {isBlocked ? (
+            <button disabled
+              className="shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-secondary)] cursor-not-allowed">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+              </svg>
+              Diblokir
+            </button>
+          ) : (
+            <button onClick={generateKey}
+              className="shrink-0 btn-gradient px-4 py-2 rounded-lg text-sm font-medium">
+              Generate
+            </button>
+          )}
         </div>
-        {newKey && (
+        {!isBlocked && newKey && (
           <div className="mt-4 p-3 bg-[var(--gradient-start)]/5 border border-[var(--gradient-start)]/20 rounded-lg">
             <p className="text-xs font-medium gradient-text mb-1">Key baru!</p>
             <div className="flex items-center gap-2">

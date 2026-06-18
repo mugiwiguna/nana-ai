@@ -30,6 +30,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           email: user.email,
           name: user.name,
           balance: user.balance,
+          status: user.status,
         };
       },
     }),
@@ -61,6 +62,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
             user.id = dbUser.id;
             (user as any).balance = dbUser.balance;
+            (user as any).status = dbUser.status;
           } else {
             const res = await query(
               `INSERT INTO users (email, name, google_id, image, password_hash, balance)
@@ -83,8 +85,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id = user.id;
         token.balance = (user as any).balance ?? 0;
+        token.status = (user as any).status ?? "active";
       } else {
-        const res = await query("SELECT balance FROM users WHERE id = $1", [
+        const res = await query("SELECT balance, status FROM users WHERE id = $1", [
           token.id,
         ]);
         if (res.rows[0]) {
