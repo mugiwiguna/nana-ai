@@ -19,7 +19,7 @@ const SECTIONS = [
     title: "Endpoint API",
     icon: "🔌",
     content: [
-      { title: "Base URL", code: "https://api.nanaai.id/v1", desc: "Semua request ke base URL ini. OpenAI-compatible." },
+      { title: "Base URL", code: "https://nana.mwcs.dev/v1", desc: "Semua request ke base URL ini. OpenAI-compatible." },
       { title: "Chat Completion", code: "POST /chat/completions", desc: "Endpoint utama kirim pesan ke model AI." },
     ],
   },
@@ -39,14 +39,14 @@ const SECTIONS = [
     content: [
       {
         title: "cURL", lang: "bash",
-        code: `curl -X POST https://api.nanaai.id/v1/chat/completions \\
+        code: `curl -X POST https://nana.mwcs.dev/v1/chat/completions \\
   -H "Content-Type: application/json" \\
   -H "Authorization: Bearer ***" \\
   -d '{"model":"gpt-4o","messages":[{"role":"user","content":"Halo!"}]}'`,
       },
       {
         title: "JavaScript (fetch)", lang: "javascript",
-        code: `const res = await fetch("https://api.nanaai.id/v1/chat/completions", {
+        code: `const res = await fetch("https://nana.mwcs.dev/v1/chat/completions", {
   method: "POST",
   headers: { "Content-Type": "application/json", "Authorization": "***" },
   body: JSON.stringify({ model: "gpt-4o", messages: [{ role: "user", content: "Halo!" }] })
@@ -57,7 +57,7 @@ console.log(data.choices[0].message.content);`,
       {
         title: "Python", lang: "python",
         code: `import requests
-response = requests.post("https://api.nanaai.id/v1/chat/completions",
+response = requests.post("https://nana.mwcs.dev/v1/chat/completions",
     headers={"Content-Type":"application/json","Authorization":"***"},
     json={"model":"gpt-4o","messages":[{"role":"user","content":"Halo!"}]})
 print(response.json()["choices"][0]["message"]["content"])`,
@@ -78,8 +78,8 @@ print(response.json()["choices"][0]["message"]["content"])`,
     id: "streaming", title: "Streaming", icon: "⚡",
     content: [
       { title: "SSE Streaming", desc: "Dapet token satu per satu tanpa nunggu response lengkap. Format OpenAI SSE." },
-      { title: "cURL", lang: "bash", code: `curl -X POST https://api.nanaai.id/v1/chat/completions -H "Content-Type: application/json" -H "Authorization: Bearer ***" -d '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"Halo!"}],"stream":true}'` },
-      { title: "JavaScript", lang: "javascript", code: `const res = await fetch("https://api.nanaai.id/v1/chat/completions", {
+      { title: "cURL", lang: "bash", code: `curl -X POST https://nana.mwcs.dev/v1/chat/completions -H "Content-Type: application/json" -H "Authorization: Bearer ***" -d '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"Halo!"}],"stream":true}'` },
+      { title: "JavaScript", lang: "javascript", code: `const res = await fetch("https://nana.mwcs.dev/v1/chat/completions", {
   method: "POST",
   headers: { "Content-Type": "application/json", "Authorization": "***" },
   body: JSON.stringify({ model: "gpt-4o-mini", messages: [{ role: "user", content: "Halo!" }], stream: true })
@@ -97,7 +97,7 @@ while (true) {
 }` },
       { title: "Python", lang: "python", code: `import httpx
 with httpx.Client() as client:
-    with client.stream("POST", "https://api.nanaai.id/v1/chat/completions",
+    with client.stream("POST", "https://nana.mwcs.dev/v1/chat/completions",
         headers={"Content-Type":"application/json","Authorization":"***"},
         json={"model":"gpt-4o-mini","messages":[{"role":"user","content":"Halo!"}],"stream":True}
     ) as res:
@@ -110,15 +110,15 @@ with httpx.Client() as client:
     id: "sdk", title: "SDK & Library", icon: "📦",
     content: [
       { title: "OpenAI JS SDK", lang: "javascript", desc: "Tinggal ganti baseURL + apiKey.", code: `import OpenAI from "openai";
-const client = new OpenAI({ baseURL: "https://api.nanaai.id/v1", apiKey: "***" });
+const client = new OpenAI({ baseURL: "https://nana.mwcs.dev/v1", apiKey: "***" });
 const c = await client.chat.completions.create({ model: "gpt-4o-mini", messages: [{ role: "user", content: "Halo!" }] });
 console.log(c.choices[0].message.content);` },
       { title: "OpenAI Python SDK", lang: "python", desc: "OpenAI Python library kompatibel.", code: `from openai import OpenAI
-client = OpenAI(base_url="https://api.nanaai.id/v1", api_key="***")
+client = OpenAI(base_url="https://nana.mwcs.dev/v1", api_key="***")
 c = client.chat.completions.create(model="gpt-4o-mini", messages=[{"role":"user","content":"Halo!"}])
 print(c.choices[0].message.content)` },
       { title: "LangChain", lang: "python", desc: "Integrasi via ChatOpenAI.", code: `from langchain_openai import ChatOpenAI
-llm = ChatOpenAI(model="gpt-4o-mini", base_url="https://api.nanaai.id/v1", api_key="***")
+llm = ChatOpenAI(model="gpt-4o-mini", base_url="https://nana.mwcs.dev/v1", api_key="***")
 print(llm.invoke("Halo!").content)` },
     ],
   },
@@ -140,7 +140,7 @@ print(llm.invoke("Halo!").content)` },
   {
     id: "apiref", title: "API Reference", icon: "📖",
     content: [
-      { title: "Base URL", code: "https://api.nanaai.id/v1", desc: "Prefix semua endpoint. OpenAI-compatible." },
+      { title: "Base URL", code: "https://nana.mwcs.dev/v1", desc: "Prefix semua endpoint. OpenAI-compatible." },
       { title: "POST /chat/completions", desc: "Parameter:", params: [
           { name: "model", type: "string", req: true, desc: "ID model" },
           { name: "messages", type: "array", req: true, desc: "[{role, content}]" },

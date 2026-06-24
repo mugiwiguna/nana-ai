@@ -160,8 +160,8 @@ function Footer() {
           <div>
             <h4 className="font-semibold mb-3 text-sm">Sumber Daya</h4>
             <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
-              <li><a href="https://status.nanaai.id" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--gradient-start)] transition-colors">Status</a></li>
-              <li><a href="https://docs.nanaai.id" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--gradient-start)] transition-colors">Referensi API</a></li>
+              <li><Link href="/docs" className="hover:text-[var(--gradient-start)] transition-colors">Status</Link></li>
+              <li><Link href="/docs" className="hover:text-[var(--gradient-start)] transition-colors">Referensi API</Link></li>
               <li><Link href="/contact" className="hover:text-[var(--gradient-start)] transition-colors">Kontak</Link></li>
             </ul>
           </div>
@@ -354,6 +354,16 @@ export default function HomePage() {
             opacity: parallaxOpacity,
           }}
         >
+          {/* Hero logo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-6 flex justify-center"
+          >
+            <img src="/logo-header.png" alt="nanaAI" className="h-32 sm:h-40 md:h-48 lg:h-56 2xl:h-64 w-auto max-w-[200px] sm:max-w-[280px] md:max-w-[340px] lg:max-w-[420px] 2xl:max-w-[500px] object-contain" />
+          </motion.div>
+
           {/* Announcement pill */}
           <motion.div
             initial={{ opacity: 0, y: -10, scale: 0.95 }}

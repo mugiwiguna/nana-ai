@@ -68,7 +68,7 @@ export default function SettingsPage() {
           <div className="flex justify-between">
             <span className="text-[var(--text-secondary)]">Status</span>
             <span className={`font-medium ${user?.status === "active" ? "gradient-text" : "text-red-400"}`}>
-              {user?.email === "admin@nanaai.id" ? "Admin" : user?.status === "active" ? "Aktif" : user?.status === "suspended" ? "Suspend" : "Banned"}
+              {user?.email === "admin@nana.mwcs.dev" ? "Admin" : user?.status === "active" ? "Aktif" : user?.status === "suspended" ? "Suspend" : "Banned"}
             </span>
           </div>
         </div>

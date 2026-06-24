@@ -84,7 +84,7 @@ export default function KeysPage() {
               <p className="text-sm font-semibold text-amber-400">Akun {userStatus === "banned" ? "Diblokir" : "Disuspend"}</p>
               <p className="text-xs text-[var(--text-secondary)] mt-1">
                 Tidak dapat membuat atau meregenerasi API key saat akun {userStatus}.
-                Hubungi <a href="mailto:admin@nanaai.id" className="text-[var(--gradient-start)] hover:underline">admin@nanaai.id</a>.
+                Hubungi <a href="mailto:admin@nana.mwcs.dev" className="text-[var(--gradient-start)] hover:underline">admin@nana.mwcs.dev</a>.
               </p>
             </div>
           </div>

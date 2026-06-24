@@ -32,10 +32,18 @@ export default function ModelsPage() {
   const { status } = useSession();
   const router = useRouter();
   const [copied, setCopied] = useState("");
+  const [customModels, setCustomModels] = useState<any[]>([]);
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
   }, [status, router]);
+
+  useEffect(() => {
+    fetch("/api/custom-models")
+      .then(r => r.json())
+      .then(d => setCustomModels(d.models || []))
+      .catch(() => {});
+  }, []);
 
   const copyModel = (id: string) => {
     navigator.clipboard.writeText(id).catch(() => {
@@ -57,6 +65,51 @@ export default function ModelsPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16 space-y-8">
       <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">Model & Harga</h1>
+
+      {customModels.length > 0 && (
+        <div className="glass-card rounded-xl overflow-hidden">
+          <div className="px-5 py-4 border-b border-[var(--border-color)] bg-[var(--bg-primary)]/30">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)] flex items-center gap-2">
+              <span>🔌</span> Model Kustom
+            </h2>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-[var(--border-color)] text-[var(--text-secondary)]">
+                  <th className="text-left py-3 px-4 font-medium">Model</th>
+                  <th className="text-right py-3 px-4 font-medium">Input / 1K token</th>
+                  <th className="text-right py-3 px-4 font-medium">Output / 1K token</th>
+                  <th className="text-right py-3 px-4 font-medium">Provider</th>
+                </tr>
+              </thead>
+              <tbody>
+                {customModels.map(m => (
+                  <tr key={m.id} className="border-b border-[var(--border-color)] hover:bg-[var(--bg-secondary)]/50 transition-colors">
+                    <td className="py-3 px-4">
+                      <span className="text-[var(--text-primary)] font-medium">{m.name}</span>
+                      <span className="text-[var(--text-secondary)] text-xs ml-2 font-mono opacity-60">{m.upstream_model_name}</span>
+                      <button onClick={() => copyModel(m.name)}
+                        className="ml-2 text-xs px-2 py-0.5 rounded border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-[var(--gradient-start)]/30 hover:text-[var(--gradient-start)] transition align-middle">
+                        {copied === m.name ? "✓" : "Salin"}
+                      </button>
+                    </td>
+                    <td className="py-3 px-4 text-right text-[var(--text-secondary)] font-mono">
+                      ${Number(m.input_price).toFixed(7).replace(/0+$/, "").replace(/\.$/, "")}
+                    </td>
+                    <td className="py-3 px-4 text-right text-[var(--text-secondary)] font-mono">
+                      ${Number(m.output_price).toFixed(7).replace(/0+$/, "").replace(/\.$/, "")}
+                    </td>
+                    <td className="py-3 px-4 text-right text-[var(--text-secondary)]">
+                      {m.provider_name}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {PROVIDERS.map(provider => {
         const models = MODELS.filter(m => m.provider === provider);

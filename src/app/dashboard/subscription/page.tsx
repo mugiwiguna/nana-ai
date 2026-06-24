@@ -129,32 +129,7 @@ export default function SubscriptionPage() {
           {hasActivePlan ? "Upgrade Plan" : "Pilih Plan"}
         </h2>
 
-        {/* Payment method toggle */}
-        {!hasActivePlan && (
-          <div className="flex items-center gap-2 mb-6">
-            <span className="text-sm text-[var(--text-secondary)]">Bayar via:</span>
-            <button
-              onClick={() => setPayMethod("balance")}
-              className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-all ${
-                payMethod === "balance"
-                  ? "bg-[var(--gradient-start)] text-white"
-                  : "bg-[var(--bg-secondary)] text-[var(--text-secondary)]"
-              }`}
-            >
-              Saldo
-            </button>
-            <button
-              onClick={() => setPayMethod("qris")}
-              className={`text-xs font-medium px-3 py-1.5 rounded-lg transition-all ${
-                payMethod === "qris"
-                  ? "bg-[var(--gradient-start)] text-white"
-                  : "bg-[var(--bg-secondary)] text-[var(--text-secondary)]"
-              }`}
-            >
-              QRIS
-            </button>
-          </div>
-        )}
+        <p className="text-xs text-[var(--text-secondary)] mb-6">Sistem plan sedang dalam pengembangan. Akan segera tersedia.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {plans.map((plan) => (
@@ -166,6 +141,13 @@ export default function SubscriptionPage() {
                   : "border-[var(--border-color)] bg-[var(--bg-secondary)]"
               }`}
             >
+              {/* Soon badge */}
+              <div className="absolute -top-2 right-3">
+                <span className="text-[10px] font-bold tracking-wider uppercase bg-zinc-500/80 text-white px-2 py-0.5 rounded-full">
+                  Soon
+                </span>
+              </div>
+
               {plan.is_popular && (
                 <div className="absolute -top-2 left-1/2 -translate-x-1/2">
                   <span className="text-[10px] font-bold tracking-wider uppercase bg-[var(--gradient-start)] text-white px-3 py-0.5 rounded-full">
@@ -200,15 +182,14 @@ export default function SubscriptionPage() {
               </ul>
 
               <button
-                disabled={buying != null}
-                onClick={() => handleSubscribe(plan.id)}
-                className={`w-full text-sm font-semibold py-2.5 rounded-xl transition-all duration-300 ${
+                disabled
+                className={`w-full text-sm font-semibold py-2.5 rounded-xl transition-all duration-300 cursor-not-allowed opacity-40 ${
                   plan.is_popular
-                    ? "bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] text-white hover:shadow-lg hover:shadow-[var(--gradient-start)]/25"
-                    : "border border-[var(--border-color)] hover:border-[var(--gradient-start)]/50 hover:bg-[var(--gradient-start)]/5"
-                } disabled:opacity-50`}
+                    ? "bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] text-white"
+                    : "border border-[var(--border-color)]"
+                }`}
               >
-                {buying === plan.id ? "Memproses..." : `Beli ${plan.name}`}
+                Segera Hadir
               </button>
             </div>
           ))}

@@ -3,6 +3,8 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import ProviderSection from "@/components/admin/ProviderSection";
+import ModelSection from "@/components/admin/ModelSection";
 
 function Toast({ msg, onClose }: { msg: string; onClose: () => void }) {
   useEffect(() => {
@@ -28,9 +30,12 @@ function scrollToInfo() {
   }, 100);
 }
 
+type Tab = "users" | "providers" | "models";
+
 export default function AdminPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [tab, setTab] = useState<Tab>("users");
   const [users, setUsers] = useState<any[]>([]);
   const [search, setSearch] = useState("");
   const [selectedUser, setSelectedUser] = useState("");
@@ -53,7 +58,7 @@ export default function AdminPage() {
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
     if (status === "authenticated") {
-      if (session?.user?.email !== "admin@nanaai.id") { router.push("/dashboard"); return; }
+      if (session?.user?.email !== "admin@nana.mwcs.dev") { router.push("/dashboard"); return; }
       loadUsers();
     }
   }, [status, session, router]);
@@ -66,7 +71,7 @@ export default function AdminPage() {
   };
 
   useEffect(() => {
-    if (status !== "authenticated" || session?.user?.email !== "admin@nanaai.id") return;
+    if (status !== "authenticated" || session?.user?.email !== "admin@nana.mwcs.dev") return;
     const timer = setTimeout(loadUsers, search ? 300 : 0);
     return () => clearTimeout(timer);
   }, [search]);
@@ -149,7 +154,7 @@ export default function AdminPage() {
 
   const handleResetAllSmart = async () => {
     if (!confirm("Reset SEMUA user dengan saldo+topup terakhir?")) return;
-    await Promise.all(users.filter(u => u.email !== "admin@nanaai.id").map(async (u) => {
+    await Promise.all(users.filter(u => u.email !== "admin@nana.mwcs.dev").map(async (u) => {
       const a = await getSmartResetAmount(u.id);
       await fetch("/api/admin/reset-quota", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: u.id, amount: a }) });
     }));
@@ -169,22 +174,47 @@ export default function AdminPage() {
     totalKeys: acc.totalKeys + Number(u.api_key_count),
   }), { totalUsers: 0, totalBalance: 0, totalUsage: 0, totalKeys: 0 });
 
-  const pickerItems = users.filter(u => u.email !== "admin@nanaai.id" && (!pickerSearch || u.email.toLowerCase().includes(pickerSearch.toLowerCase()) || u.name?.toLowerCase().includes(pickerSearch.toLowerCase())));
+  const pickerItems = users.filter(u => u.email !== "admin@nana.mwcs.dev" && (!pickerSearch || u.email.toLowerCase().includes(pickerSearch.toLowerCase()) || u.name?.toLowerCase().includes(pickerSearch.toLowerCase())));
   const topupUserObj = users.find(u => u.id === topupHistoryUser);
 
   if (status === "loading") return <p className="text-center mt-20 text-[var(--text-secondary)]">Loading...</p>;
-  if (session?.user?.email !== "admin@nanaai.id") return null;
+  if (session?.user?.email !== "admin@nana.mwcs.dev") return null;
 
   return (
     <div className="space-y-8">
       <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">Admin Panel</h1>
 
+      <div className="flex gap-6 mt-6 border-b border-[var(--border-color)]">
+        {([
+          ["users", "Pengguna"],
+          ["providers", "Provider"],
+          ["models", "Model Kustom"],
+        ] as [Tab, string][]).map(([key, label]) => (
+          <button
+            key={key}
+            onClick={() => setTab(key)}
+            className={`px-1 py-2 text-sm font-medium transition border-b-2 ${
+              tab === key
+                ? "text-[var(--text-primary)] border-[var(--text-primary)]"
+                : "text-[var(--text-secondary)] border-transparent hover:text-[var(--text-primary)]"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {tab === "providers" && <ProviderSection showToast={showToast} />}
+      {tab === "models" && <ModelSection showToast={showToast} />}
+      {tab === "users" && (
+        <>
+
       {/* Summary */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <SumCard title="Total User" value={summary.totalUsers} />
-        <SumCard title="Total Saldo" value={"$" + summary.totalBalance.toFixed(2)} color="#10b981" />
-        <SumCard title="API Key" value={summary.totalKeys} color="#3b82f6" />
-        <SumCard title="Revenue" value={"$" + summary.totalUsage.toFixed(4)} color="#f59e0b" />
+        <SumCard title="Total Saldo" value={"$" + summary.totalBalance.toFixed(2)} />
+        <SumCard title="API Key" value={summary.totalKeys} />
+        <SumCard title="Revenue" value={"$" + summary.totalUsage.toFixed(4)} />
       </div>
 
       {/* Actions */}
@@ -281,7 +311,7 @@ export default function AdminPage() {
                     <button onClick={() => setEditBalanceOpen("")} className="text-xs text-[var(--text-secondary)] hover:underline">batal</button>
                   </div>
                 )}
-                <p className="text-[var(--text-secondary)]"><span className="text-[var(--text-primary)]">Status:</span> {u.email === "admin@nanaai.id" ? "🔧 Admin" : u.status === "active" ? "✅ Aktif" : u.status === "suspended" ? "⏸ Suspend" : "🚫 Banned"}</p>
+                <p className="text-[var(--text-secondary)]"><span className="text-[var(--text-primary)]">Status:</span> {u.email === "admin@nana.mwcs.dev" ? "🔧 Admin" : u.status === "active" ? "✅ Aktif" : u.status === "suspended" ? "⏸ Suspend" : "🚫 Banned"}</p>
                 <p className="text-[var(--text-secondary)]"><span className="text-[var(--text-primary)]">Keys:</span> {u.api_key_count}</p>
                 <p className="text-[var(--text-secondary)]"><span className="text-[var(--text-primary)]">Usage:</span> ${Number(u.total_usage).toFixed(4)}</p>
                 {topupHistory.length > 0 && (
@@ -335,13 +365,13 @@ export default function AdminPage() {
                   </td>
                   <td className="py-2 px-4 text-center">
                     <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                      u.email === "admin@nanaai.id"
+                      u.email === "admin@nana.mwcs.dev"
                         ? "bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400"
                         : u.status === "active" ? "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400"
                       : u.status === "suspended" ? "bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400"
                       : "bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400"
                     }`}>
-                      {u.email === "admin@nanaai.id" ? "Admin" : u.status === "active" ? "Aktif" : u.status === "suspended" ? "Suspend" : "Banned"}
+                      {u.email === "admin@nana.mwcs.dev" ? "Admin" : u.status === "active" ? "Aktif" : u.status === "suspended" ? "Suspend" : "Banned"}
                     </span>
                   </td>
                   <td className="py-2 px-4 text-right text-[var(--text-secondary)]">{u.api_key_count}</td>
@@ -352,7 +382,7 @@ export default function AdminPage() {
                   </td>
                   <td className="py-2 px-4 text-right">
                     <div className="flex items-center justify-end gap-1">
-                      {u.email !== "admin@nanaai.id" && (
+                      {u.email !== "admin@nana.mwcs.dev" && (
                         <>
                           <button onClick={() => { setSelectedUser(u.id); handleResetUser(u.id); }}
                             className="text-xs text-blue-500 hover:text-blue-400 px-1" title="Reset quota">↺</button>
@@ -381,15 +411,17 @@ export default function AdminPage() {
 
       {/* Toast */}
       {toast && <Toast msg={toast} onClose={() => setToast("")} />}
+      </>
+      )}
     </div>
   );
 }
 
-function SumCard({ title, value, color }: { title: string; value: string | number; color?: string }) {
+function SumCard({ title, value }: { title: string; value: string | number }) {
   return (
     <div className="bg-[var(--bg-card)] backdrop-blur-xl border border-[var(--border-color)] rounded-xl p-5">
       <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider mb-1">{title}</p>
-      <p className="text-2xl font-bold mt-1" style={{ color: color || "var(--text-primary)" }}>{value}</p>
+      <p className="text-2xl font-bold mt-1 text-[var(--text-primary)]">{value}</p>
     </div>
   );
 }

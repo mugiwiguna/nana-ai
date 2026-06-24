@@ -42,16 +42,8 @@ export default function Navbar() {
               </svg>
             </button>
           )}
-          <Link href="/" className="flex items-center gap-2">
-            <svg className="w-7 h-7" viewBox="0 0 120 120" fill="none">
-              <path d="M30 52 L18 18 L42 38 Z" stroke="var(--gradient-start)" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
-              <path d="M90 52 L102 18 L78 38 Z" stroke="var(--gradient-start)" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
-              <path d="M35 42 L28 58 L32 80 L60 92 L88 80 L92 58 L85 42 Z" stroke="var(--gradient-start)" strokeWidth="3" strokeLinejoin="miter" fill="none"/>
-              <path d="M44 60 L50 54 L56 60 L50 66 Z" stroke="var(--gradient-start)" strokeWidth="2.5" fill="none"/>
-              <path d="M64 60 L70 54 L76 60 L70 66 Z" stroke="var(--gradient-start)" strokeWidth="2.5" fill="none"/>
-              <path d="M57 72 L63 72 L60 76 Z" fill="var(--gradient-start)" fillOpacity="0.3"/>
-            </svg>
-            <span className="font-bold text-lg text-zinc-400">nana<span className="text-red-500">AI</span><span className="text-zinc-400">.</span></span>
+          <Link href="/" className="flex items-center">
+            <img src="/logo-header.png" alt="Logo" className="h-16 w-auto" />
           </Link>
 
         </div>

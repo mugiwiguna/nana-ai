@@ -20,7 +20,7 @@ export async function GET(req: Request) {
 
   const [dataRes, countRes] = await Promise.all([
     query(
-      `SELECT id, model, tokens_in, tokens_out, cost, created_at FROM usage_logs WHERE user_id = $1 ${clause} ORDER BY created_at DESC LIMIT $${params.length + 2} OFFSET $${params.length + 3}`,
+      `SELECT id, model, api_key_id, tokens_in, tokens_out, cost, created_at FROM usage_logs WHERE user_id = $1 ${clause} ORDER BY created_at DESC LIMIT $${params.length + 2} OFFSET $${params.length + 3}`,
       [session.user.id, ...params, limit, offset]
     ),
     query(
