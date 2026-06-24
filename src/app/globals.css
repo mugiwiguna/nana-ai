@@ -113,15 +113,12 @@ body {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--gradient-start);
 }
 
 /* Gradient button base */
 .btn-gradient {
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  background: var(--gradient-start);
   color: white;
   transition: all 0.2s ease;
 }

@@ -100,7 +100,7 @@ export default function PricingPage() {
                 href="/dashboard/topup"
                 className={`text-center font-semibold py-3 rounded-xl transition-all duration-300 ${
                   plan.is_popular
-                    ? "bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] text-white hover:shadow-lg hover:shadow-[var(--gradient-start)]/25 hover:scale-[1.02]"
+                    ? "bg-[var(--gradient-start)] text-white hover:scale-[1.02]"
                     : "border border-[var(--border-color)] hover:border-[var(--gradient-start)]/40 hover:bg-[var(--gradient-start)]/5"
                 }`}
               >

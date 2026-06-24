@@ -393,7 +393,7 @@ export default function HomePage() {
               className="group relative overflow-hidden inline-flex items-center gap-2.5 text-white font-semibold px-5 py-2.5 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-500 hover:scale-[1.03] active:scale-[0.98]"
             >
               {/* Animated gradient bg */}
-              <span className="absolute inset-0 bg-gradient-to-r from-[var(--gradient-start)] via-[var(--gradient-mid)] to-[var(--gradient-end)] bg-[length:200%_100%] animate-shimmer" />
+              <span className="absolute inset-0 bg-[var(--gradient-start)]/10" />
               {/* Glass overlay */}
               <span className="absolute inset-0 bg-white/10 backdrop-blur-[2px]" />
               {/* Inner glow ring */}
@@ -461,7 +461,7 @@ export default function HomePage() {
                 transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="glass-card rounded-2xl p-6 group"
               >
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--gradient-start)] to-[var(--gradient-end)]/60 flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-10 h-10 rounded-xl bg-[var(--gradient-start)] flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300">
                   {f.icon}
                 </div>
                 <h3 className="font-semibold text-lg mb-2">{f.title}</h3>
@@ -524,7 +524,7 @@ export default function HomePage() {
                 {/* Icon circle */}
                 <motion.div
                   whileHover={{ scale: 1.1 }}
-                  className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-[var(--gradient-start)] to-[var(--gradient-end)] flex items-center justify-center text-white shadow-lg shadow-[var(--gradient-start)]/20"
+                  className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-[var(--gradient-start)] flex items-center justify-center text-white shadow-lg shadow-[var(--gradient-start)]/20"
                 >
                   {step.icon}
                 </motion.div>
@@ -604,7 +604,7 @@ export default function HomePage() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[var(--gradient-start)]/10 via-transparent to-[var(--gradient-end)]/10 border border-[var(--border-color)] p-10 md:p-16 text-center"
+            className="relative overflow-hidden rounded-3xl bg-[var(--gradient-start)]/5 border border-[var(--border-color)] p-10 md:p-16 text-center"
           >
             {/* Decorative orbs */}
             <div className="absolute top-0 right-0 w-64 h-64 gradient-orb opacity-20" />
@@ -623,7 +623,7 @@ export default function HomePage() {
                   href={session ? "/dashboard" : "/register"}
                   className="group relative overflow-hidden inline-flex items-center gap-2.5 text-white font-semibold px-5 py-2.5 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-500 hover:scale-[1.03] active:scale-[0.98]"
                 >
-                  <span className="absolute inset-0 bg-gradient-to-r from-[var(--gradient-start)] via-[var(--gradient-mid)] to-[var(--gradient-end)] bg-[length:200%_100%] animate-shimmer" />
+                  <span className="absolute inset-0 bg-[var(--gradient-start)]/10" />
                   <span className="absolute inset-0 bg-white/10 backdrop-blur-[2px]" />
                   <span className="absolute inset-0 rounded-xl sm:rounded-2xl ring-1 ring-inset ring-white/20" />
                   <span className="absolute bottom-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />

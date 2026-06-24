@@ -185,7 +185,7 @@ export default function SubscriptionPage() {
                 disabled
                 className={`w-full text-sm font-semibold py-2.5 rounded-xl transition-all duration-300 cursor-not-allowed opacity-40 ${
                   plan.is_popular
-                    ? "bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] text-white"
+                    ? "bg-[var(--gradient-start)] text-white"
                     : "border border-[var(--border-color)]"
                 }`}
               >

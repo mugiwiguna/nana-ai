@@ -133,7 +133,7 @@ export default function Navbar() {
             <>
               <Link href="/login" className="text-[var(--text-secondary)] hover:text-[var(--gradient-start)] transition-colors px-2 py-1">Masuk</Link>
               <Link href="/register"
-                className="bg-gradient-to-r from-[var(--gradient-start)] to-[var(--gradient-end)] hover:opacity-90 px-4 py-1.5 rounded-lg text-white font-medium transition-opacity">
+                className="bg-[var(--gradient-start)] hover:opacity-90 px-4 py-1.5 rounded-lg text-white font-medium transition-opacity">
                 Daftar
               </Link>
             </>

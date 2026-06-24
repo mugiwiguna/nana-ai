@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`dark ${jakarta.variable}`} suppressHydrationWarning>
+    <html lang="en" className={jakarta.variable} suppressHydrationWarning>
       <body className="min-h-screen antialiased relative">
         <div className="bg-glow" aria-hidden="true" />
         <ThemeProvider>
