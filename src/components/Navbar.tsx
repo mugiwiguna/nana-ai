@@ -124,7 +124,7 @@ export default function Navbar() {
                 </Link>
               )}
 
-              <button onClick={() => signOut({ redirectTo: "/login" })}
+              <button onClick={() => signOut({ callbackUrl: "/login", redirect: true })}
                 className="text-[var(--text-secondary)] hover:text-red-400 transition-colors px-2 py-1">
                 Keluar
               </button>

@@ -22,13 +22,13 @@
 }
 
 .dark {
-  --bg-primary: #050508;
-  --bg-secondary: #0c0c14;
-  --bg-card: rgba(12, 12, 24, 0.6);
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-card: rgba(0, 0, 0, 0.6);
   --text-primary: #ededf0;
   --text-secondary: #7b7b8e;
   --border-color: rgba(255, 255, 255, 0.06);
-  --glass-bg: rgba(12, 12, 24, 0.4);
+  --glass-bg: rgba(0, 0, 0, 0.4);
   --glass-border: rgba(255, 255, 255, 0.05);
   --glass-shadow: rgba(0, 0, 0, 0.4);
   --gradient-start: #f4f4f5;
@@ -74,6 +74,14 @@ body {
   background: radial-gradient(circle at center, rgba(0, 0, 0, 0.03) 0%, transparent 70%);
   filter: blur(120px);
   animation: orb-drift-2 25s ease-in-out infinite;
+}
+
+.dark .bg-glow::before {
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+}
+
+.dark .bg-glow::after {
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
 }
 
 @keyframes orb-drift-1 {

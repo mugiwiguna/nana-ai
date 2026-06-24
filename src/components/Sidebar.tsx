@@ -184,7 +184,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           {/* Logout */}
           <div className="border-t border-[var(--border-color)] pt-4 mt-4">
             <button
-              onClick={() => signOut({ redirectTo: "/login" })}
+              onClick={() => signOut({ callbackUrl: "/login", redirect: true })}
               className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-[var(--text-secondary)] hover:text-red-400 hover:bg-red-500/10 w-full transition-colors"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
