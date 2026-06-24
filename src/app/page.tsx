@@ -160,7 +160,7 @@ function Footer() {
           <div>
             <h4 className="font-semibold mb-3 text-sm">Sumber Daya</h4>
             <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
-              <li><Link href="/docs" className="hover:text-[var(--gradient-start)] transition-colors">Status</Link></li>
+              <li><Link href="/status" className="hover:text-[var(--gradient-start)] transition-colors">Status</Link></li>
               <li><Link href="/docs" className="hover:text-[var(--gradient-start)] transition-colors">Referensi API</Link></li>
               <li><Link href="/contact" className="hover:text-[var(--gradient-start)] transition-colors">Kontak</Link></li>
             </ul>

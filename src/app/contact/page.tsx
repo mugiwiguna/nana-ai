@@ -93,10 +93,10 @@ export default function ContactPage() {
               Cek uptime dan status operasional platform nanaAI secara real-time.
             </p>
             <Link
-              href="/docs"
+              href="/status"
               className="text-sm font-medium text-[var(--gradient-start)] hover:underline"
             >
-              Buka Dokumentasi →
+              Lihat Status →
             </Link>
           </div>
         </div>
