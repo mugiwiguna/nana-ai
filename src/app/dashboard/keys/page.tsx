@@ -228,7 +228,7 @@ export default function KeysPage() {
 }
 
 function StatCard({ title, value, accent }: { title: string; value: string | number; accent?: string }) {
-  const colors: Record<string, string> = { violet: "#526477", indigo: "#6366f1", purple: "#475569" };
+  const colors: Record<string, string> = { violet: "#27272a", indigo: "#18181b", purple: "#52525b" };
   return (
     <div className="glass-card rounded-xl p-5">
       <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider mb-1">{title}</p>

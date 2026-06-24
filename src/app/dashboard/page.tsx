@@ -5,19 +5,19 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-const COLORS = ["#526477", "#3b82f6", "#6366f1", "#475569", "#1e40af", "#334155", "#4338ca", "#203059"];
+const COLORS = ["#18181b", "#27272a", "#3f3f46", "#52525b", "#71717a", "#a1a1aa", "#d4d4d8", "#e4e4e7"];
 const MODEL_COLORS: Record<string, string> = {
-  "openai/gpt-4o-mini": "#526477",
-  "openai/gpt-4o": "#3b82f6",
-  "openai/gpt-3.5-turbo": "#475569",
-  "deepseek/deepseek-chat": "#6366f1",
-  "deepseek/deepseek-coder": "#334155",
-  "anthropic/claude-3.5-sonnet": "#1e40af",
-  "anthropic/claude-3-haiku": "#3b82f6",
-  "anthropic/claude-3-opus": "#4338ca",
-  "google/gemini-pro": "#475569",
-  "google/gemini-1.5-flash": "#526477",
-  "google/gemini-1.5-pro": "#1e40af",
+  "openai/gpt-4o-mini": "#71717a",
+  "openai/gpt-4o": "#18181b",
+  "openai/gpt-3.5-turbo": "#52525b",
+  "deepseek/deepseek-chat": "#3f3f46",
+  "deepseek/deepseek-coder": "#27272a",
+  "anthropic/claude-3.5-sonnet": "#a1a1aa",
+  "anthropic/claude-3-haiku": "#71717a",
+  "anthropic/claude-3-opus": "#52525b",
+  "google/gemini-pro": "#3f3f46",
+  "google/gemini-1.5-flash": "#27272a",
+  "google/gemini-1.5-pro": "#18181b",
 };
 
 export default function DashboardPage() {
@@ -207,9 +207,9 @@ function Card({ title, value, accent, link, linkText, subtitle, icon }: {
 }) {
   const colors: Record<string, string> = {
     violet: "#526477",
-    indigo: "#6366f1",
+    indigo: "#27272a",
     purple: "#475569",
-    fuchsia: "#3b82f6",
+    fuchsia: "#52525b",
   };
   const dot = colors[accent || "violet"] || "#526477";
   return (

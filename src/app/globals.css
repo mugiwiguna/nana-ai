@@ -15,10 +15,10 @@
   --glass-bg: rgba(255, 255, 255, 0.6);
   --glass-border: rgba(255, 255, 255, 0.8);
   --glass-shadow: rgba(0, 0, 0, 0.05);
-  --gradient-start: #6366f1;
-  --gradient-end: #4f46e5;
-  --gradient-mid: #5b56e8;
-  --accent-glow: rgba(99, 102, 241, 0.08);
+  --gradient-start: #18181b;
+  --gradient-end: #27272a;
+  --gradient-mid: #3f3f46;
+  --accent-glow: rgba(0, 0, 0, 0.04);
 }
 
 .dark {
@@ -31,10 +31,10 @@
   --glass-bg: rgba(12, 12, 24, 0.4);
   --glass-border: rgba(255, 255, 255, 0.05);
   --glass-shadow: rgba(0, 0, 0, 0.4);
-  --gradient-start: #6366f1;
-  --gradient-end: #4f46e5;
-  --gradient-mid: #5b56e8;
-  --accent-glow: rgba(99, 102, 241, 0.06);
+  --gradient-start: #f4f4f5;
+  --gradient-end: #e4e4e7;
+  --gradient-mid: #d4d4d8;
+  --accent-glow: rgba(255, 255, 255, 0.04);
 }
 
 body {
@@ -59,7 +59,7 @@ body {
   left: -10%;
   width: 60%;
   height: 60%;
-  background: radial-gradient(circle at center, rgba(99, 102, 241, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.03) 0%, transparent 70%);
   filter: blur(120px);
   animation: orb-drift-1 20s ease-in-out infinite;
 }
@@ -71,7 +71,7 @@ body {
   right: -10%;
   width: 50%;
   height: 50%;
-  background: radial-gradient(circle at center, rgba(71, 85, 105, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.03) 0%, transparent 70%);
   filter: blur(120px);
   animation: orb-drift-2 25s ease-in-out infinite;
 }
@@ -99,9 +99,8 @@ body {
 
 .glass-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px var(--glass-shadow),
-              0 0 0 1px rgba(99, 102, 241, 0.12);
-  border-color: rgba(99, 102, 241, 0.15);
+  box-shadow: 0 8px 32px var(--glass-shadow);
+  border-color: var(--text-primary);
 }
 
 /* Gradient text */
@@ -121,13 +120,11 @@ body {
 
 .btn-gradient:hover {
   opacity: 0.9;
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
 }
 
 /* Gradient border ring for active/selected states */
 .ring-accent {
-  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.15),
-              inset 0 0 0 1px rgba(99, 102, 241, 0.06);
+  box-shadow: 0 0 0 1px var(--text-secondary);
 }
 
 /* Table styles */
@@ -150,7 +147,7 @@ body {
 
 /* Popular column highlight */
 .pricing-table tr.popular td {
-  background: rgba(99, 102, 241, 0.04);
+  background: rgba(0, 0, 0, 0.02);
 }
 
 .pricing-table tr.popular td:first-child {

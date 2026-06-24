@@ -24,7 +24,7 @@ class ErrorBd extends Component<{ children: ReactNode }, { error: Error | null }
 }
 
 const PAGE_SIZES = [25, 50, 100];
-const COLORS = ["#526477", "#3b82f6", "#6366f1", "#475569", "#1e40af", "#334155", "#4338ca", "#203059"];
+const COLORS = ["#18181b", "#3f3f46", "#52525b", "#71717a", "#a1a1aa", "#27272a", "#d4d4d8", "#e4e4e7"];
 const MONTHS = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
 
 function toISODate(d: Date) { return d.toISOString().slice(0, 10); }
@@ -315,7 +315,7 @@ export default function UsagePage() {
         {/* Biaya Harian */}
         <div className="glass-card rounded-xl p-5">
           <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4">Biaya Harian</h3>
-          <ErrorBd><LineChart data={daily} valueKey="cost" color="#6366f1" days={90} /></ErrorBd>
+          <ErrorBd><LineChart data={daily} valueKey="cost" color="#18181b" days={90} /></ErrorBd>
         </div>
       </div>
 
