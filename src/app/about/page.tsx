@@ -75,7 +75,7 @@ export default function AboutPage() {
             </p>
             <Link
               href="/register"
-              className="inline-flex items-center gap-2 text-white font-semibold px-8 py-4 rounded-2xl bg-[var(--gradient-start)] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300"
+              className="inline-flex items-center gap-2 text-[var(--accent-fg)] font-semibold px-8 py-4 rounded-2xl bg-[var(--accent-bg)] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300"
             >
               Mulai Gratis
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

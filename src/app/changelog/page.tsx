@@ -91,7 +91,7 @@ export default function ChangelogPage() {
               {CHANGELOG.map((release, i) => (
                 <div key={i} className="relative pl-12 md:pl-16">
                   {/* Dot */}
-                  <div className="absolute left-[11px] md:left-[27px] top-1.5 w-3 h-3 rounded-full bg-[var(--gradient-start)] ring-4 ring-[var(--bg-primary)]" />
+                  <div className="absolute left-[11px] md:left-[27px] top-1.5 w-3 h-3 rounded-full bg-[var(--accent-bg)] ring-4 ring-[var(--bg-primary)]" />
 
                   <div className="glass-card rounded-2xl p-6">
                     <div className="flex items-baseline gap-3 mb-4">

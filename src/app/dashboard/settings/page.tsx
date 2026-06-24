@@ -128,7 +128,7 @@ export default function SettingsPage() {
               </div>
             )}
             <button type="submit" disabled={pwLoading}
-              className="w-full bg-[var(--gradient-start)] hover:opacity-90 disabled:opacity-50 text-white py-2 rounded-lg text-sm font-medium transition">
+              className="w-full bg-[var(--accent-bg)] hover:opacity-90 disabled:opacity-50 text-[var(--accent-fg)] py-2 rounded-lg text-sm font-medium transition">
               {pwLoading ? "Memproses..." : "Simpan Password"}
             </button>
           </form>

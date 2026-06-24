@@ -180,7 +180,7 @@ export default function KeysPage() {
                         {k.is_active && !isBlocked && (
                           <>
                             <button onClick={() => regenerateKey(k.id)}
-                              className="text-xs text-[var(--gradient-start)] hover:text-white hover:bg-[var(--gradient-start)] rounded px-2 py-1 transition-all font-medium" title="Regenerate key baru">↻</button>
+                              className="text-xs text-[var(--gradient-start)] hover:text-white hover:bg-[var(--accent-bg)] rounded px-2 py-1 transition-all font-medium" title="Regenerate key baru">↻</button>
                             <button onClick={() => revokeKey(k.id)}
                               className="text-xs text-red-400 hover:text-white hover:bg-red-500 rounded px-2 py-1 transition-all" title="Cabut key">✕</button>
                           </>

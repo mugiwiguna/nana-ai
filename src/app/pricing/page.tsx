@@ -62,7 +62,7 @@ export default function PricingPage() {
             >
               {plan.is_popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="text-xs font-bold tracking-wider uppercase bg-[var(--gradient-start)] text-white px-4 py-1 rounded-full">
+                  <span className="text-xs font-bold tracking-wider uppercase bg-[var(--accent-bg)] text-[var(--accent-fg)] px-4 py-1 rounded-full">
                     Paling Populer
                   </span>
                 </div>
@@ -100,7 +100,7 @@ export default function PricingPage() {
                 href="/dashboard/topup"
                 className={`text-center font-semibold py-3 rounded-xl transition-all duration-300 ${
                   plan.is_popular
-                    ? "bg-[var(--gradient-start)] text-white hover:scale-[1.02]"
+                    ? "bg-[var(--accent-bg)] text-[var(--accent-fg)] hover:scale-[1.02]"
                     : "border border-[var(--border-color)] hover:border-[var(--gradient-start)]/40 hover:bg-[var(--gradient-start)]/5"
                 }`}
               >

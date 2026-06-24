@@ -372,7 +372,7 @@ export default function HomePage() {
             className="mb-8"
           >
             <span className="inline-flex items-center gap-2 text-xs font-medium bg-[var(--gradient-start)]/10 dark:bg-[var(--gradient-start)]/10 text-[var(--gradient-start)] px-4 py-1.5 rounded-full border border-[var(--gradient-start)]/20">
-              <span className="w-1.5 h-1.5 rounded-full bg-[var(--gradient-start)] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-bg)] animate-pulse" />
               Sekarang mendukung GPT-4o & Claude 3.5 Sonnet
             </span>
           </motion.div>
@@ -390,7 +390,7 @@ export default function HomePage() {
             {/* Primary — liquid glass + gradient */}
             <Link
               href={session ? "/dashboard" : "/register"}
-              className="group relative overflow-hidden inline-flex items-center gap-2.5 text-white font-semibold px-5 py-2.5 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-500 hover:scale-[1.03] active:scale-[0.98]"
+              className="group relative overflow-hidden inline-flex items-center gap-2.5 text-[var(--accent-fg)] font-semibold px-5 py-2.5 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-500 hover:scale-[1.03] active:scale-[0.98]"
             >
               {/* Animated gradient bg */}
               <span className="absolute inset-0 bg-[var(--gradient-start)]/10" />
@@ -461,7 +461,7 @@ export default function HomePage() {
                 transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="glass-card rounded-2xl p-6 group"
               >
-                <div className="w-10 h-10 rounded-xl bg-[var(--gradient-start)] flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-10 h-10 rounded-xl bg-[var(--accent-bg)] flex items-center justify-center text-[var(--accent-fg)] mb-4 group-hover:scale-110 transition-transform duration-300">
                   {f.icon}
                 </div>
                 <h3 className="font-semibold text-lg mb-2">{f.title}</h3>
@@ -524,7 +524,7 @@ export default function HomePage() {
                 {/* Icon circle */}
                 <motion.div
                   whileHover={{ scale: 1.1 }}
-                  className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-[var(--gradient-start)] flex items-center justify-center text-white shadow-lg shadow-[var(--gradient-start)]/20"
+                  className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-[var(--accent-bg)] flex items-center justify-center text-[var(--accent-fg)] shadow-lg shadow-[var(--gradient-start)]/20"
                 >
                   {step.icon}
                 </motion.div>
@@ -621,7 +621,7 @@ export default function HomePage() {
                 {/* Primary liquid glass */}
                 <Link
                   href={session ? "/dashboard" : "/register"}
-                  className="group relative overflow-hidden inline-flex items-center gap-2.5 text-white font-semibold px-5 py-2.5 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-500 hover:scale-[1.03] active:scale-[0.98]"
+                  className="group relative overflow-hidden inline-flex items-center gap-2.5 text-[var(--accent-fg)] font-semibold px-5 py-2.5 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl transition-all duration-500 hover:scale-[1.03] active:scale-[0.98]"
                 >
                   <span className="absolute inset-0 bg-[var(--gradient-start)]/10" />
                   <span className="absolute inset-0 bg-white/10 backdrop-blur-[2px]" />

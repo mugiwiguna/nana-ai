@@ -126,7 +126,7 @@ export default function TopupPage() {
               </div>
               <div className="h-1.5 rounded-full bg-[var(--bg-primary)] overflow-hidden">
                 <div
-                  className="h-full rounded-full bg-[var(--gradient-start)] transition-all duration-1000 ease-linear"
+                  className="h-full rounded-full bg-[var(--accent-bg)] transition-all duration-1000 ease-linear"
                   style={{ width: ((QR_TIMEOUT - qris.countdown) / QR_TIMEOUT * 100) + "%" }}
                 />
               </div>
@@ -171,7 +171,7 @@ export default function TopupPage() {
           </div>
         </div>
         <button onClick={handleTopup} disabled={loading || qris.show}
-          className="w-full btn-gradient disabled:opacity-50 py-3 rounded-xl font-semibold text-white transition flex items-center justify-center gap-2">
+          className="w-full btn-gradient disabled:opacity-50 py-3 rounded-xl font-semibold text-[var(--accent-fg)] transition flex items-center justify-center gap-2">
           {qris.show ? "QRIS Aktif..." : <>Bayar Rp {formattedIdr}</>}
         </button>
         {result && (

@@ -143,14 +143,14 @@ export default function SubscriptionPage() {
             >
               {/* Soon badge */}
               <div className="absolute -top-2 right-3">
-                <span className="text-[10px] font-bold tracking-wider uppercase bg-zinc-500/80 text-white px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold tracking-wider uppercase bg-zinc-500/80 text-[var(--accent-fg)] px-2 py-0.5 rounded-full">
                   Soon
                 </span>
               </div>
 
               {plan.is_popular && (
                 <div className="absolute -top-2 left-1/2 -translate-x-1/2">
-                  <span className="text-[10px] font-bold tracking-wider uppercase bg-[var(--gradient-start)] text-white px-3 py-0.5 rounded-full">
+                  <span className="text-[10px] font-bold tracking-wider uppercase bg-[var(--accent-bg)] text-[var(--accent-fg)] px-3 py-0.5 rounded-full">
                     Populer
                   </span>
                 </div>
@@ -185,7 +185,7 @@ export default function SubscriptionPage() {
                 disabled
                 className={`w-full text-sm font-semibold py-2.5 rounded-xl transition-all duration-300 cursor-not-allowed opacity-40 ${
                   plan.is_popular
-                    ? "bg-[var(--gradient-start)] text-white"
+                    ? "bg-[var(--accent-bg)] text-[var(--accent-fg)]"
                     : "border border-[var(--border-color)]"
                 }`}
               >

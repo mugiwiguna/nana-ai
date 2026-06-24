@@ -14,7 +14,7 @@ function Toast({ msg, onClose }: { msg: string; onClose: () => void }) {
 
   return (
     <div className="fixed bottom-6 right-6 z-50 animate-slide-up">
-      <div className="bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 px-5 py-3 rounded-xl shadow-2xl text-sm flex items-center gap-3 border border-neutral-700 dark:border-neutral-200">
+      <div className="bg-neutral-900 dark:bg-neutral-100 text-[var(--accent-fg)] dark:text-neutral-900 px-5 py-3 rounded-xl shadow-2xl text-sm flex items-center gap-3 border border-neutral-700 dark:border-neutral-200">
         <span>{msg}</span>
         <button onClick={onClose} className="text-neutral-400 hover:text-white dark:hover:text-neutral-600">&times;</button>
       </div>
@@ -254,7 +254,7 @@ export default function AdminPage() {
               placeholder="Contoh: 10 atau -5"
               className="w-full bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]" />
             <button onClick={handleTopup}
-              className="w-full bg-[var(--gradient-start)] hover:opacity-90 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+              className="w-full bg-[var(--accent-bg)] hover:opacity-90 text-[var(--accent-fg)] px-4 py-2 rounded-lg text-sm font-medium transition">
               {!topupAmount || parseFloat(topupAmount) >= 0 ? "Tambah Saldo" : "Kurangi Saldo"}
             </button>
           </div>
@@ -282,11 +282,11 @@ export default function AdminPage() {
           <div className="space-y-3">
             <p className="text-xs text-[var(--text-secondary)]">Saldo + top-up terakhir.</p>
             <button onClick={() => { if (!selectedUser) { showToast("⚠️ Pilih user dulu"); return; } handleResetUser(selectedUser); }}
-              className="w-full bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+              className="w-full bg-blue-600 hover:bg-blue-500 text-[var(--accent-fg)] px-4 py-2 rounded-lg text-sm font-medium transition">
               Reset User Terpilih
             </button>
             <button onClick={handleResetAllSmart}
-              className="w-full bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+              className="w-full bg-amber-600 hover:bg-amber-500 text-[var(--accent-fg)] px-4 py-2 rounded-lg text-sm font-medium transition">
               Reset Semua (Smart)
             </button>
           </div>

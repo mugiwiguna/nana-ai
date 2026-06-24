@@ -19,6 +19,8 @@
   --gradient-end: #27272a;
   --gradient-mid: #3f3f46;
   --accent-glow: rgba(0, 0, 0, 0.04);
+  --accent-bg: #18181b;
+  --accent-fg: #ffffff;
 }
 
 .dark {
@@ -35,6 +37,8 @@
   --gradient-end: #e4e4e7;
   --gradient-mid: #d4d4d8;
   --accent-glow: rgba(255, 255, 255, 0.04);
+  --accent-bg: #3f3f46;
+  --accent-fg: #fafafa;
 }
 
 body {
@@ -118,8 +122,8 @@ body {
 
 /* Gradient button base */
 .btn-gradient {
-  background: var(--gradient-start);
-  color: white;
+  background: var(--accent-bg);
+  color: var(--accent-fg);
   transition: all 0.2s ease;
 }
 

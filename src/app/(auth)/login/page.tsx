@@ -78,7 +78,7 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="w-full bg-[var(--gradient-start)] hover:opacity-90 text-white py-2.5 rounded-lg font-medium transition"
+              className="w-full bg-[var(--accent-bg)] hover:opacity-90 text-[var(--accent-fg)] py-2.5 rounded-lg font-medium transition"
             >
               Masuk
             </button>

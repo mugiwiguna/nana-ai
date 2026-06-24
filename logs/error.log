@@ -1,10 +1,238 @@
-⨯ Failed to start server
-Error: listen EADDRINUSE: address already in use :::3002
-    at <unknown> (Error: listen EADDRINUSE: address already in use :::3002)
-    at new Promise (<anonymous>) {
-  code: 'EADDRINUSE',
-  errno: -98,
-  syscall: 'listen',
-  address: '::',
-  port: 3002
-}
+2026-06-23 17:01:26: Error: Failed to find Server Action "23d52e14". This request might be from an older or newer deployment.
+2026-06-23 17:01:26: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-23 17:01:26:     at ignore-listed frames
+2026-06-23 17:01:29: Error: Failed to find Server Action "d269b4db". This request might be from an older or newer deployment.
+2026-06-23 17:01:29: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-23 17:01:29:     at ignore-listed frames
+2026-06-23 17:07:13: [31m[auth][error][0m UnknownAction: Unsupported action. Read more at https://errors.authjs.dev#unknownaction
+2026-06-23 17:07:13:     at Object.signin (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:380:5557)
+2026-06-23 17:07:13:     at iC (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:50307)
+2026-06-23 17:07:13:     at async iU (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:54801)
+2026-06-23 17:07:13:     at async rJ.do (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:20930)
+2026-06-23 17:07:13:     at async rJ.handle (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:25785)
+2026-06-23 17:07:13:     at async d (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:4813)
+2026-06-23 17:07:13:     at async rJ.handleResponse (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:1:119701)
+2026-06-23 17:07:13:     at async l (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:5854)
+2026-06-23 17:07:13:     at async Module.y [as handler] (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:6961)
+2026-06-23 17:07:13:     at async NextNodeServer.renderToResponseWithComponentsImpl (/home/ubuntu/nanaai/node_modules/next/dist/server/base-server.js:1462:9)
+2026-06-23 17:08:32: [31m[auth][error][0m UnknownAction: Unsupported action. Read more at https://errors.authjs.dev#unknownaction
+2026-06-23 17:08:32:     at Object.signin (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:380:5557)
+2026-06-23 17:08:32:     at iC (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:50307)
+2026-06-23 17:08:32:     at async iU (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:54801)
+2026-06-23 17:08:32:     at async rJ.do (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:20930)
+2026-06-23 17:08:32:     at async rJ.handle (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:25785)
+2026-06-23 17:08:32:     at async d (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:4813)
+2026-06-23 17:08:32:     at async rJ.handleResponse (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:1:119701)
+2026-06-23 17:08:32:     at async l (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:5854)
+2026-06-23 17:08:32:     at async Module.y [as handler] (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:6961)
+2026-06-23 17:08:32:     at async NextNodeServer.renderToResponseWithComponentsImpl (/home/ubuntu/nanaai/node_modules/next/dist/server/base-server.js:1462:9)
+2026-06-23 17:09:07: [31m[auth][error][0m MissingCSRF: CSRF token was missing during an action signin. Read more at https://errors.authjs.dev#missingcsrf
+2026-06-23 17:09:07:     at ri (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:1:82486)
+2026-06-23 17:09:07:     at iC (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:50650)
+2026-06-23 17:09:07:     at async iU (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:54801)
+2026-06-23 17:09:07:     at async rJ.do (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:20930)
+2026-06-23 17:09:07:     at async rJ.handle (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:25785)
+2026-06-23 17:09:07:     at async d (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:4813)
+2026-06-23 17:09:07:     at async rJ.handleResponse (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:1:119701)
+2026-06-23 17:09:07:     at async l (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:5854)
+2026-06-23 17:09:07:     at async Module.y [as handler] (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:6961)
+2026-06-23 17:09:07:     at async NextNodeServer.renderToResponseWithComponentsImpl (/home/ubuntu/nanaai/node_modules/next/dist/server/base-server.js:1462:9)
+2026-06-23 17:09:16: [31m[auth][error][0m MissingCSRF: CSRF token was missing during an action signin. Read more at https://errors.authjs.dev#missingcsrf
+2026-06-23 17:09:16:     at ri (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:1:82486)
+2026-06-23 17:09:16:     at iC (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:50650)
+2026-06-23 17:09:16:     at async iU (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:54801)
+2026-06-23 17:09:16:     at async rJ.do (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:20930)
+2026-06-23 17:09:16:     at async rJ.handle (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:25785)
+2026-06-23 17:09:16:     at async d (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:4813)
+2026-06-23 17:09:16:     at async rJ.handleResponse (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:1:119701)
+2026-06-23 17:09:16:     at async l (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:5854)
+2026-06-23 17:09:16:     at async Module.y [as handler] (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:6961)
+2026-06-23 17:09:16:     at async NextNodeServer.renderToResponseWithComponentsImpl (/home/ubuntu/nanaai/node_modules/next/dist/server/base-server.js:1462:9)
+2026-06-23 17:09:27: [31m[auth][error][0m MissingCSRF: CSRF token was missing during an action signin. Read more at https://errors.authjs.dev#missingcsrf
+2026-06-23 17:09:27:     at ri (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:1:82486)
+2026-06-23 17:09:27:     at iC (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:50650)
+2026-06-23 17:09:27:     at async iU (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:54801)
+2026-06-23 17:09:27:     at async rJ.do (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:20930)
+2026-06-23 17:09:27:     at async rJ.handle (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:25785)
+2026-06-23 17:09:27:     at async d (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:4813)
+2026-06-23 17:09:27:     at async rJ.handleResponse (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:1:119701)
+2026-06-23 17:09:27:     at async l (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:5854)
+2026-06-23 17:09:27:     at async Module.y [as handler] (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:6961)
+2026-06-23 17:09:27:     at async NextNodeServer.renderToResponseWithComponentsImpl (/home/ubuntu/nanaai/node_modules/next/dist/server/base-server.js:1462:9)
+2026-06-23 17:09:32: [31m[auth][error][0m MissingCSRF: CSRF token was missing during an action signin. Read more at https://errors.authjs.dev#missingcsrf
+2026-06-23 17:09:32:     at ri (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:1:82486)
+2026-06-23 17:09:32:     at iC (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:50650)
+2026-06-23 17:09:32:     at async iU (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:54801)
+2026-06-23 17:09:32:     at async rJ.do (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:20930)
+2026-06-23 17:09:32:     at async rJ.handle (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:25785)
+2026-06-23 17:09:32:     at async d (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:4813)
+2026-06-23 17:09:32:     at async rJ.handleResponse (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:1:119701)
+2026-06-23 17:09:32:     at async l (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:5854)
+2026-06-23 17:09:32:     at async Module.y [as handler] (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:6961)
+2026-06-23 17:09:32:     at async NextNodeServer.renderToResponseWithComponentsImpl (/home/ubuntu/nanaai/node_modules/next/dist/server/base-server.js:1462:9)
+2026-06-23 17:09:37: [31m[auth][error][0m MissingCSRF: CSRF token was missing during an action signin. Read more at https://errors.authjs.dev#missingcsrf
+2026-06-23 17:09:37:     at ri (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:1:82486)
+2026-06-23 17:09:37:     at iC (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:50650)
+2026-06-23 17:09:37:     at async iU (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:54801)
+2026-06-23 17:09:37:     at async rJ.do (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:20930)
+2026-06-23 17:09:37:     at async rJ.handle (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:25785)
+2026-06-23 17:09:37:     at async d (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:4813)
+2026-06-23 17:09:37:     at async rJ.handleResponse (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:1:119701)
+2026-06-23 17:09:37:     at async l (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:5854)
+2026-06-23 17:09:37:     at async Module.y [as handler] (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:6961)
+2026-06-23 17:09:37:     at async NextNodeServer.renderToResponseWithComponentsImpl (/home/ubuntu/nanaai/node_modules/next/dist/server/base-server.js:1462:9)
+2026-06-23 17:28:25: [31m[auth][error][0m CredentialsSignin: Read more at https://errors.authjs.dev#credentialssignin
+2026-06-23 17:28:25:     at iv (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:40971)
+2026-06-23 17:28:25:     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+2026-06-23 17:28:25:     at async iC (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:50551)
+2026-06-23 17:28:25:     at async iU (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:54801)
+2026-06-23 17:28:25:     at async rJ.do (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:20930)
+2026-06-23 17:28:25:     at async rJ.handle (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:25785)
+2026-06-23 17:28:25:     at async d (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:4813)
+2026-06-23 17:28:25:     at async rJ.handleResponse (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:1:119701)
+2026-06-23 17:28:25:     at async l (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:5854)
+2026-06-23 17:28:25:     at async Module.y [as handler] (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:6961)
+2026-06-23 18:22:39: Error: Failed to find Server Action "y". This request might be from an older or newer deployment.
+2026-06-23 18:22:39: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-23 18:22:39:     at ignore-listed frames
+2026-06-23 22:33:31: ⨯ Error: ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:31:     at ignore-listed frames {
+2026-06-23 22:33:31:   errno: -2,
+2026-06-23 22:33:31:   code: 'ENOENT',
+2026-06-23 22:33:31:   syscall: 'open',
+2026-06-23 22:33:31:   path: '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:31: }
+2026-06-23 22:33:31: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-06-23 22:33:31:     at ignore-listed frames
+2026-06-23 22:33:32: ⨯ Error: ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:32:     at ignore-listed frames {
+2026-06-23 22:33:32:   errno: -2,
+2026-06-23 22:33:32:   code: 'ENOENT',
+2026-06-23 22:33:32:   syscall: 'open',
+2026-06-23 22:33:32:   path: '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:32: }
+2026-06-23 22:33:32: ⨯ Error: ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:32:     at ignore-listed frames {
+2026-06-23 22:33:32:   errno: -2,
+2026-06-23 22:33:32:   code: 'ENOENT',
+2026-06-23 22:33:32:   syscall: 'open',
+2026-06-23 22:33:32:   path: '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:32: }
+2026-06-23 22:33:32: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-06-23 22:33:32:     at ignore-listed frames
+2026-06-23 22:33:32: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-06-23 22:33:32:     at ignore-listed frames
+2026-06-23 22:33:32: ⨯ Error: ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:32:     at ignore-listed frames {
+2026-06-23 22:33:32:   errno: -2,
+2026-06-23 22:33:32:   code: 'ENOENT',
+2026-06-23 22:33:32:   syscall: 'open',
+2026-06-23 22:33:32:   path: '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:32: }
+2026-06-23 22:33:32: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-06-23 22:33:32:     at ignore-listed frames
+2026-06-23 22:33:32: ⨯ Error: ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:32:     at ignore-listed frames {
+2026-06-23 22:33:32:   errno: -2,
+2026-06-23 22:33:32:   code: 'ENOENT',
+2026-06-23 22:33:32:   syscall: 'open',
+2026-06-23 22:33:32:   path: '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:32: }
+2026-06-23 22:33:32: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-06-23 22:33:32:     at ignore-listed frames
+2026-06-23 22:33:33: ⨯ Error: ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:33:     at ignore-listed frames {
+2026-06-23 22:33:33:   errno: -2,
+2026-06-23 22:33:33:   code: 'ENOENT',
+2026-06-23 22:33:33:   syscall: 'open',
+2026-06-23 22:33:33:   path: '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:33: }
+2026-06-23 22:33:33: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-06-23 22:33:33:     at ignore-listed frames
+2026-06-23 22:33:33: ⨯ Error: ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:33:     at ignore-listed frames {
+2026-06-23 22:33:33:   errno: -2,
+2026-06-23 22:33:33:   code: 'ENOENT',
+2026-06-23 22:33:33:   syscall: 'open',
+2026-06-23 22:33:33:   path: '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:33: }
+2026-06-23 22:33:33: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-06-23 22:33:33:     at ignore-listed frames
+2026-06-23 22:33:33: ⨯ Error: ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:33:     at ignore-listed frames {
+2026-06-23 22:33:33:   errno: -2,
+2026-06-23 22:33:33:   code: 'ENOENT',
+2026-06-23 22:33:33:   syscall: 'open',
+2026-06-23 22:33:33:   path: '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:33: }
+2026-06-23 22:33:33: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-06-23 22:33:33:     at ignore-listed frames
+2026-06-23 22:33:34: ⨯ Error: ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:34:     at ignore-listed frames {
+2026-06-23 22:33:34:   errno: -2,
+2026-06-23 22:33:34:   code: 'ENOENT',
+2026-06-23 22:33:34:   syscall: 'open',
+2026-06-23 22:33:34:   path: '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:34: }
+2026-06-23 22:33:34: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-06-23 22:33:34:     at ignore-listed frames
+2026-06-23 22:33:35: ⨯ Error: ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:35:     at ignore-listed frames {
+2026-06-23 22:33:35:   errno: -2,
+2026-06-23 22:33:35:   code: 'ENOENT',
+2026-06-23 22:33:35:   syscall: 'open',
+2026-06-23 22:33:35:   path: '/home/ubuntu/nanaai/.next/required-server-files.json'
+2026-06-23 22:33:35: }
+2026-06-23 22:33:35: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-06-23 22:33:35:     at ignore-listed frames
+2026-06-23 23:55:39: [31m[auth][error][0m InvalidCheck: pkceCodeVerifier value could not be parsed. Read more at https://errors.authjs.dev#invalidcheck
+2026-06-23 23:55:39:     at a4 (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:24542)
+2026-06-23 23:55:39:     at Object.use (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:24950)
+2026-06-23 23:55:39:     at ic (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:30950)
+2026-06-23 23:55:39:     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+2026-06-23 23:55:39:     at async iv (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:38134)
+2026-06-23 23:55:39:     at async iC (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:50120)
+2026-06-23 23:55:39:     at async iU (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:54801)
+2026-06-23 23:55:39:     at async rJ.do (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:20930)
+2026-06-23 23:55:39:     at async rJ.handle (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:25785)
+2026-06-23 23:55:39:     at async d (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:4813)
+2026-06-24 07:19:48: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-24 07:19:48: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-24 07:19:48:     at ignore-listed frames
+2026-06-24 07:19:49: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-24 07:19:49: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-24 07:19:49:     at ignore-listed frames
+2026-06-24 07:19:50: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-24 07:19:50: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-24 07:19:50:     at ignore-listed frames
+2026-06-24 07:19:51: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-24 07:19:51: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-24 07:19:51:     at ignore-listed frames
+2026-06-24 07:19:51: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-24 07:19:51: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-24 07:19:51:     at ignore-listed frames
+2026-06-24 07:19:53: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-24 07:19:53: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-24 07:19:53:     at ignore-listed frames
+2026-06-24 10:36:30: [31m[auth][error][0m MissingCSRF: CSRF token was missing during an action signout. Read more at https://errors.authjs.dev#missingcsrf
+2026-06-24 10:36:30:     at ri (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:1:82486)
+2026-06-24 10:36:30:     at iC (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:50695)
+2026-06-24 10:36:30:     at async iU (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:54801)
+2026-06-24 10:36:30:     at async rJ.do (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:20930)
+2026-06-24 10:36:30:     at async rJ.handle (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:25785)
+2026-06-24 10:36:30:     at async d (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:4813)
+2026-06-24 10:36:30:     at async rJ.handleResponse (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:1:119701)
+2026-06-24 10:36:30:     at async l (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:5854)
+2026-06-24 10:36:30:     at async Module.y [as handler] (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:6961)
+2026-06-24 10:36:30:     at async NextNodeServer.renderToResponseWithComponentsImpl (/home/ubuntu/nanaai/node_modules/next/dist/server/base-server.js:1462:9)
+2026-06-24 10:36:33: [31m[auth][error][0m MissingCSRF: CSRF token was missing during an action signout. Read more at https://errors.authjs.dev#missingcsrf
+2026-06-24 10:36:33:     at ri (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:1:82486)
+2026-06-24 10:36:33:     at iC (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:50695)
+2026-06-24 10:36:33:     at async iU (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:54801)
+2026-06-24 10:36:33:     at async rJ.do (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:20930)
+2026-06-24 10:36:33:     at async rJ.handle (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:25785)
+2026-06-24 10:36:33:     at async d (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:4813)
+2026-06-24 10:36:33:     at async rJ.handleResponse (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:1:119701)
+2026-06-24 10:36:33:     at async l (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:5854)
+2026-06-24 10:36:33:     at async Module.y [as handler] (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:6961)
+2026-06-24 10:36:33:     at async NextNodeServer.renderToResponseWithComponentsImpl (/home/ubuntu/nanaai/node_modules/next/dist/server/base-server.js:1462:9)

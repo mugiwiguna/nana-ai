@@ -107,7 +107,7 @@ function TypewriterLine({ mouseX, mouseY }: { mouseX: number; mouseY: number }) 
         />
       ))}
       <span
-        className={`inline-block w-[3px] h-[0.8em] align-middle ml-1 rounded-full bg-[var(--gradient-start)] transition-opacity duration-100 ${showCursor ? "opacity-100" : "opacity-0"}`}
+        className={`inline-block w-[3px] h-[0.8em] align-middle ml-1 rounded-full bg-[var(--accent-bg)] transition-opacity duration-100 ${showCursor ? "opacity-100" : "opacity-0"}`}
       />
     </span>
   );

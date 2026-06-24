@@ -111,7 +111,7 @@ export default function ModelSection({ showToast }: { showToast: (m: string) => 
           Model Kustom ({models.filter(m => m.is_active).length} aktif)
         </h2>
         <button onClick={() => { resetForm(); setShowForm(!showForm); }}
-          className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+          className="bg-blue-600 hover:bg-blue-500 text-[var(--accent-fg)] px-4 py-2 rounded-lg text-sm font-medium transition">
           {showForm ? "Batal" : "+ Tambah Model"}
         </button>
       </div>
@@ -167,7 +167,7 @@ export default function ModelSection({ showToast }: { showToast: (m: string) => 
             </div>
           </div>
           <button onClick={handleSubmit}
-            className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg text-sm font-medium transition">
+            className="bg-emerald-600 hover:bg-emerald-500 text-[var(--accent-fg)] px-6 py-2 rounded-lg text-sm font-medium transition">
             {edit ? "Simpan" : "Tambah"}
           </button>
         </div>
