@@ -95,10 +95,10 @@ export default function ModelsPage() {
                       </button>
                     </td>
                     <td className="py-3 px-4 text-right text-[var(--text-secondary)] font-mono">
-                      ${Number(m.input_price).toFixed(7).replace(/0+$/, "").replace(/\.$/, "")}
+                      ${Number(m.input_price).toFixed(8)}
                     </td>
                     <td className="py-3 px-4 text-right text-[var(--text-secondary)] font-mono">
-                      ${Number(m.output_price).toFixed(7).replace(/0+$/, "").replace(/\.$/, "")}
+                      ${Number(m.output_price).toFixed(8)}
                     </td>
                     <td className="py-3 px-4 text-right text-[var(--text-secondary)]">
                       {m.provider_name}
@@ -142,10 +142,10 @@ export default function ModelsPage() {
                         </button>
                       </td>
                       <td className="py-3 px-4 text-right text-[var(--text-secondary)] font-mono">
-                        ${m.input.toFixed(7).replace(/0+$/, "").replace(/\.$/, "")}
+                        ${m.input.toFixed(8)}
                       </td>
                       <td className="py-3 px-4 text-right text-[var(--text-secondary)] font-mono">
-                        ${m.output.toFixed(7).replace(/0+$/, "").replace(/\.$/, "")}
+                        ${m.output.toFixed(8)}
                       </td>
                       <td className="py-3 px-4 text-right">
                         <span className="px-2 py-0.5 rounded text-xs bg-[var(--gradient-start)]/10 text-[var(--gradient-start)] border border-[var(--gradient-start)]/20 font-medium">

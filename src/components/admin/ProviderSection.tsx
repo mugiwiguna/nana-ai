@@ -118,26 +118,36 @@ export default function ProviderSection({ showToast }: { showToast: (m: string) 
           <p className="text-sm text-[var(--text-secondary)] text-center py-8">Belum ada provider. Tambah dulu!</p>
         )}
         {providers.map(p => (
-          <div key={p.id} className={`bg-[var(--bg-card)] border rounded-xl p-5 ${p.is_active ? "border-[var(--border-color)]" : "border-red-900/30 opacity-70"}`}>
-            <div className="flex items-start justify-between">
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-semibold text-[var(--text-primary)]">{p.name}</h3>
-                  <span className="text-xs text-[var(--text-secondary)] font-mono">/{p.slug}</span>
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${p.is_active ? "bg-emerald-900/30 text-emerald-400" : "bg-red-900/30 text-red-400"}`}>
+          <div key={p.id} className={`group bg-[var(--bg-card)] border rounded-xl p-4 transition-all hover:border-[var(--accent-primary)]/30 ${p.is_active ? "border-[var(--border-color)]" : "border-red-900/30 opacity-60"}`}>
+            <div className="flex items-center justify-between gap-4">
+              {/* Left: info */}
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="text-sm font-semibold text-[var(--text-primary)] truncate">{p.name}</h3>
+                  <code className="text-[11px] text-[var(--text-secondary)] font-mono bg-[var(--bg-primary)] px-1.5 py-0.5 rounded">/{p.slug}</code>
+                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide ${p.is_active ? "bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/20" : "bg-red-500/10 text-red-400 ring-1 ring-red-500/20"}`}>
+                    <span className={`w-1.5 h-1.5 rounded-full ${p.is_active ? "bg-emerald-400" : "bg-red-400"}`} />
                     {p.is_active ? "Aktif" : "Nonaktif"}
                   </span>
                 </div>
-                <p className="text-xs text-[var(--text-secondary)] mt-1 font-mono truncate max-w-md">{p.base_url}</p>
-                <p className="text-xs text-[var(--text-secondary)] mt-0.5">Model: {p.models?.length || 0}</p>
+                <p className="text-xs text-[var(--text-secondary)] font-mono truncate max-w-sm">{p.base_url}</p>
+                <p className="text-xs text-[var(--text-secondary)] mt-1">
+                  <span className="inline-flex items-center bg-[var(--bg-primary)] px-2 py-0.5 rounded-md text-[11px] font-medium">
+                    🧩 {p.models?.length || 0} model
+                  </span>
+                </p>
               </div>
-              <div className="flex gap-2">
-                <button onClick={() => handleToggle(p)} className="text-xs text-amber-400 hover:text-amber-300 px-2 py-1 border border-[var(--border-color)] rounded-lg">
-                  {p.is_active ? "Nonaktifkan" : "Aktifkan"}
+              {/* Right: actions */}
+              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button onClick={() => handleToggle(p)} title={p.is_active ? "Nonaktifkan" : "Aktifkan"} className="p-1.5 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 transition">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" /></svg>
                 </button>
-                <button onClick={() => { setShowForm(true); setEdit(p); setForm({ name: p.name, slug: p.slug, base_url: p.base_url, api_key: "" }); }}
-                  className="text-xs text-blue-400 hover:text-blue-300 px-2 py-1 border border-[var(--border-color)] rounded-lg">Edit</button>
-                <button onClick={() => handleDelete(p.id)} className="text-xs text-red-400 hover:text-red-300 px-2 py-1 border border-[var(--border-color)] rounded-lg">Hapus</button>
+                <button onClick={() => { setShowForm(true); setEdit(p); setForm({ name: p.name, slug: p.slug, base_url: p.base_url, api_key: "" }); }} title="Edit" className="p-1.5 rounded-lg text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 transition">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" /></svg>
+                </button>
+                <button onClick={() => handleDelete(p.id)} title="Hapus" className="p-1.5 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/10 transition">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
+                </button>
               </div>
             </div>
           </div>
