@@ -19,6 +19,7 @@ export async function POST(req: Request) {
 
     const body = await req.json();
     const model = body.model || "gpt-3.5-turbo";
+    const isStream = body.stream === true;
 
     if (Number(user.balance) <= 0) {
       return NextResponse.json({ error: { message: "Insufficient balance", type: "insufficient_quota" } }, { status: 402 });
@@ -33,13 +34,11 @@ export async function POST(req: Request) {
     let useCustomPricing: { input: number; output: number } | null = null;
 
     if (customRoute) {
-      // Custom model -> route to its provider
       upstreamBaseUrl = customRoute.baseUrl;
       upstreamApiKey = customRoute.apiKey;
       upstreamBody = { ...body, model: customRoute.upstreamModel };
       useCustomPricing = { input: customRoute.inputPrice, output: customRoute.outputPrice };
     } else {
-      // Built-in model -> route to default upstream
       upstreamBaseUrl = process.env.UPSTREAM_BASE_URL || "";
       upstreamApiKey = process.env.UPSTREAM_API_KEY || "";
       upstreamBody = body;
@@ -50,6 +49,11 @@ export async function POST(req: Request) {
         { error: { message: "No upstream configured for this model", type: "config_error" } },
         { status: 503 }
       );
+    }
+
+    // Request usage info in stream if supported
+    if (isStream) {
+      upstreamBody.stream_options = { include_usage: true };
     }
 
     const upstreamRes = await fetch(`${upstreamBaseUrl}/chat/completions`, {
@@ -69,20 +73,88 @@ export async function POST(req: Request) {
       );
     }
 
+    // ── Streaming response ──
+    if (isStream && upstreamRes.body) {
+      const stream = upstreamRes.body;
+      const reader = stream.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let tokensIn = 0;
+      let tokensOut = 0;
+      let usageFound = false;
+      let completionContent = "";
+
+      const proxy = new ReadableStream({
+        async pull(controller) {
+          const { done, value } = await reader.read();
+          if (done) {
+            // Stream ended — estimate tokens if upstream didn't send usage
+            if (!usageFound && tokensIn === 0 && tokensOut === 0) {
+              // Rough estimate: ~4 chars per token
+              tokensIn = Math.ceil(JSON.stringify(upstreamBody.messages || []).length / 4);
+              tokensOut = Math.ceil(completionContent.length / 4);
+            }
+
+            // Deduct balance async (don't block the response)
+            const cost = useCustomPricing
+              ? tokensIn * useCustomPricing.input + tokensOut * useCustomPricing.output
+              : calculateCost(model, tokensIn, tokensOut);
+            deductBalance(user.id, user.api_key_id, model, tokensIn, tokensOut, cost).catch(() => {});
+
+            controller.close();
+            return;
+          }
+
+          const chunk = decoder.decode(value, { stream: true });
+          buffer += chunk;
+
+          // Parse SSE lines for usage extraction
+          const lines = buffer.split("\n");
+          buffer = lines.pop() || "";
+
+          for (const line of lines) {
+            if (line.startsWith("data: ")) {
+              const data = line.slice(6).trim();
+              if (data === "[DONE]") continue;
+              try {
+                const parsed = JSON.parse(data);
+                // Accumulate content for token estimation
+                const delta = parsed.choices?.[0]?.delta?.content;
+                if (delta) completionContent += delta;
+                // Extract usage if present (final chunk)
+                if (parsed.usage) {
+                  tokensIn = parsed.usage.prompt_tokens || 0;
+                  tokensOut = parsed.usage.completion_tokens || 0;
+                  usageFound = true;
+                }
+              } catch {}
+            }
+          }
+
+          controller.enqueue(value);
+        },
+      });
+
+      return new Response(proxy, {
+        status: 200,
+        headers: {
+          "Content-Type": "text/event-stream",
+          "Cache-Control": "no-cache",
+          Connection: "keep-alive",
+        },
+      });
+    }
+
+    // ── Non-streaming response ──
     const data = await upstreamRes.json();
 
     const tokensIn = data.usage?.prompt_tokens || 0;
     const tokensOut = data.usage?.completion_tokens || 0;
 
-    // Use custom pricing if available, else fallback to built-in
-    let cost: number;
-    if (useCustomPricing) {
-      cost = tokensIn * useCustomPricing.input + tokensOut * useCustomPricing.output;
-    } else {
-      cost = calculateCost(model, tokensIn, tokensOut);
-    }
+    const cost = useCustomPricing
+      ? tokensIn * useCustomPricing.input + tokensOut * useCustomPricing.output
+      : calculateCost(model, tokensIn, tokensOut);
 
-    // Always log usage; balance deducted even if cost=0 (records the request)
     await deductBalance(user.id, user.api_key_id, model, tokensIn, tokensOut, cost);
 
     return NextResponse.json({
