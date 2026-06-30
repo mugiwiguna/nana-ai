@@ -12,6 +12,7 @@ interface Model {
   output_price: string;
   provider_name: string;
   is_free: boolean;
+  is_reasoning: boolean;
 }
 
 export default function ModelsPage() {
@@ -97,6 +98,9 @@ export default function ModelsPage() {
                             <span className="text-[var(--text-primary)] font-medium">{m.name}</span>
                             {m.is_free && (
                               <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-violet-500/10 text-violet-400 border border-violet-500/20">FREE</span>
+                            )}
+                            {m.is_reasoning && (
+                              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">REASONING</span>
                             )}
                             <code className="text-[11px] text-blue-400 font-mono bg-blue-500/10 px-1.5 py-0.5 rounded">{m.name}</code>
                             <button onClick={() => copyModel(m.name)}

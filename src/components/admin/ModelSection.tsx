@@ -17,6 +17,7 @@ interface Model {
   output_price: string;
   is_active: boolean;
   is_free: boolean;
+  is_reasoning: boolean;
   created_at: string;
 }
 
@@ -217,6 +218,9 @@ export default function ModelSection({ showToast }: { showToast: (m: string) => 
               <div className="flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity shrink-0">
                 <button onClick={() => handleFreeToggle(m)} title={m.is_free ? "Hapus dari free tier" : "Jadikan free tier"} className={`w-8 h-8 flex items-center justify-center rounded-lg transition ${m.is_free ? "text-violet-400 hover:text-violet-300 hover:bg-violet-500/10" : "text-[var(--text-secondary)] hover:text-violet-400 hover:bg-violet-500/10"}`}>
                   <span className="text-sm">🆓</span>
+                </button>
+                <button onClick={async () => { await fetch(`/api/admin/models/${m.id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ is_reasoning: !m.is_reasoning }) }); showToast(m.is_reasoning ? "Reasoning dimatikan" : "Reasoning diaktifkan"); }} title={m.is_reasoning ? "Nonaktifkan reasoning" : "Aktifkan reasoning"} className={`w-8 h-8 flex items-center justify-center rounded-lg transition ${m.is_reasoning ? "text-amber-400 hover:text-amber-300 hover:bg-amber-500/10" : "text-[var(--text-secondary)] hover:text-amber-400 hover:bg-amber-500/10"}`}>
+                  <span className="text-sm">🧠</span>
                 </button>
                 <button onClick={() => handleToggle(m)} title={m.is_active ? "Nonaktifkan" : "Aktifkan"} className="w-8 h-8 flex items-center justify-center rounded-lg text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 transition">
                   {m.is_active ? (

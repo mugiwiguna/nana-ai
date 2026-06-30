@@ -54,7 +54,7 @@ export async function getCustomModelRoute(model: string) {
 
   // Get upstream model name
   const mRes = await query(
-    "SELECT upstream_model_name FROM custom_models WHERE name = $1 AND is_active = true",
+    "SELECT upstream_model_name, is_reasoning FROM custom_models WHERE name = $1 AND is_active = true",
     [model]
   );
   if (!mRes.rows[0]) return null;
@@ -65,6 +65,7 @@ export async function getCustomModelRoute(model: string) {
     upstreamModel: mRes.rows[0].upstream_model_name,
     inputPrice: info.input,
     outputPrice: info.output,
+    isReasoning: mRes.rows[0].is_reasoning || false,
   };
 }
 

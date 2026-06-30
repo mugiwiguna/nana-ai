@@ -24,7 +24,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
   let idx = 1;
 
   for (const [k, v] of Object.entries(body)) {
-    if (["provider_id", "name", "upstream_model_name", "input_price", "output_price", "is_active", "is_free"].includes(k)) {
+    if (["provider_id", "name", "upstream_model_name", "input_price", "output_price", "is_active", "is_free", "is_reasoning"].includes(k)) {
       sets.push(`${k} = $${idx++}`);
       vals.push(v);
     }

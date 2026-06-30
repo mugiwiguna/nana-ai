@@ -35,12 +35,18 @@ export async function POST(req: Request) {
     let upstreamApiKey: string;
     let upstreamBody: any;
     let useCustomPricing: { input: number; output: number } | null = null;
+    let isReasoningModel = false;
 
     if (customRoute) {
       upstreamBaseUrl = customRoute.baseUrl;
       upstreamApiKey = customRoute.apiKey;
       upstreamBody = { ...body, model: customRoute.upstreamModel };
       useCustomPricing = { input: customRoute.inputPrice, output: customRoute.outputPrice };
+      isReasoningModel = customRoute.isReasoning;
+      // Reasoning models need higher max_tokens — enforce minimum 1024
+      if (isReasoningModel && (!body.max_tokens || body.max_tokens < 1024)) {
+        upstreamBody.max_tokens = Math.max(body.max_tokens || 0, 1024);
+      }
     } else {
       upstreamBaseUrl = process.env.UPSTREAM_BASE_URL || "";
       upstreamApiKey = process.env.UPSTREAM_API_KEY || "";
