@@ -29,7 +29,7 @@ export async function GET() {
     let used = 0;
     try {
       const usageRes = await query(
-        `SELECT COALESCE(SUM(ul.total_tokens), 0) as used
+        `SELECT COALESCE(SUM(ul.tokens_in + ul.tokens_out), 0) as used
          FROM usage_logs ul
          JOIN custom_models cm ON ul.model = cm.name
          WHERE ul.user_id = $1
