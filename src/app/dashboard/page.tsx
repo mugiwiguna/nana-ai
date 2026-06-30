@@ -189,7 +189,7 @@ export default function DashboardPage() {
             </>
           ) : (
             <p className="text-xs text-[var(--text-secondary)]">
-              Top-up minimal Rp 10.000 untuk akses model free tier. {freeUsage.freeModels} model tersedia.
+              Top-up minimal $1 untuk akses model free tier. {freeUsage.freeModels} model tersedia.
             </p>
           )}
         </div>

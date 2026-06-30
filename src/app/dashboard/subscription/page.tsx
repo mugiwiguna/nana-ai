@@ -145,7 +145,7 @@ export default function SubscriptionPage() {
             </>
           ) : (
             <p className="text-sm text-[var(--text-secondary)]">
-              Top-up minimal Rp 10.000 untuk mendapatkan akses gratis ke model free tier ({freeUsage.freeModels} model tersedia).
+              Top-up minimal $1 untuk mendapatkan akses gratis ke model free tier ({freeUsage.freeModels} model tersedia).
             </p>
           )}
         </div>
