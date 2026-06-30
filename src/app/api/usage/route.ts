@@ -24,7 +24,7 @@ export async function GET(req: Request) {
       [session.user.id, ...params, limit, offset]
     ),
     query(
-      `SELECT COUNT(*) as total FROM usage_logs WHERE user_id = $1 ${clause}`,
+      `SELECT COUNT(*) as total FROM usage_logs ul WHERE ul.user_id = $1 ${clause}`,
       [session.user.id, ...params]
     ),
   ]);
