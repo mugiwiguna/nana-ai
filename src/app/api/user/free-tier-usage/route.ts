@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth";
 import { query } from "@/lib/db";
 
 const FREE_TOKEN_LIMIT = 3_000_000;
-const MIN_TOPUP = 10_000;
+const MIN_TOPUP = 1; // $1
 
 export async function GET() {
   try {

@@ -86,7 +86,7 @@ export async function validateApiKey(key: string) {
 }
 
 const FREE_TOKEN_LIMIT = 3_000_000;
-const MIN_TOPUP = 10_000;
+const MIN_TOPUP = 1; // $1
 
 export async function checkFreeTier(userId: string, model: string): Promise<{ eligible: boolean; remaining: number }> {
   const pricing = await loadCustomPricing();
