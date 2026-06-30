@@ -41,7 +41,7 @@ export default function DashboardPage() {
       fetch("/api/usage/daily").then(r => r.json()).catch(e => ({ error: e.message })),
       fetch("/api/usage/daily-models").then(r => r.json()).catch(e => ({ error: e.message })),
       fetch("/api/usage/models").then(r => r.json()).catch(e => ({ error: e.message })),
-      fetch("/api/user/free-tier-usage").then(r => r.json()).catch(e => null),
+      fetch("/api/user/free-tier-usage", { cache: "no-store" }).then(r => r.json()).catch(e => null),
     ]).then(([keyCount, recent, dailyData, dailyModelsData, modelsRes, freeData]) => {
       if (keyCount.error || recent.error || dailyData.error || dailyModelsData.error || modelsRes.error) {
         const errs = [keyCount, recent, dailyData, dailyModelsData, modelsRes]

@@ -130,7 +130,7 @@ function UserInfoWidget() {
     if (!session?.user) return;
     const load = async () => {
       try {
-        const res = await fetch("/api/user/free-tier-usage");
+        const res = await fetch("/api/user/free-tier-usage", { cache: "no-store" });
         if (res.ok) setFreeUsage(await res.json());
       } catch {}
     };
@@ -149,7 +149,9 @@ function UserInfoWidget() {
     <div className="border-t border-[var(--border-color)] pt-3 mt-3">
       <div className="px-3">
         <p className="text-sm font-medium text-[var(--text-primary)] truncate">{name}</p>
-        {freeUsage && (
+        {!freeUsage ? (
+          <p className="text-[11px] mt-0.5 text-[var(--text-secondary)] animate-pulse">Memuat paket...</p>
+        ) : (
           <>
             <p className={`text-[11px] mt-0.5 ${isEligible ? "text-violet-400" : "text-[var(--text-secondary)]"}`}>
               {isEligible ? "🆓 Free Tier" : freeUsage.totalTopup > 0 ? "💎 Pay-as-you-go" : "📋 Belum Top-up"}
