@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   const from = url.searchParams.get("from");
   const to = url.searchParams.get("to");
 
-  const dateClause = from && to ? "AND created_at >= $2 AND created_at <= $3" : "";
+  const dateClause = from && to ? "AND ul.created_at >= $2 AND ul.created_at <= $3" : "";
   const params: any[] = from && to ? [session.user.id, from, to] : [session.user.id];
 
   const res = await query(

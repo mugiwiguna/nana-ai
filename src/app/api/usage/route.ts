@@ -5,7 +5,7 @@ import { query } from "@/lib/db";
 function dateFilter(url: URL) {
   const from = url.searchParams.get("from");
   const to = url.searchParams.get("to");
-  if (from && to) return { clause: "AND created_at >= $2 AND created_at <= $3", params: [from, to] };
+  if (from && to) return { clause: "AND ul.created_at >= $2 AND ul.created_at <= $3", params: [from, to] };
   return { clause: "", params: [] };
 }
 
