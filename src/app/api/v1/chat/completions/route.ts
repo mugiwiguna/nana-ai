@@ -153,7 +153,20 @@ export async function POST(req: Request) {
     }
 
     // ── Non-streaming response ──
-    const data = await upstreamRes.json();
+    const rawText = await upstreamRes.text();
+    let data: any;
+    try {
+      data = JSON.parse(rawText);
+    } catch {
+      // Upstream returned SSE instead of JSON — parse the last data: chunk
+      const lines = rawText.split('\n').filter(l => l.startsWith('data: ') && !l.includes('[DONE]'));
+      const last = lines[lines.length - 1];
+      if (last) {
+        data = JSON.parse(last.replace('data: ', ''));
+      } else {
+        return NextResponse.json({ error: { message: 'Invalid upstream response' } }, { status: 502 });
+      }
+    }
 
     const tokensIn = data.usage?.prompt_tokens || 0;
     const tokensOut = data.usage?.completion_tokens || 0;
