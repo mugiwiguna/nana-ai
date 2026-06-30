@@ -26,6 +26,10 @@ export async function GET() {
     const todayStart = new Date(shanghaiDate.getFullYear(), shanghaiDate.getMonth(), shanghaiDate.getDate());
     const todayStartUTC = new Date(todayStart.getTime() - shanghaiOffset);
 
+    // Reset at = start of next day in Shanghai timezone
+    const tomorrowStart = new Date(shanghaiDate.getFullYear(), shanghaiDate.getMonth(), shanghaiDate.getDate() + 1);
+    const tomorrowStartUTC = new Date(tomorrowStart.getTime() - shanghaiOffset);
+
     let used = 0;
     try {
       const usageRes = await query(
@@ -55,7 +59,7 @@ export async function GET() {
       remaining: Math.max(0, FREE_TOKEN_LIMIT - used),
       percentage: Math.min(100, Math.round((used / FREE_TOKEN_LIMIT) * 100)),
       freeModels,
-      resetAt: todayStartUTC.toISOString(),
+      resetAt: shanghaiDate.toISOString().slice(0, 10) + "T00:00:00+08:00",
     });
   } catch (e: any) {
     console.error("free-tier-usage error:", e);
