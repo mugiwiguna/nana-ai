@@ -123,23 +123,28 @@ function formatTokens(n: number): string {
 }
 
 function UserInfoWidget() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [freeUsage, setFreeUsage] = useState<any>(null);
 
   useEffect(() => {
-    if (!session?.user) return;
+    if (status !== "authenticated" || !session?.user?.id) return;
     const load = async () => {
       try {
         const res = await fetch("/api/user/free-tier-usage", { cache: "no-store" });
-        if (res.ok) setFreeUsage(await res.json());
-      } catch {}
+        if (res.ok) {
+          const data = await res.json();
+          setFreeUsage(data);
+        }
+      } catch (e) {
+        console.error("Free tier fetch error:", e);
+      }
     };
     load();
-    const interval = setInterval(load, 30000); // refresh tiap 30 detik
+    const interval = setInterval(load, 30000);
     return () => clearInterval(interval);
-  }, [session]);
+  }, [status, session?.user?.id]);
 
-  if (!session?.user) return null;
+  if (status !== "authenticated" || !session?.user) return null;
 
   const name = session.user.name || session.user.email || "User";
   const isEligible = freeUsage?.eligible;

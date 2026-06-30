@@ -2,21 +2,15 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { query } from "@/lib/db";
 
-const FREE_TOKEN_LIMIT = 3_000_000; // 3M tokens per day
-const MIN_TOPUP = 10_000; // Rp10,000
+const FREE_TOKEN_LIMIT = 3_000_000;
+const MIN_TOPUP = 10_000;
 
 export async function GET() {
   const session = await auth();
-  if (!session?.user?.email) {
+  if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-
-  // Get user info
-  const userRes = await query(`SELECT id FROM users WHERE email = $1`, [session.user.email]);
-  if (userRes.rows.length === 0) {
-    return NextResponse.json({ error: "User not found" }, { status: 404 });
-  }
-  const userId = userRes.rows[0].id;
+  const userId = session.user.id;
 
   // Check eligibility: total topup >= Rp10,000
   const topupRes = await query(
@@ -26,7 +20,7 @@ export async function GET() {
   const totalTopup = Number(topupRes.rows[0].total);
   const eligible = totalTopup >= MIN_TOPUP;
 
-  // Get today's free tier usage (Asia/Shanghai = WITA = UTC+8)
+  // Today's free tier usage (WITA = UTC+8)
   const now = new Date();
   const shanghaiOffset = 8 * 60 * 60 * 1000;
   const shanghaiDate = new Date(now.getTime() + shanghaiOffset);
@@ -44,7 +38,6 @@ export async function GET() {
   );
   const used = Number(usageRes.rows[0].used);
 
-  // Get free models count
   const modelsRes = await query(
     `SELECT COUNT(*) as count FROM custom_models WHERE is_free = true AND is_active = true`
   );

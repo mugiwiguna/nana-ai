@@ -42,15 +42,18 @@ export default function SubscriptionPage() {
   const [buying, setBuying] = useState<string | null>(null);
   const [payMethod, setPayMethod] = useState<"balance" | "qris">("balance");
   const [msg, setMsg] = useState<{ text: string; ok: boolean } | null>(null);
+  const [freeUsage, setFreeUsage] = useState<any>(null);
 
   useEffect(() => {
     Promise.all([
       fetch("/api/plans").then((r) => r.json()),
       fetch("/api/subscription").then((r) => r.json()),
+      fetch("/api/user/free-tier-usage", { cache: "no-store" }).then((r) => r.json()).catch(() => null),
     ])
-      .then(([p, s]) => {
+      .then(([p, s, f]) => {
         setPlans(p);
         setSub(s);
+        if (f && !f.error) setFreeUsage(f);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -101,6 +104,50 @@ export default function SubscriptionPage() {
             : "bg-red-500/10 text-red-500 border border-red-500/20"
         }`}>
           {msg.text}
+        </div>
+      )}
+
+      {/* Free Tier Card */}
+      {freeUsage && (
+        <div className="glass-card rounded-2xl p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold">Free Tier</h2>
+            <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
+              freeUsage.eligible
+                ? "bg-violet-500/10 text-violet-400 border border-violet-500/20"
+                : "bg-zinc-500/10 text-zinc-400 border border-zinc-500/20"
+            }`}>
+              {freeUsage.eligible ? "Aktif" : "Tidak Aktif"}
+            </span>
+          </div>
+
+          {freeUsage.eligible ? (
+            <>
+              <p className="text-sm text-[var(--text-secondary)] mb-4">
+                Akses gratis {freeUsage.freeModels} model · {freeUsage.used.toLocaleString()} / {freeUsage.limit.toLocaleString()} token hari ini
+              </p>
+              <div className="w-full h-3 bg-[var(--bg-primary)] rounded-full overflow-hidden border border-[var(--border-color)] mb-2">
+                <div
+                  className={`h-full rounded-full transition-all duration-700 ${
+                    freeUsage.percentage > 90 ? "bg-red-500" : freeUsage.percentage > 70 ? "bg-amber-500" : "bg-emerald-500"
+                  }`}
+                  style={{ width: `${Math.min(100, freeUsage.percentage)}%` }}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-[var(--text-secondary)]">
+                  Sisa: {freeUsage.remaining.toLocaleString()} token
+                </span>
+                <span className="text-xs text-[var(--text-secondary)]">
+                  Reset harian
+                </span>
+              </div>
+            </>
+          ) : (
+            <p className="text-sm text-[var(--text-secondary)]">
+              Top-up minimal Rp 10.000 untuk mendapatkan akses gratis ke model free tier ({freeUsage.freeModels} model tersedia).
+            </p>
+          )}
         </div>
       )}
 
