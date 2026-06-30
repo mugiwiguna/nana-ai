@@ -9,22 +9,23 @@ const PRICING: Record<string, { input: number; output: number }> = {
 };
 
 // Keep custom model cache in module for hot path (refreshed on mutation)
-let customPricingCache: Record<string, { input: number; output: number; providerId: string }> | null = null;
+let customPricingCache: Record<string, { input: number; output: number; providerId: string; isFree: boolean }> | null = null;
 let customModelsCacheTs = 0;
 
-async function loadCustomPricing(): Promise<Record<string, { input: number; output: number; providerId: string }>> {
+async function loadCustomPricing(): Promise<Record<string, { input: number; output: number; providerId: string; isFree: boolean }>> {
   const now = Date.now();
   if (customPricingCache && now - customModelsCacheTs < 30000) return customPricingCache!;
 
   const res = await query(
-    "SELECT m.name, m.input_price, m.output_price, m.provider_id FROM custom_models m WHERE m.is_active = true"
+    "SELECT m.name, m.input_price, m.output_price, m.provider_id, m.is_free FROM custom_models m WHERE m.is_active = true"
   );
-  const map: Record<string, { input: number; output: number; providerId: string }> = {};
+  const map: Record<string, { input: number; output: number; providerId: string; isFree: boolean }> = {};
   for (const row of res.rows) {
     map[row.name] = {
       input: Number(row.input_price),
       output: Number(row.output_price),
       providerId: row.provider_id,
+      isFree: row.is_free,
     };
   }
   customPricingCache = map;
@@ -82,6 +83,51 @@ export async function validateApiKey(key: string) {
     [key]
   );
   return res.rows[0] || null;
+}
+
+const FREE_TOKEN_LIMIT = 3_000_000;
+const MIN_TOPUP = 10_000;
+
+export async function checkFreeTier(userId: string, model: string): Promise<{ eligible: boolean; remaining: number }> {
+  const pricing = await loadCustomPricing();
+  const modelInfo = pricing[model];
+  if (!modelInfo?.isFree) return { eligible: false, remaining: 0 };
+
+  // Check total topup >= Rp10,000
+  const topupRes = await query(
+    `SELECT COALESCE(SUM(amount), 0) as total FROM topups WHERE user_id = $1 AND status = 'success'`,
+    [userId]
+  );
+  if (Number(topupRes.rows[0].total) < MIN_TOPUP) return { eligible: false, remaining: 0 };
+
+  // Check today's free usage
+  const now = new Date();
+  const shanghaiOffset = 8 * 60 * 60 * 1000;
+  const shanghaiDate = new Date(now.getTime() + shanghaiOffset);
+  const todayStart = new Date(shanghaiDate.getFullYear(), shanghaiDate.getMonth(), shanghaiDate.getDate());
+  const todayStartUTC = new Date(todayStart.getTime() - shanghaiOffset);
+
+  const usageRes = await query(
+    `SELECT COALESCE(SUM(ul.total_tokens), 0) as used FROM usage_logs ul JOIN custom_models cm ON ul.model = cm.name WHERE ul.user_id = $1 AND cm.is_free = true AND ul.created_at >= $2`,
+    [userId, todayStartUTC.toISOString()]
+  );
+  const used = Number(usageRes.rows[0].used);
+  const remaining = Math.max(0, FREE_TOKEN_LIMIT - used);
+
+  return { eligible: remaining > 0, remaining };
+}
+
+export async function logFreeUsage(
+  userId: string,
+  apiKeyId: string,
+  model: string,
+  tokensIn: number,
+  tokensOut: number
+) {
+  await query(
+    "INSERT INTO usage_logs (user_id, api_key_id, model, tokens_in, tokens_out, cost) VALUES ($1, $2, $3, $4, $5, 0)",
+    [userId, apiKeyId, model, tokensIn, tokensOut]
+  );
 }
 
 export async function deductBalance(

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { validateApiKey, calculateCost, deductBalance, getCustomModelRoute } from "@/lib/billing";
+import { validateApiKey, calculateCost, deductBalance, getCustomModelRoute, checkFreeTier, logFreeUsage } from "@/lib/billing";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -21,12 +21,15 @@ export async function POST(req: Request) {
     const model = body.model || "gpt-3.5-turbo";
     const isStream = body.stream === true;
 
-    if (Number(user.balance) <= 0) {
-      return NextResponse.json({ error: { message: "Insufficient balance", type: "insufficient_quota" } }, { status: 402 });
-    }
-
     // Determine upstream target
     const customRoute = await getCustomModelRoute(model);
+
+    // Check free tier eligibility
+    const freeTier = await checkFreeTier(user.id, model);
+
+    if (!freeTier.eligible && Number(user.balance) <= 0) {
+      return NextResponse.json({ error: { message: "Insufficient balance", type: "insufficient_quota" } }, { status: 402 });
+    }
 
     let upstreamBaseUrl: string;
     let upstreamApiKey: string;
@@ -95,11 +98,15 @@ export async function POST(req: Request) {
               tokensOut = Math.ceil(completionContent.length / 4);
             }
 
-            // Deduct balance async (don't block the response)
-            const cost = useCustomPricing
-              ? tokensIn * useCustomPricing.input + tokensOut * useCustomPricing.output
-              : calculateCost(model, tokensIn, tokensOut);
-            deductBalance(user.id, user.api_key_id, model, tokensIn, tokensOut, cost).catch(() => {});
+            // Deduct balance or log free usage
+            if (freeTier.eligible) {
+              logFreeUsage(user.id, user.api_key_id, model, tokensIn, tokensOut).catch(() => {});
+            } else {
+              const cost = useCustomPricing
+                ? tokensIn * useCustomPricing.input + tokensOut * useCustomPricing.output
+                : calculateCost(model, tokensIn, tokensOut);
+              deductBalance(user.id, user.api_key_id, model, tokensIn, tokensOut, cost).catch(() => {});
+            }
 
             controller.close();
             return;
@@ -150,6 +157,19 @@ export async function POST(req: Request) {
 
     const tokensIn = data.usage?.prompt_tokens || 0;
     const tokensOut = data.usage?.completion_tokens || 0;
+
+    if (freeTier.eligible) {
+      await logFreeUsage(user.id, user.api_key_id, model, tokensIn, tokensOut);
+      return NextResponse.json({
+        ...data,
+        usage: {
+          ...data.usage,
+          cost: 0,
+          free_tier: true,
+          remaining_balance: Number(user.balance),
+        },
+      });
+    }
 
     const cost = useCustomPricing
       ? tokensIn * useCustomPricing.input + tokensOut * useCustomPricing.output

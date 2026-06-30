@@ -16,6 +16,7 @@ interface Model {
   input_price: string;
   output_price: string;
   is_active: boolean;
+  is_free: boolean;
   created_at: string;
 }
 
@@ -104,6 +105,16 @@ export default function ModelSection({ showToast }: { showToast: (m: string) => 
     load();
   };
 
+  const handleFreeToggle = async (m: Model) => {
+    await fetch(`/api/admin/models/${m.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ is_free: !m.is_free }),
+    });
+    showToast(m.is_free ? "🆓 Free tier dimatikan" : "🆓 Free tier diaktifkan");
+    load();
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -189,6 +200,11 @@ export default function ModelSection({ showToast }: { showToast: (m: string) => 
                     <span className={`w-1.5 h-1.5 rounded-full ${m.is_active ? "bg-emerald-400" : "bg-red-400"}`} />
                     {m.is_active ? "On" : "Off"}
                   </span>
+                  {m.is_free && (
+                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-violet-500/10 text-violet-400 ring-1 ring-violet-500/20">
+                      🆓 Free
+                    </span>
+                  )}
                 </div>
                 <div className="flex items-center gap-2 text-[11px] text-[var(--text-secondary)] mt-0.5 overflow-hidden">
                   <span className="shrink-0">{m.provider_name}</span>
@@ -199,6 +215,9 @@ export default function ModelSection({ showToast }: { showToast: (m: string) => 
               </div>
               {/* Right: actions */}
               <div className="flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity shrink-0">
+                <button onClick={() => handleFreeToggle(m)} title={m.is_free ? "Hapus dari free tier" : "Jadikan free tier"} className={`w-8 h-8 flex items-center justify-center rounded-lg transition ${m.is_free ? "text-violet-400 hover:text-violet-300 hover:bg-violet-500/10" : "text-[var(--text-secondary)] hover:text-violet-400 hover:bg-violet-500/10"}`}>
+                  <span className="text-sm">🆓</span>
+                </button>
                 <button onClick={() => handleToggle(m)} title={m.is_active ? "Nonaktifkan" : "Aktifkan"} className="w-8 h-8 flex items-center justify-center rounded-lg text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 transition">
                   {m.is_active ? (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>

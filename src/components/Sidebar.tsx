@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 const NAV_GROUPS = [
   {
@@ -115,6 +116,69 @@ const ADMIN_ITEM = {
   ),
 };
 
+function formatTokens(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(0)}K`;
+  return String(n);
+}
+
+function UserInfoWidget() {
+  const { data: session } = useSession();
+  const [freeUsage, setFreeUsage] = useState<any>(null);
+
+  useEffect(() => {
+    if (!session?.user) return;
+    const load = async () => {
+      try {
+        const res = await fetch("/api/user/free-tier-usage");
+        if (res.ok) setFreeUsage(await res.json());
+      } catch {}
+    };
+    load();
+    const interval = setInterval(load, 30000); // refresh tiap 30 detik
+    return () => clearInterval(interval);
+  }, [session]);
+
+  if (!session?.user) return null;
+
+  const name = session.user.name || session.user.email || "User";
+  const isEligible = freeUsage?.eligible;
+  const isNearLimit = freeUsage && freeUsage.percentage > 80;
+
+  return (
+    <div className="border-t border-[var(--border-color)] pt-3 mt-3">
+      <div className="px-3">
+        <p className="text-sm font-medium text-[var(--text-primary)] truncate">{name}</p>
+        {freeUsage && (
+          <>
+            <p className={`text-[11px] mt-0.5 ${isEligible ? "text-violet-400" : "text-[var(--text-secondary)]"}`}>
+              {isEligible ? "🆓 Free Tier" : freeUsage.totalTopup > 0 ? "💎 Pay-as-you-go" : "📋 Belum Top-up"}
+            </p>
+            {isEligible && (
+              <div className="mt-2">
+                <div className="flex items-center justify-between text-[10px] text-[var(--text-secondary)] mb-1">
+                  <span>Token Hari Ini</span>
+                  <span className={isNearLimit ? "text-amber-400" : "text-emerald-400"}>
+                    {formatTokens(freeUsage.used)} / {formatTokens(freeUsage.limit)}
+                  </span>
+                </div>
+                <div className="w-full h-1.5 bg-[var(--bg-secondary)] rounded-full overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all duration-500 ${
+                      freeUsage.percentage > 90 ? "bg-red-500" : isNearLimit ? "bg-amber-500" : "bg-emerald-500"
+                    }`}
+                    style={{ width: `${Math.min(100, freeUsage.percentage)}%` }}
+                  />
+                </div>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
@@ -180,6 +244,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               </div>
             ))}
           </nav>
+
+          {/* User Info Widget */}
+          <UserInfoWidget />
 
           {/* Logout */}
           <div className="border-t border-[var(--border-color)] pt-4 mt-4">
