@@ -89,7 +89,7 @@ export default function DashboardPage() {
               <p className="text-xs text-[var(--text-secondary)] mt-1">
                 Akun Anda sedang dalam status {(session.user as any)?.status === "banned" ? "banned" : "suspended"}. Semua API key telah dinonaktifkan.
                 Silakan hubungi admin untuk informasi lebih lanjut:{" "}
-                <a href="mailto:admin@nana.mwcs.dev" className="text-[var(--gradient-start)] hover:underline">admin@nana.mwcs.dev</a>
+                <a href="mailto:admin@nanaai.id" className="text-[var(--gradient-start)] hover:underline">admin@nanaai.id</a>
               </p>
             </div>
           </div>
@@ -296,7 +296,7 @@ function Card({ title, value, accent, link, linkText, subtitle, icon }: {
 function Empty() { return <p className="text-sm text-[var(--text-secondary)] py-8 text-center">Belum ada data</p>; }
 
 function StatusBadge({ status, email }: { status?: string; email?: string }) {
-  if (email === "admin@nana.mwcs.dev") {
+  if (email === "admin@nanaai.id") {
     return (
       <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
         Admin
