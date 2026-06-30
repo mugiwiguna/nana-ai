@@ -21,17 +21,15 @@ export async function GET() {
     const eligible = totalTopup >= MIN_TOPUP;
 
     const now = new Date();
-    const shanghaiOffset = 8 * 60 * 60 * 1000;
-    const shanghaiDate = new Date(now.getTime() + shanghaiOffset);
-    const todayStart = new Date(shanghaiDate.getFullYear(), shanghaiDate.getMonth(), shanghaiDate.getDate());
-    const todayStartUTC = new Date(todayStart.getTime() - shanghaiOffset);
-
-    // Reset at = start of next day in Shanghai timezone
-    const tomorrowStart = new Date(shanghaiDate.getFullYear(), shanghaiDate.getMonth(), shanghaiDate.getDate() + 1);
-    const tomorrowStartUTC = new Date(tomorrowStart.getTime() - shanghaiOffset);
+    const wibOffset = 7 * 60 * 60 * 1000;
+    const wibDate = new Date(now.getTime() + wibOffset);
+    // Reset at = start of next day in WIB
+    const tomorrowStart = new Date(wibDate.getFullYear(), wibDate.getMonth(), wibDate.getDate() + 1);
 
     let used = 0;
     try {
+      const todayStart = new Date(wibDate.getFullYear(), wibDate.getMonth(), wibDate.getDate());
+      const todayStartUTC = new Date(todayStart.getTime() - wibOffset);
       const usageRes = await query(
         `SELECT COALESCE(SUM(ul.tokens_in + ul.tokens_out), 0) as used
          FROM usage_logs ul
@@ -59,7 +57,7 @@ export async function GET() {
       remaining: Math.max(0, FREE_TOKEN_LIMIT - used),
       percentage: Math.min(100, Math.round((used / FREE_TOKEN_LIMIT) * 100)),
       freeModels,
-      resetAt: shanghaiDate.toISOString().slice(0, 10) + "T00:00:00+08:00",
+      resetAt: `${tomorrowStart.getFullYear()}-${String(tomorrowStart.getMonth()+1).padStart(2,'0')}-${String(tomorrowStart.getDate()).padStart(2,'0')}T00:00:00+07:00`,
     });
   } catch (e: any) {
     console.error("free-tier-usage error:", e);
