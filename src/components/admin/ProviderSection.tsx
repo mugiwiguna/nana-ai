@@ -119,34 +119,35 @@ export default function ProviderSection({ showToast }: { showToast: (m: string) 
         )}
         {providers.map(p => (
           <div key={p.id} className={`group bg-[var(--bg-card)] border rounded-xl p-4 transition-all hover:border-[var(--accent-primary)]/30 ${p.is_active ? "border-[var(--border-color)]" : "border-red-900/30 opacity-60"}`}>
-            <div className="flex items-center justify-between gap-4">
-              {/* Left: info */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2 mb-1">
-                  <h3 className="text-sm font-semibold text-[var(--text-primary)] truncate">{p.name}</h3>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h3 className="text-sm font-semibold text-[var(--text-primary)]">{p.name}</h3>
                   <code className="text-[11px] text-[var(--text-secondary)] font-mono bg-[var(--bg-primary)] px-1.5 py-0.5 rounded">/{p.slug}</code>
-                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide ${p.is_active ? "bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/20" : "bg-red-500/10 text-red-400 ring-1 ring-red-500/20"}`}>
+                  <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold ${p.is_active ? "bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/20" : "bg-red-500/10 text-red-400 ring-1 ring-red-500/20"}`}>
                     <span className={`w-1.5 h-1.5 rounded-full ${p.is_active ? "bg-emerald-400" : "bg-red-400"}`} />
-                    {p.is_active ? "Aktif" : "Nonaktif"}
+                    {p.is_active ? "On" : "Off"}
                   </span>
                 </div>
-                <p className="text-xs text-[var(--text-secondary)] font-mono truncate max-w-sm">{p.base_url}</p>
-                <p className="text-xs text-[var(--text-secondary)] mt-1">
-                  <span className="inline-flex items-center bg-[var(--bg-primary)] px-2 py-0.5 rounded-md text-[11px] font-medium">
-                    🧩 {p.models?.length || 0} model
-                  </span>
-                </p>
+                <div className="flex items-center gap-2 text-[11px] text-[var(--text-secondary)] mt-0.5 overflow-hidden">
+                  <span className="font-mono truncate">{p.base_url}</span>
+                  <span className="shrink-0">·</span>
+                  <span className="shrink-0">{p.models?.length || 0} model</span>
+                </div>
               </div>
-              {/* Right: actions */}
-              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button onClick={() => handleToggle(p)} title={p.is_active ? "Nonaktifkan" : "Aktifkan"} className="p-1.5 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 transition">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" /></svg>
+              <div className="flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity shrink-0">
+                <button onClick={() => handleToggle(p)} title={p.is_active ? "Nonaktifkan" : "Aktifkan"} className="w-8 h-8 flex items-center justify-center rounded-lg text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 transition">
+                  {p.is_active ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+                  ) : (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  )}
                 </button>
-                <button onClick={() => { setShowForm(true); setEdit(p); setForm({ name: p.name, slug: p.slug, base_url: p.base_url, api_key: "" }); }} title="Edit" className="p-1.5 rounded-lg text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 transition">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" /></svg>
+                <button onClick={() => { setShowForm(true); setEdit(p); setForm({ name: p.name, slug: p.slug, base_url: p.base_url, api_key: "" }); }} title="Edit" className="w-8 h-8 flex items-center justify-center rounded-lg text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 transition">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
                 </button>
-                <button onClick={() => handleDelete(p.id)} title="Hapus" className="p-1.5 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/10 transition">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
+                <button onClick={() => handleDelete(p.id)} title="Hapus" className="w-8 h-8 flex items-center justify-center rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/10 transition">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
                 </button>
               </div>
             </div>

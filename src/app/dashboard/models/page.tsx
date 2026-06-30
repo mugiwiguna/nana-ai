@@ -4,35 +4,20 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-const MODELS = [
-  { id: "openai/gpt-4o", name: "GPT-4o", provider: "OpenAI", input: 0.0000025, output: 0.00001, context: "128K" },
-  { id: "openai/gpt-4o-mini", name: "GPT-4o Mini", provider: "OpenAI", input: 0.00000015, output: 0.0000006, context: "128K" },
-  { id: "openai/gpt-4-turbo", name: "GPT-4 Turbo", provider: "OpenAI", input: 0.00001, output: 0.00003, context: "128K" },
-  { id: "openai/gpt-3.5-turbo", name: "GPT-3.5 Turbo", provider: "OpenAI", input: 0.0000005, output: 0.0000015, context: "16K" },
-  { id: "anthropic/claude-3.5-sonnet", name: "Claude 3.5 Sonnet", provider: "Anthropic", input: 0.000003, output: 0.000015, context: "200K" },
-  { id: "anthropic/claude-3-haiku", name: "Claude 3 Haiku", provider: "Anthropic", input: 0.00000025, output: 0.00000125, context: "200K" },
-  { id: "anthropic/claude-3-opus", name: "Claude 3 Opus", provider: "Anthropic", input: 0.000015, output: 0.000075, context: "200K" },
-  { id: "google/gemini-pro", name: "Gemini Pro", provider: "Google", input: 0.00000125, output: 0.000005, context: "32K" },
-  { id: "google/gemini-1.5-flash", name: "Gemini 1.5 Flash", provider: "Google", input: 0.00000035, output: 0.00000105, context: "1M" },
-  { id: "google/gemini-1.5-pro", name: "Gemini 1.5 Pro", provider: "Google", input: 0.00000125, output: 0.000005, context: "2M" },
-  { id: "deepseek/deepseek-chat", name: "DeepSeek Chat", provider: "DeepSeek", input: 0.00000014, output: 0.00000028, context: "64K" },
-  { id: "deepseek/deepseek-coder", name: "DeepSeek Coder", provider: "DeepSeek", input: 0.00000014, output: 0.00000028, context: "64K" },
-];
-
-const PROVIDERS = [...new Set(MODELS.map(m => m.provider))];
-
-const PROVIDER_ICONS: Record<string, string> = {
-  OpenAI: "⚡",
-  Anthropic: "🧠",
-  Google: "🔮",
-  DeepSeek: "🐋",
-};
+interface Model {
+  id: string;
+  name: string;
+  upstream_model_name: string;
+  input_price: string;
+  output_price: string;
+  provider_name: string;
+}
 
 export default function ModelsPage() {
   const { status } = useSession();
   const router = useRouter();
   const [copied, setCopied] = useState("");
-  const [customModels, setCustomModels] = useState<any[]>([]);
+  const [customModels, setCustomModels] = useState<Model[]>([]);
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
@@ -60,106 +45,77 @@ export default function ModelsPage() {
     setTimeout(() => setCopied(""), 2000);
   };
 
+  // Group by provider
+  const grouped = customModels.reduce<Record<string, Model[]>>((acc, m) => {
+    (acc[m.provider_name] ||= []).push(m);
+    return acc;
+  }, {});
+
   if (status === "loading") return <p className="text-center mt-20 text-[var(--text-secondary)]">Loading...</p>;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16 space-y-8">
       <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">Model & Harga</h1>
 
-      {customModels.length > 0 && (
-        <div className="glass-card rounded-xl overflow-hidden">
-          <div className="px-5 py-4 border-b border-[var(--border-color)] bg-[var(--bg-primary)]/30">
-            <h2 className="text-sm font-semibold text-[var(--text-primary)] flex items-center gap-2">
-              <span>🔌</span> Model Kustom
-            </h2>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-[var(--border-color)] text-[var(--text-secondary)]">
-                  <th className="text-left py-3 px-4 font-medium">Model</th>
-                  <th className="text-right py-3 px-4 font-medium">Input / 1K token</th>
-                  <th className="text-right py-3 px-4 font-medium">Output / 1K token</th>
-                  <th className="text-right py-3 px-4 font-medium">Provider</th>
-                </tr>
-              </thead>
-              <tbody>
-                {customModels.map(m => (
-                  <tr key={m.id} className="border-b border-[var(--border-color)] hover:bg-[var(--bg-secondary)]/50 transition-colors">
-                    <td className="py-3 px-4">
-                      <span className="text-[var(--text-primary)] font-medium">{m.name}</span>
-                      <span className="text-[var(--text-secondary)] text-xs ml-2 font-mono opacity-60">{m.upstream_model_name}</span>
-                      <button onClick={() => copyModel(m.name)}
-                        className="ml-2 text-xs px-2 py-0.5 rounded border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-[var(--gradient-start)]/30 hover:text-[var(--gradient-start)] transition align-middle">
-                        {copied === m.name ? "✓" : "Salin"}
-                      </button>
-                    </td>
-                    <td className="py-3 px-4 text-right text-[var(--text-secondary)] font-mono">
-                      ${Number(m.input_price).toFixed(8)}
-                    </td>
-                    <td className="py-3 px-4 text-right text-[var(--text-secondary)] font-mono">
-                      ${Number(m.output_price).toFixed(8)}
-                    </td>
-                    <td className="py-3 px-4 text-right text-[var(--text-secondary)]">
-                      {m.provider_name}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+      {customModels.length === 0 ? (
+        <div className="glass-card rounded-xl p-8 text-center">
+          <svg className="w-12 h-12 mx-auto text-[var(--text-secondary)] opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+          </svg>
+          <p className="text-[var(--text-secondary)] mt-3 text-sm">Belum ada model tersedia.</p>
+          <p className="text-[var(--text-secondary)] text-xs mt-1 opacity-60">Tambahkan provider dan model di halaman Admin.</p>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          <h2 className="text-lg font-semibold text-[var(--text-primary)] flex items-center gap-2">
+            <svg className="w-5 h-5 text-[var(--gradient-start)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3m0 3h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008zm-3 6h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008z" />
+            </svg>
+            Model Available
+          </h2>
+
+          {Object.entries(grouped).map(([provider, models]) => (
+            <div key={provider} className="glass-card rounded-xl overflow-hidden">
+              <div className="px-5 py-3 border-b border-[var(--border-color)] bg-[var(--bg-primary)]/30">
+                <h3 className="text-sm font-semibold text-[var(--text-primary)]">{provider}</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-[var(--border-color)] text-[var(--text-secondary)]">
+                      <th className="text-left py-3 px-4 font-medium">Model</th>
+                      <th className="text-right py-3 px-4 font-medium">Input / 1K token</th>
+                      <th className="text-right py-3 px-4 font-medium">Output / 1K token</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {models.map(m => (
+                      <tr key={m.id} className="border-b border-[var(--border-color)] last:border-0 hover:bg-[var(--bg-secondary)]/50 transition-colors">
+                        <td className="py-3 px-4">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="text-[var(--text-primary)] font-medium">{m.name}</span>
+                            <code className="text-[11px] text-blue-400 font-mono bg-blue-500/10 px-1.5 py-0.5 rounded">{m.upstream_model_name}</code>
+                            <button onClick={() => copyModel(m.name)}
+                              className="text-[11px] px-1.5 py-0.5 rounded border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-[var(--gradient-start)]/30 hover:text-[var(--gradient-start)] transition">
+                              {copied === m.name ? "✓" : "Salin"}
+                            </button>
+                          </div>
+                        </td>
+                        <td className="py-3 px-4 text-right text-emerald-400 font-mono text-[12px]">
+                          ${Number(m.input_price).toFixed(8)}
+                        </td>
+                        <td className="py-3 px-4 text-right text-amber-400 font-mono text-[12px]">
+                          ${Number(m.output_price).toFixed(8)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
         </div>
       )}
-
-      {PROVIDERS.map(provider => {
-        const models = MODELS.filter(m => m.provider === provider);
-        return (
-          <div key={provider} className="glass-card rounded-xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-[var(--border-color)] bg-[var(--bg-primary)]/30">
-              <h2 className="text-sm font-semibold text-[var(--text-primary)] flex items-center gap-2">
-                <span>{PROVIDER_ICONS[provider] || "📦"}</span> {provider}
-              </h2>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-[var(--border-color)] text-[var(--text-secondary)]">
-                    <th className="text-left py-3 px-4 font-medium">Model</th>
-                    <th className="text-right py-3 px-4 font-medium">Input / 1K token</th>
-                    <th className="text-right py-3 px-4 font-medium">Output / 1K token</th>
-                    <th className="text-right py-3 px-4 font-medium">Context</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {models.map(m => (
-                    <tr key={m.id} className="border-b border-[var(--border-color)] hover:bg-[var(--bg-secondary)]/50 transition-colors">
-                      <td className="py-3 px-4">
-                        <span className="text-[var(--text-primary)] font-medium">{m.name}</span>
-                        <span className="text-[var(--text-secondary)] text-xs ml-2 font-mono opacity-60">{m.id}</span>
-                        <button onClick={() => copyModel(m.id)}
-                          className="ml-2 text-xs px-2 py-0.5 rounded border border-[var(--border-color)] text-[var(--text-secondary)] hover:border-[var(--gradient-start)]/30 hover:text-[var(--gradient-start)] transition align-middle">
-                          {copied === m.id ? "✓" : "Salin"}
-                        </button>
-                      </td>
-                      <td className="py-3 px-4 text-right text-[var(--text-secondary)] font-mono">
-                        ${m.input.toFixed(8)}
-                      </td>
-                      <td className="py-3 px-4 text-right text-[var(--text-secondary)] font-mono">
-                        ${m.output.toFixed(8)}
-                      </td>
-                      <td className="py-3 px-4 text-right">
-                        <span className="px-2 py-0.5 rounded text-xs bg-[var(--gradient-start)]/10 text-[var(--gradient-start)] border border-[var(--gradient-start)]/20 font-medium">
-                          {m.context}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        );
-      })}
     </div>
   );
 }
