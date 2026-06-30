@@ -125,6 +125,7 @@ function formatTokens(n: number): string {
 function UserInfoWidget() {
   const { data: session, status } = useSession();
   const [freeUsage, setFreeUsage] = useState<any>(null);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if (status !== "authenticated" || !session?.user?.id) return;
@@ -132,11 +133,15 @@ function UserInfoWidget() {
       try {
         const res = await fetch("/api/user/free-tier-usage", { cache: "no-store" });
         if (res.ok) {
-          const data = await res.json();
-          setFreeUsage(data);
+          setFreeUsage(await res.json());
+        } else {
+          // API error — show fallback with session data
+          setFreeUsage({ eligible: false, totalTopup: 0, used: 0, limit: 3000000, remaining: 3000000, percentage: 0, freeModels: 0 });
         }
-      } catch (e) {
-        console.error("Free tier fetch error:", e);
+      } catch {
+        setFreeUsage({ eligible: false, totalTopup: 0, used: 0, limit: 3000000, remaining: 3000000, percentage: 0, freeModels: 0 });
+      } finally {
+        setLoaded(true);
       }
     };
     load();
@@ -147,6 +152,7 @@ function UserInfoWidget() {
   if (status !== "authenticated" || !session?.user) return null;
 
   const name = session.user.name || session.user.email || "User";
+  const balance = Number((session.user as any).balance ?? 0);
   const isEligible = freeUsage?.eligible;
   const isNearLimit = freeUsage && freeUsage.percentage > 80;
 
@@ -154,31 +160,33 @@ function UserInfoWidget() {
     <div className="border-t border-[var(--border-color)] pt-3 mt-3">
       <div className="px-3">
         <p className="text-sm font-medium text-[var(--text-primary)] truncate">{name}</p>
-        {!freeUsage ? (
+        {!loaded ? (
           <p className="text-[11px] mt-0.5 text-[var(--text-secondary)] animate-pulse">Memuat paket...</p>
+        ) : isEligible ? (
+          <>
+            <p className="text-[11px] mt-0.5 text-violet-400">🆓 Free Tier</p>
+            <div className="mt-2">
+              <div className="flex items-center justify-between text-[10px] text-[var(--text-secondary)] mb-1">
+                <span>Token Hari Ini</span>
+                <span className={isNearLimit ? "text-amber-400" : "text-emerald-400"}>
+                  {formatTokens(freeUsage.used)} / {formatTokens(freeUsage.limit)}
+                </span>
+              </div>
+              <div className="w-full h-1.5 bg-[var(--bg-secondary)] rounded-full overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ${
+                    freeUsage.percentage > 90 ? "bg-red-500" : isNearLimit ? "bg-amber-500" : "bg-emerald-500"
+                  }`}
+                  style={{ width: `${Math.min(100, freeUsage.percentage)}%` }}
+                />
+              </div>
+            </div>
+          </>
         ) : (
           <>
-            <p className={`text-[11px] mt-0.5 ${isEligible ? "text-violet-400" : "text-[var(--text-secondary)]"}`}>
-              {isEligible ? "🆓 Free Tier" : freeUsage.totalTopup > 0 ? "💎 Pay-as-you-go" : "📋 Belum Top-up"}
+            <p className="text-[11px] mt-0.5 text-[var(--text-secondary)]">
+              💎 Saldo: ${balance.toFixed(2)}
             </p>
-            {isEligible && (
-              <div className="mt-2">
-                <div className="flex items-center justify-between text-[10px] text-[var(--text-secondary)] mb-1">
-                  <span>Token Hari Ini</span>
-                  <span className={isNearLimit ? "text-amber-400" : "text-emerald-400"}>
-                    {formatTokens(freeUsage.used)} / {formatTokens(freeUsage.limit)}
-                  </span>
-                </div>
-                <div className="w-full h-1.5 bg-[var(--bg-secondary)] rounded-full overflow-hidden">
-                  <div
-                    className={`h-full rounded-full transition-all duration-500 ${
-                      freeUsage.percentage > 90 ? "bg-red-500" : isNearLimit ? "bg-amber-500" : "bg-emerald-500"
-                    }`}
-                    style={{ width: `${Math.min(100, freeUsage.percentage)}%` }}
-                  />
-                </div>
-              </div>
-            )}
           </>
         )}
       </div>
