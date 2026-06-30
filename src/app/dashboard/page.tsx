@@ -30,6 +30,7 @@ export default function DashboardPage() {
   const [modelBreakdown, setModelBreakdown] = useState<any[]>([]);
   const [daily, setDaily] = useState<any[]>([]);
   const [fetchErr, setFetchErr] = useState("");
+  const [freeUsage, setFreeUsage] = useState<any>(null);
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
@@ -40,7 +41,8 @@ export default function DashboardPage() {
       fetch("/api/usage/daily").then(r => r.json()).catch(e => ({ error: e.message })),
       fetch("/api/usage/daily-models").then(r => r.json()).catch(e => ({ error: e.message })),
       fetch("/api/usage/models").then(r => r.json()).catch(e => ({ error: e.message })),
-    ]).then(([keyCount, recent, dailyData, dailyModelsData, modelsRes]) => {
+      fetch("/api/user/free-tier-usage").then(r => r.json()).catch(e => null),
+    ]).then(([keyCount, recent, dailyData, dailyModelsData, modelsRes, freeData]) => {
       if (keyCount.error || recent.error || dailyData.error || dailyModelsData.error || modelsRes.error) {
         const errs = [keyCount, recent, dailyData, dailyModelsData, modelsRes]
           .map((r:any,i) => r.error ? ["keys/count","usage","usage/daily","usage/daily-models","usage/models"][i]+": "+r.error : null).filter(Boolean);
@@ -58,6 +60,7 @@ export default function DashboardPage() {
         totalTokens: keyCount.totalTokens ?? 0,
         totalCost: keyCount.totalCost ?? 0,
       });
+      if (freeData && !freeData.error) setFreeUsage(freeData);
       setStats({ keyCount, recent: recent.usage || [], daily: d, dailyModels: dailyModelsData.days || [], modelBreakdown: modelsRes.models || [] });
     });
   }, [status, router, session]);
@@ -132,6 +135,65 @@ export default function DashboardPage() {
           icon={<ZapIcon />}
         />
       </div>
+
+      {/* Free Tier Progress Bar */}
+      {freeUsage && (
+        <div className="glass-card rounded-xl p-5">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">{freeUsage.eligible ? "🆓" : "📋"}</span>
+              <h3 className="text-sm font-semibold text-[var(--text-primary)]">
+                {freeUsage.eligible ? "Free Tier Aktif" : "Free Tier"}
+              </h3>
+              <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${
+                freeUsage.eligible
+                  ? "bg-violet-500/10 text-violet-400 ring-1 ring-violet-500/20"
+                  : "bg-zinc-500/10 text-zinc-400 ring-1 ring-zinc-500/20"
+              }`}>
+                {freeUsage.eligible ? "Aktif" : "Tidak Aktif"}
+              </span>
+            </div>
+            {freeUsage.eligible && (
+              <span className="text-xs text-[var(--text-secondary)]">
+                {freeUsage.freeModels} model tersedia
+              </span>
+            )}
+          </div>
+
+          {freeUsage.eligible ? (
+            <>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs text-[var(--text-secondary)]">Token Terpakai Hari Ini</span>
+                <span className={`text-sm font-bold tabular-nums ${
+                  freeUsage.percentage > 90 ? "text-red-400" : freeUsage.percentage > 70 ? "text-amber-400" : "text-emerald-400"
+                }`}>
+                  {freeUsage.used.toLocaleString()} / {freeUsage.limit.toLocaleString()}
+                </span>
+              </div>
+              <div className="w-full h-3 bg-[var(--bg-primary)] rounded-full overflow-hidden border border-[var(--border-color)]">
+                <div
+                  className={`h-full rounded-full transition-all duration-700 ${
+                    freeUsage.percentage > 90 ? "bg-red-500" : freeUsage.percentage > 70 ? "bg-amber-500" : "bg-emerald-500"
+                  }`}
+                  style={{ width: `${Math.min(100, freeUsage.percentage)}%` }}
+                />
+              </div>
+              <div className="flex items-center justify-between mt-2">
+                <span className="text-[11px] text-[var(--text-secondary)]">
+                  Sisa: {freeUsage.remaining.toLocaleString()} token
+                </span>
+                <span className="text-[11px] text-[var(--text-secondary)]">
+                  Reset: {new Date(freeUsage.resetAt).toLocaleDateString("id-ID", { weekday: "short", day: "numeric", month: "short" })}
+                </span>
+              </div>
+            </>
+          ) : (
+            <p className="text-xs text-[var(--text-secondary)]">
+              Top-up minimal Rp 10.000 untuk akses model free tier. {freeUsage.freeModels} model tersedia.
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Model Breakdown */}
       <div className="glass-card rounded-xl p-5">
