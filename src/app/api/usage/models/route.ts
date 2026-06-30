@@ -14,13 +14,15 @@ export async function GET(req: Request) {
   const params: any[] = from && to ? [session.user.id, from, to] : [session.user.id];
 
   const res = await query(
-    `SELECT model,
+    `SELECT ul.model,
             COUNT(*) as requests,
-            COALESCE(SUM(tokens_in + tokens_out), 0) as tokens,
-            COALESCE(SUM(cost), 0) as cost
-     FROM usage_logs
-     WHERE user_id = $1 ${dateClause}
-     GROUP BY model
+            COALESCE(SUM(ul.tokens_in + ul.tokens_out), 0) as tokens,
+            COALESCE(SUM(ul.cost), 0) as cost,
+            COALESCE(cm.is_free, false) as is_free
+     FROM usage_logs ul
+     LEFT JOIN custom_models cm ON ul.model = cm.name
+     WHERE ul.user_id = $1 ${dateClause}
+     GROUP BY ul.model, cm.is_free
      ORDER BY cost DESC`,
     params
   );

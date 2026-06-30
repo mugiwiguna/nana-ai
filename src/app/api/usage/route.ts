@@ -20,7 +20,7 @@ export async function GET(req: Request) {
 
   const [dataRes, countRes] = await Promise.all([
     query(
-      `SELECT id, model, api_key_id, tokens_in, tokens_out, cost, created_at FROM usage_logs WHERE user_id = $1 ${clause} ORDER BY created_at DESC LIMIT $${params.length + 2} OFFSET $${params.length + 3}`,
+      `SELECT ul.id, ul.model, ul.api_key_id, ul.tokens_in, ul.tokens_out, ul.cost, ul.created_at, COALESCE(cm.is_free, false) as is_free FROM usage_logs ul LEFT JOIN custom_models cm ON ul.model = cm.name WHERE ul.user_id = $1 ${clause} ORDER BY ul.created_at DESC LIMIT $${params.length + 2} OFFSET $${params.length + 3}`,
       [session.user.id, ...params, limit, offset]
     ),
     query(

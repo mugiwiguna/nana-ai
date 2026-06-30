@@ -330,7 +330,12 @@ export default function UsagePage() {
               return (
                 <div key={i}>
                   <div className="flex justify-between items-center mb-1">
-                    <span className="text-sm text-[var(--text-primary)]">{m && m.model ? (m.model.split("/")[1] || m.model) : "?"}</span>
+                    <span className="text-sm text-[var(--text-primary)]">
+                      {m && m.model ? (m.model.split("/")[1] || m.model) : "?"}
+                      {m && m.is_free && (
+                        <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-violet-500/10 text-violet-400 border border-violet-500/20">FREE</span>
+                      )}
+                    </span>
                     <span className="text-xs text-[var(--text-secondary)] tabular-nums">
                       {m && m.requests ? m.requests : 0} reqs · ${Number(m && m.cost ? m.cost : 0).toFixed(4)}
                     </span>
@@ -392,7 +397,12 @@ export default function UsagePage() {
               <tbody>
                 {usage.map((u: any) => (
                   <tr key={u.id} onClick={() => setSelectedRow(u)} className="border-b border-[var(--border-color)] hover:bg-[var(--bg-secondary)]/50 transition-colors cursor-pointer">
-                    <td className="py-2 px-4 text-[var(--text-primary)]">{u.model}</td>
+                    <td className="py-2 px-4 text-[var(--text-primary)]">
+                      {u.model}
+                      {u.is_free && (
+                        <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-violet-500/10 text-violet-400 border border-violet-500/20">FREE</span>
+                      )}
+                    </td>
                     <td className="text-right py-2 px-4 text-[var(--text-secondary)]">{u.tokens_in}</td>
                     <td className="text-right py-2 px-4 text-[var(--text-secondary)]">{u.tokens_out}</td>
                     <td className="text-right py-2 px-4 gradient-text font-medium">${Number(u.cost).toFixed(6)}</td>
