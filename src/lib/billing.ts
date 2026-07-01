@@ -210,22 +210,10 @@ export async function checkTokenLimits(userId: string): Promise<TokenLimitResult
     const weeksSinceStart = Math.floor(elapsed / msPerWeek);
     weekStartUTC = new Date(subStart.getTime() + weeksSinceStart * msPerWeek);
 
-    // Monthly: same day-of-month as subscription start
-    const subDay = subStart.getUTCDate();
-    const curMonth = witaNow.getUTCMonth();
-    const curYear = witaNow.getUTCFullYear();
-    // Walk back to find the most recent month that has subDay
-    let m = new Date(Date.UTC(curYear, curMonth + 1, 1)); // next month 1st
-    while (true) {
-      m = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth() - 1, 1));
-      const dim = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth() + 1, 0)).getUTCDate();
-      const clampedDay = Math.min(subDay, dim);
-      const candidate = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth(), clampedDay));
-      if (candidate <= now) {
-        monthStartUTC = new Date(candidate.getTime() - WITA_OFFSET);
-        break;
-      }
-    }
+    // Monthly: 30-day cycle from subscription start
+    const msPerMonth = 30 * 24 * 60 * 60 * 1000;
+    const monthsSinceStart = Math.floor(elapsed / msPerMonth);
+    monthStartUTC = new Date(subStart.getTime() + monthsSinceStart * msPerMonth);
   } else {
     // Free plan: calendar-based
     // Week start: Monday 00:00 WITA

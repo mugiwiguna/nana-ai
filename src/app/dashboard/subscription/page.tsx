@@ -186,7 +186,7 @@ export default function SubscriptionPage() {
               {([
                 ["daily", "Harian", "midnight WITA"],
                 ["weekly", "Mingguan", sub?.active?.starts_at ? "cycle dari tgl sub" : "Senin"],
-                ["monthly", "Bulanan", sub?.active?.starts_at ? "tgl sub tiap bulan" : "tgl 1"],
+                ["monthly", "Bulanan", sub?.active?.starts_at ? "cycle 30 hari dari tgl sub" : "tgl 1"],
               ] as const).map(([key, label, resetNote]) => {
                 const l = sub.tokenLimits![key];
                 if (!l.limit) return null;
