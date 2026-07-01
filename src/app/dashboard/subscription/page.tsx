@@ -60,10 +60,35 @@ export default function SubscriptionPage() {
   const [loading, setLoading] = useState(true);
   const [buying, setBuying] = useState<string | null>(null);
   const [paymentPicker, setPaymentPicker] = useState<{ planId: string; planName: string; price: string } | null>(null);
-  const [msg, setMsg] = useState<{ text: string; ok: boolean } | null>(null);
+  const [toast, setToast] = useState<{ text: string; ok: boolean } | null>(null);
+  const [payments, setPayments] = useState<any[]>([]);
   const [freeUsage, setFreeUsage] = useState<any>(null);
   const [showFreeModal, setShowFreeModal] = useState(false);
   const [idrRate, setIdrRate] = useState(16000);
+  const [countdown, setCountdown] = useState("");
+
+  // Toast auto-dismiss
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(null), 4000);
+    return () => clearTimeout(t);
+  }, [toast]);
+
+  // Countdown timer
+  useEffect(() => {
+    if (!sub?.active?.expires_at) return;
+    const tick = () => {
+      const diff = new Date(sub.active!.expires_at).getTime() - Date.now();
+      if (diff <= 0) { setCountdown("Kadaluarsa"); return; }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      setCountdown(d > 0 ? `${d}h ${h}j ${m}m` : h > 0 ? `${h}j ${m}m` : `${m}m`);
+    };
+    tick();
+    const interval = setInterval(tick, 60000);
+    return () => clearInterval(interval);
+  }, [sub?.active?.expires_at]);
 
   useEffect(() => {
     const cached = localStorage.getItem("usd_idr_rate");
@@ -91,11 +116,13 @@ export default function SubscriptionPage() {
       fetch("/api/plans").then((r) => r.json()),
       fetch("/api/subscription").then((r) => r.json()),
       fetch("/api/user/free-tier-usage", { cache: "no-store" }).then((r) => r.json()).catch(() => null),
+      fetch("/api/payments").then((r) => r.json()).catch(() => []),
     ])
-      .then(([p, s, f]) => {
+      .then(([p, s, f, pay]) => {
         setPlans(p);
         setSub(s);
         if (f && !f.error) setFreeUsage(f);
+        if (Array.isArray(pay)) setPayments(pay);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -103,7 +130,7 @@ export default function SubscriptionPage() {
   async function handleSubscribe(planId: string, method: "balance" | "qris") {
     setBuying(planId);
     setPaymentPicker(null);
-    setMsg(null);
+    setToast(null);
     try {
       const res = await fetch("/api/subscribe", {
         method: "POST",
@@ -112,15 +139,15 @@ export default function SubscriptionPage() {
       });
       const json = await res.json();
       if (res.ok) {
-        setMsg({ text: json.message || "Berhasil!", ok: true });
+        setToast({ text: json.message || "Berhasil!", ok: true });
         // Refresh subscription data
         const s = await fetch("/api/subscription").then((r) => r.json());
         setSub(s);
       } else {
-        setMsg({ text: json.error || "Gagal", ok: false });
+        setToast({ text: json.error || "Gagal", ok: false });
       }
     } catch {
-      setMsg({ text: "Network error", ok: false });
+      setToast({ text: "Network error", ok: false });
     }
     setBuying(null);
   }
@@ -140,13 +167,13 @@ export default function SubscriptionPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16 space-y-8">
       {/* Message */}
-      {msg && (
+      {toast && (
         <div className={`p-4 rounded-xl text-sm font-medium ${
-          msg.ok
+          toast.ok
             ? "bg-[var(--gradient-start)]/10 text-[var(--gradient-start)] border border-[var(--gradient-start)]/20"
             : "bg-red-500/10 text-red-500 border border-red-500/20"
         }`}>
-          {msg.text}
+          {toast.text}
         </div>
       )}
 
@@ -209,6 +236,12 @@ export default function SubscriptionPage() {
               </p>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
                 Berlaku hingga {new Date(sub!.active!.expires_at).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}
+                {countdown && countdown !== "Kadaluarsa" && (
+                  <span className="ml-2 inline-flex items-center gap-1 text-emerald-400 font-medium">
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    {countdown}
+                  </span>
+                )}
               </p>
             </div>
             <div className="text-right">
@@ -394,37 +427,35 @@ export default function SubscriptionPage() {
         </div>
       </div>
 
-      {/* History */}
+      {/* Payment History */}
       <div className="glass-card rounded-2xl p-6">
-        <h2 className="text-lg font-semibold mb-4">Riwayat</h2>
-        {sub?.history && sub.history.length > 0 ? (
+        <h2 className="text-lg font-semibold mb-4">Riwayat Pembayaran</h2>
+        {payments.length > 0 ? (
           <div className="space-y-2">
-            {sub.history.map((item) => (
+            {payments.map((item) => (
               <div key={item.id} className="flex items-center justify-between p-3 rounded-xl bg-[var(--bg-secondary)]">
                 <div>
                   <p className="font-medium text-sm">{item.plan_name}</p>
                   <p className="text-xs text-[var(--text-secondary)]">
-                    {new Date(item.created_at).toLocaleDateString("id-ID")} · {item.payment_method === "balance" ? "Saldo" : "QRIS"}
+                    {new Date(item.created_at).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })} · {item.payment_method === "balance" ? "Saldo" : "QRIS"}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-medium">${Number(item.price).toLocaleString()}</p>
-                  <p className="text-[10px] text-[var(--text-secondary)]">~Rp {Math.round(Number(item.price) * idrRate).toLocaleString("id-ID")}</p>
+                  <p className="text-sm font-bold">${Number(item.amount).toLocaleString()}</p>
+                  <p className="text-[10px] text-[var(--text-secondary)]">~Rp {Math.round(Number(item.amount) * idrRate).toLocaleString("id-ID")}</p>
                   <span className={`text-[10px] px-2 py-0.5 rounded-full ${
-                    item.status === "active"
-                      ? "bg-[var(--gradient-start)]/10 text-[var(--gradient-start)]"
-                      : item.status === "pending"
-                        ? "bg-yellow-500/10 text-yellow-500"
-                        : "bg-zinc-500/10 text-zinc-400"
+                    item.status === "completed"
+                      ? "bg-emerald-500/10 text-emerald-500"
+                      : "bg-yellow-500/10 text-yellow-500"
                   }`}>
-                    {item.status === "active" ? "Aktif" : item.status === "pending" ? "Pending" : "Kadaluarsa"}
+                    {item.status === "completed" ? "Berhasil" : "Pending"}
                   </span>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-[var(--text-secondary)] text-sm text-center py-4">Belum ada riwayat</p>
+          <p className="text-[var(--text-secondary)] text-sm text-center py-4">Belum ada riwayat pembayaran</p>
         )}
       </div>
 

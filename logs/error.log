@@ -236,3 +236,2174 @@
 2026-06-24 10:36:33:     at async l (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:5854)
 2026-06-24 10:36:33:     at async Module.y [as handler] (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:6961)
 2026-06-24 10:36:33:     at async NextNodeServer.renderToResponseWithComponentsImpl (/home/ubuntu/nanaai/node_modules/next/dist/server/base-server.js:1462:9)
+2026-06-24 11:18:21: [31m[auth][error][0m CallbackRouteError: Read more at https://errors.authjs.dev#callbackrouteerror
+2026-06-24 11:18:21: [31m[auth][cause][0m: nH: response parameter "iss" (issuer) missing
+2026-06-24 11:18:21:     at nD (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:5174)
+2026-06-24 11:18:21:     at /home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:29900
+2026-06-24 11:18:21:     at ic (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:30690)
+2026-06-24 11:18:21:     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+2026-06-24 11:18:21:     at async iv (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:38134)
+2026-06-24 11:18:21:     at async iC (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:50120)
+2026-06-24 11:18:21:     at async iU (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:54801)
+2026-06-24 11:18:21:     at async rJ.do (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:20930)
+2026-06-24 11:18:21:     at async rJ.handle (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:25785)
+2026-06-24 11:18:21:     at async d (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:4813)
+2026-06-24 11:18:21: [31m[auth][details][0m: {
+2026-06-24 11:18:21:   "parameters": {},
+2026-06-24 11:18:21:   "provider": "google"
+2026-06-24 11:18:21: }
+2026-06-24 21:21:37: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-24 21:21:37: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-24 21:21:37:     at ignore-listed frames
+2026-06-25 18:32:52: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-25 18:32:52: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-25 18:32:52:     at ignore-listed frames
+2026-06-25 18:32:53: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-25 18:32:53: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-25 18:32:53:     at ignore-listed frames
+2026-06-25 18:32:53: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-25 18:32:53: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-25 18:32:53:     at ignore-listed frames
+2026-06-25 18:32:54: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-25 18:32:54: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-25 18:32:54:     at ignore-listed frames
+2026-06-25 18:32:55: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-25 18:32:55: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-25 18:32:55:     at ignore-listed frames
+2026-06-25 18:32:55: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-25 18:32:55: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-25 18:32:55:     at ignore-listed frames
+2026-06-26 00:54:03: Error: Failed to find Server Action "7b902413112060496a5649327a873639ca70f290". This request might be from an older or newer deployment.
+2026-06-26 00:54:03: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-26 00:54:03:     at ignore-listed frames
+2026-06-26 19:14:44: Error: Failed to find Server Action "b8e05f8dcb99d1e87e1a4bf1878c6a6c5ba3bf72". This request might be from an older or newer deployment.
+2026-06-26 19:14:44: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-26 19:14:44:     at ignore-listed frames
+2026-06-26 22:39:28: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-26 22:39:28: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-26 22:39:28:     at ignore-listed frames
+2026-06-26 22:39:29: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-26 22:39:29: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-26 22:39:29:     at ignore-listed frames
+2026-06-26 22:39:29: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-26 22:39:29: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-26 22:39:29:     at ignore-listed frames
+2026-06-26 22:39:30: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-26 22:39:30: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-26 22:39:30:     at ignore-listed frames
+2026-06-26 22:39:31: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-26 22:39:31: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-26 22:39:31:     at ignore-listed frames
+2026-06-26 22:39:31: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-26 22:39:31: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-26 22:39:31:     at ignore-listed frames
+2026-06-27 00:57:51: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-27 00:57:51: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-27 00:57:51:     at ignore-listed frames
+2026-06-27 01:59:15: [31m[auth][error][0m MissingCSRF: CSRF token was missing during an action signin. Read more at https://errors.authjs.dev#missingcsrf
+2026-06-27 01:59:15:     at ri (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:1:82486)
+2026-06-27 01:59:15:     at iC (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:50650)
+2026-06-27 01:59:15:     at async iU (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:54801)
+2026-06-27 01:59:15:     at async rJ.do (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:20930)
+2026-06-27 01:59:15:     at async rJ.handle (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:25785)
+2026-06-27 01:59:15:     at async d (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:4813)
+2026-06-27 01:59:15:     at async rJ.handleResponse (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:1:119701)
+2026-06-27 01:59:15:     at async l (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:5854)
+2026-06-27 01:59:15:     at async Module.y [as handler] (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:6961)
+2026-06-27 01:59:15:     at async NextNodeServer.renderToResponseWithComponentsImpl (/home/ubuntu/nanaai/node_modules/next/dist/server/base-server.js:1462:9)
+2026-06-28 04:46:53: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-28 04:46:53: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-28 04:46:53:     at ignore-listed frames
+2026-06-28 04:46:54: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-28 04:46:54: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-28 04:46:54:     at ignore-listed frames
+2026-06-28 04:46:54: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-28 04:46:54: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-28 04:46:54:     at ignore-listed frames
+2026-06-28 04:46:55: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-28 04:46:55: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-28 04:46:55:     at ignore-listed frames
+2026-06-28 04:46:55: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-28 04:46:55: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-28 04:46:55:     at ignore-listed frames
+2026-06-28 04:46:56: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-28 04:46:56: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-28 04:46:56:     at ignore-listed frames
+2026-06-29 12:26:17: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-29 12:26:17: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-29 12:26:17:     at ignore-listed frames
+2026-06-29 12:26:18: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-29 12:26:18: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-29 12:26:18:     at ignore-listed frames
+2026-06-29 12:26:18: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-29 12:26:18: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-29 12:26:18:     at ignore-listed frames
+2026-06-29 12:26:19: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-29 12:26:19: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-29 12:26:19:     at ignore-listed frames
+2026-06-29 12:26:20: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-29 12:26:20: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-29 12:26:20:     at ignore-listed frames
+2026-06-29 12:26:20: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-29 12:26:20: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-29 12:26:20:     at ignore-listed frames
+2026-06-30 19:27:11: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-30 19:27:11: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-30 19:27:11:     at ignore-listed frames
+2026-06-30 19:27:12: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-30 19:27:12: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-30 19:27:12:     at ignore-listed frames
+2026-06-30 19:27:13: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-30 19:27:13: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-30 19:27:13:     at ignore-listed frames
+2026-06-30 19:27:13: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-30 19:27:13: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-30 19:27:13:     at ignore-listed frames
+2026-06-30 19:27:14: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-30 19:27:14: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-30 19:27:14:     at ignore-listed frames
+2026-06-30 19:27:14: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-06-30 19:27:14: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-06-30 19:27:14:     at ignore-listed frames
+2026-06-30 23:57:02: ⨯ error: column ul.total_tokens does not exist
+2026-06-30 23:57:02:     at async i (src/lib/db.ts:12:17)
+2026-06-30 23:57:02:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-06-30 23:57:02:   length: 113,
+2026-06-30 23:57:02:   severity: 'ERROR',
+2026-06-30 23:57:02:   code: '42703',
+2026-06-30 23:57:02:   detail: undefined,
+2026-06-30 23:57:02:   hint: undefined,
+2026-06-30 23:57:02:   position: '21',
+2026-06-30 23:57:02:   internalPosition: undefined,
+2026-06-30 23:57:02:   internalQuery: undefined,
+2026-06-30 23:57:02:   where: undefined,
+2026-06-30 23:57:02:   schema: undefined,
+2026-06-30 23:57:02:   table: undefined,
+2026-06-30 23:57:02:   column: undefined,
+2026-06-30 23:57:02:   dataType: undefined,
+2026-06-30 23:57:02:   constraint: undefined,
+2026-06-30 23:57:02:   file: 'parse_relation.c',
+2026-06-30 23:57:02:   line: '3722',
+2026-06-30 23:57:02:   routine: 'errorMissingColumn'
+2026-06-30 23:57:02: }
+2026-06-30 23:57:02: ⨯ error: column ul.total_tokens does not exist
+2026-06-30 23:57:02:     at async i (src/lib/db.ts:12:17)
+2026-06-30 23:57:02:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-06-30 23:57:02:   length: 113,
+2026-06-30 23:57:02:   severity: 'ERROR',
+2026-06-30 23:57:02:   code: '42703',
+2026-06-30 23:57:02:   detail: undefined,
+2026-06-30 23:57:02:   hint: undefined,
+2026-06-30 23:57:02:   position: '21',
+2026-06-30 23:57:02:   internalPosition: undefined,
+2026-06-30 23:57:02:   internalQuery: undefined,
+2026-06-30 23:57:02:   where: undefined,
+2026-06-30 23:57:02:   schema: undefined,
+2026-06-30 23:57:02:   table: undefined,
+2026-06-30 23:57:02:   column: undefined,
+2026-06-30 23:57:02:   dataType: undefined,
+2026-06-30 23:57:02:   constraint: undefined,
+2026-06-30 23:57:02:   file: 'parse_relation.c',
+2026-06-30 23:57:02:   line: '3722',
+2026-06-30 23:57:02:   routine: 'errorMissingColumn'
+2026-06-30 23:57:02: }
+2026-06-30 23:57:02: ⨯ error: column ul.total_tokens does not exist
+2026-06-30 23:57:02:     at async i (src/lib/db.ts:12:17)
+2026-06-30 23:57:02:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-06-30 23:57:02:   length: 113,
+2026-06-30 23:57:02:   severity: 'ERROR',
+2026-06-30 23:57:02:   code: '42703',
+2026-06-30 23:57:02:   detail: undefined,
+2026-06-30 23:57:02:   hint: undefined,
+2026-06-30 23:57:02:   position: '21',
+2026-06-30 23:57:02:   internalPosition: undefined,
+2026-06-30 23:57:02:   internalQuery: undefined,
+2026-06-30 23:57:02:   where: undefined,
+2026-06-30 23:57:02:   schema: undefined,
+2026-06-30 23:57:02:   table: undefined,
+2026-06-30 23:57:02:   column: undefined,
+2026-06-30 23:57:02:   dataType: undefined,
+2026-06-30 23:57:02:   constraint: undefined,
+2026-06-30 23:57:02:   file: 'parse_relation.c',
+2026-06-30 23:57:02:   line: '3722',
+2026-06-30 23:57:02:   routine: 'errorMissingColumn'
+2026-06-30 23:57:02: }
+2026-06-30 23:57:28: ⨯ error: column ul.total_tokens does not exist
+2026-06-30 23:57:28:     at async i (src/lib/db.ts:12:17)
+2026-06-30 23:57:28:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-06-30 23:57:28:   length: 113,
+2026-06-30 23:57:28:   severity: 'ERROR',
+2026-06-30 23:57:28:   code: '42703',
+2026-06-30 23:57:28:   detail: undefined,
+2026-06-30 23:57:28:   hint: undefined,
+2026-06-30 23:57:28:   position: '21',
+2026-06-30 23:57:28:   internalPosition: undefined,
+2026-06-30 23:57:28:   internalQuery: undefined,
+2026-06-30 23:57:28:   where: undefined,
+2026-06-30 23:57:28:   schema: undefined,
+2026-06-30 23:57:28:   table: undefined,
+2026-06-30 23:57:28:   column: undefined,
+2026-06-30 23:57:28:   dataType: undefined,
+2026-06-30 23:57:28:   constraint: undefined,
+2026-06-30 23:57:28:   file: 'parse_relation.c',
+2026-06-30 23:57:28:   line: '3722',
+2026-06-30 23:57:28:   routine: 'errorMissingColumn'
+2026-06-30 23:57:28: }
+2026-06-30 23:57:28: ⨯ error: column ul.total_tokens does not exist
+2026-06-30 23:57:28:     at async i (src/lib/db.ts:12:17)
+2026-06-30 23:57:28:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-06-30 23:57:28:   length: 113,
+2026-06-30 23:57:28:   severity: 'ERROR',
+2026-06-30 23:57:28:   code: '42703',
+2026-06-30 23:57:28:   detail: undefined,
+2026-06-30 23:57:28:   hint: undefined,
+2026-06-30 23:57:28:   position: '21',
+2026-06-30 23:57:28:   internalPosition: undefined,
+2026-06-30 23:57:28:   internalQuery: undefined,
+2026-06-30 23:57:28:   where: undefined,
+2026-06-30 23:57:28:   schema: undefined,
+2026-06-30 23:57:28:   table: undefined,
+2026-06-30 23:57:28:   column: undefined,
+2026-06-30 23:57:28:   dataType: undefined,
+2026-06-30 23:57:28:   constraint: undefined,
+2026-06-30 23:57:28:   file: 'parse_relation.c',
+2026-06-30 23:57:28:   line: '3722',
+2026-06-30 23:57:28:   routine: 'errorMissingColumn'
+2026-06-30 23:57:28: }
+2026-06-30 23:57:58: ⨯ error: column ul.total_tokens does not exist
+2026-06-30 23:57:58:     at async i (src/lib/db.ts:12:17)
+2026-06-30 23:57:58:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-06-30 23:57:58:   length: 113,
+2026-06-30 23:57:58:   severity: 'ERROR',
+2026-06-30 23:57:58:   code: '42703',
+2026-06-30 23:57:58:   detail: undefined,
+2026-06-30 23:57:58:   hint: undefined,
+2026-06-30 23:57:58:   position: '21',
+2026-06-30 23:57:58:   internalPosition: undefined,
+2026-06-30 23:57:58:   internalQuery: undefined,
+2026-06-30 23:57:58:   where: undefined,
+2026-06-30 23:57:58:   schema: undefined,
+2026-06-30 23:57:58:   table: undefined,
+2026-06-30 23:57:58:   column: undefined,
+2026-06-30 23:57:58:   dataType: undefined,
+2026-06-30 23:57:58:   constraint: undefined,
+2026-06-30 23:57:58:   file: 'parse_relation.c',
+2026-06-30 23:57:58:   line: '3722',
+2026-06-30 23:57:58:   routine: 'errorMissingColumn'
+2026-06-30 23:57:58: }
+2026-06-30 23:58:28: ⨯ error: column ul.total_tokens does not exist
+2026-06-30 23:58:28:     at async i (src/lib/db.ts:12:17)
+2026-06-30 23:58:28:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-06-30 23:58:28:   length: 113,
+2026-06-30 23:58:28:   severity: 'ERROR',
+2026-06-30 23:58:28:   code: '42703',
+2026-06-30 23:58:28:   detail: undefined,
+2026-06-30 23:58:28:   hint: undefined,
+2026-06-30 23:58:28:   position: '21',
+2026-06-30 23:58:28:   internalPosition: undefined,
+2026-06-30 23:58:28:   internalQuery: undefined,
+2026-06-30 23:58:28:   where: undefined,
+2026-06-30 23:58:28:   schema: undefined,
+2026-06-30 23:58:28:   table: undefined,
+2026-06-30 23:58:28:   column: undefined,
+2026-06-30 23:58:28:   dataType: undefined,
+2026-06-30 23:58:28:   constraint: undefined,
+2026-06-30 23:58:28:   file: 'parse_relation.c',
+2026-06-30 23:58:28:   line: '3722',
+2026-06-30 23:58:28:   routine: 'errorMissingColumn'
+2026-06-30 23:58:28: }
+2026-06-30 23:58:41: ⨯ error: column ul.total_tokens does not exist
+2026-06-30 23:58:41:     at async i (src/lib/db.ts:12:17)
+2026-06-30 23:58:41:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-06-30 23:58:41:   length: 113,
+2026-06-30 23:58:41:   severity: 'ERROR',
+2026-06-30 23:58:41:   code: '42703',
+2026-06-30 23:58:41:   detail: undefined,
+2026-06-30 23:58:41:   hint: undefined,
+2026-06-30 23:58:41:   position: '21',
+2026-06-30 23:58:41:   internalPosition: undefined,
+2026-06-30 23:58:41:   internalQuery: undefined,
+2026-06-30 23:58:41:   where: undefined,
+2026-06-30 23:58:41:   schema: undefined,
+2026-06-30 23:58:41:   table: undefined,
+2026-06-30 23:58:41:   column: undefined,
+2026-06-30 23:58:41:   dataType: undefined,
+2026-06-30 23:58:41:   constraint: undefined,
+2026-06-30 23:58:41:   file: 'parse_relation.c',
+2026-06-30 23:58:41:   line: '3722',
+2026-06-30 23:58:41:   routine: 'errorMissingColumn'
+2026-06-30 23:58:41: }
+2026-06-30 23:58:41: ⨯ error: column ul.total_tokens does not exist
+2026-06-30 23:58:41:     at async i (src/lib/db.ts:12:17)
+2026-06-30 23:58:41:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-06-30 23:58:41:   length: 113,
+2026-06-30 23:58:41:   severity: 'ERROR',
+2026-06-30 23:58:41:   code: '42703',
+2026-06-30 23:58:41:   detail: undefined,
+2026-06-30 23:58:41:   hint: undefined,
+2026-06-30 23:58:41:   position: '21',
+2026-06-30 23:58:41:   internalPosition: undefined,
+2026-06-30 23:58:41:   internalQuery: undefined,
+2026-06-30 23:58:41:   where: undefined,
+2026-06-30 23:58:41:   schema: undefined,
+2026-06-30 23:58:41:   table: undefined,
+2026-06-30 23:58:41:   column: undefined,
+2026-06-30 23:58:41:   dataType: undefined,
+2026-06-30 23:58:41:   constraint: undefined,
+2026-06-30 23:58:41:   file: 'parse_relation.c',
+2026-06-30 23:58:41:   line: '3722',
+2026-06-30 23:58:41:   routine: 'errorMissingColumn'
+2026-06-30 23:58:41: }
+2026-06-30 23:59:05: ⨯ error: column ul.total_tokens does not exist
+2026-06-30 23:59:05:     at async i (src/lib/db.ts:12:17)
+2026-06-30 23:59:05:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-06-30 23:59:05:   length: 113,
+2026-06-30 23:59:05:   severity: 'ERROR',
+2026-06-30 23:59:05:   code: '42703',
+2026-06-30 23:59:05:   detail: undefined,
+2026-06-30 23:59:05:   hint: undefined,
+2026-06-30 23:59:05:   position: '21',
+2026-06-30 23:59:05:   internalPosition: undefined,
+2026-06-30 23:59:05:   internalQuery: undefined,
+2026-06-30 23:59:05:   where: undefined,
+2026-06-30 23:59:05:   schema: undefined,
+2026-06-30 23:59:05:   table: undefined,
+2026-06-30 23:59:05:   column: undefined,
+2026-06-30 23:59:05:   dataType: undefined,
+2026-06-30 23:59:05:   constraint: undefined,
+2026-06-30 23:59:05:   file: 'parse_relation.c',
+2026-06-30 23:59:05:   line: '3722',
+2026-06-30 23:59:05:   routine: 'errorMissingColumn'
+2026-06-30 23:59:05: }
+2026-06-30 23:59:05: ⨯ error: column ul.total_tokens does not exist
+2026-06-30 23:59:05:     at async i (src/lib/db.ts:12:17)
+2026-06-30 23:59:05:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-06-30 23:59:05:   length: 113,
+2026-06-30 23:59:05:   severity: 'ERROR',
+2026-06-30 23:59:05:   code: '42703',
+2026-06-30 23:59:05:   detail: undefined,
+2026-06-30 23:59:05:   hint: undefined,
+2026-06-30 23:59:05:   position: '21',
+2026-06-30 23:59:05:   internalPosition: undefined,
+2026-06-30 23:59:05:   internalQuery: undefined,
+2026-06-30 23:59:05:   where: undefined,
+2026-06-30 23:59:05:   schema: undefined,
+2026-06-30 23:59:05:   table: undefined,
+2026-06-30 23:59:05:   column: undefined,
+2026-06-30 23:59:05:   dataType: undefined,
+2026-06-30 23:59:05:   constraint: undefined,
+2026-06-30 23:59:05:   file: 'parse_relation.c',
+2026-06-30 23:59:05:   line: '3722',
+2026-06-30 23:59:05:   routine: 'errorMissingColumn'
+2026-06-30 23:59:05: }
+2026-07-01 00:00:29: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:00:29:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:00:29:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:00:29:   length: 113,
+2026-07-01 00:00:29:   severity: 'ERROR',
+2026-07-01 00:00:29:   code: '42703',
+2026-07-01 00:00:29:   detail: undefined,
+2026-07-01 00:00:29:   hint: undefined,
+2026-07-01 00:00:29:   position: '21',
+2026-07-01 00:00:29:   internalPosition: undefined,
+2026-07-01 00:00:29:   internalQuery: undefined,
+2026-07-01 00:00:29:   where: undefined,
+2026-07-01 00:00:29:   schema: undefined,
+2026-07-01 00:00:29:   table: undefined,
+2026-07-01 00:00:29:   column: undefined,
+2026-07-01 00:00:29:   dataType: undefined,
+2026-07-01 00:00:29:   constraint: undefined,
+2026-07-01 00:00:29:   file: 'parse_relation.c',
+2026-07-01 00:00:29:   line: '3722',
+2026-07-01 00:00:29:   routine: 'errorMissingColumn'
+2026-07-01 00:00:29: }
+2026-07-01 00:00:29: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:00:29:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:00:29:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:00:29:   length: 113,
+2026-07-01 00:00:29:   severity: 'ERROR',
+2026-07-01 00:00:29:   code: '42703',
+2026-07-01 00:00:29:   detail: undefined,
+2026-07-01 00:00:29:   hint: undefined,
+2026-07-01 00:00:29:   position: '21',
+2026-07-01 00:00:29:   internalPosition: undefined,
+2026-07-01 00:00:29:   internalQuery: undefined,
+2026-07-01 00:00:29:   where: undefined,
+2026-07-01 00:00:29:   schema: undefined,
+2026-07-01 00:00:29:   table: undefined,
+2026-07-01 00:00:29:   column: undefined,
+2026-07-01 00:00:29:   dataType: undefined,
+2026-07-01 00:00:29:   constraint: undefined,
+2026-07-01 00:00:29:   file: 'parse_relation.c',
+2026-07-01 00:00:29:   line: '3722',
+2026-07-01 00:00:29:   routine: 'errorMissingColumn'
+2026-07-01 00:00:29: }
+2026-07-01 00:00:29: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:00:29:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:00:29:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:00:29:   length: 113,
+2026-07-01 00:00:29:   severity: 'ERROR',
+2026-07-01 00:00:29:   code: '42703',
+2026-07-01 00:00:29:   detail: undefined,
+2026-07-01 00:00:29:   hint: undefined,
+2026-07-01 00:00:29:   position: '21',
+2026-07-01 00:00:29:   internalPosition: undefined,
+2026-07-01 00:00:29:   internalQuery: undefined,
+2026-07-01 00:00:29:   where: undefined,
+2026-07-01 00:00:29:   schema: undefined,
+2026-07-01 00:00:29:   table: undefined,
+2026-07-01 00:00:29:   column: undefined,
+2026-07-01 00:00:29:   dataType: undefined,
+2026-07-01 00:00:29:   constraint: undefined,
+2026-07-01 00:00:29:   file: 'parse_relation.c',
+2026-07-01 00:00:29:   line: '3722',
+2026-07-01 00:00:29:   routine: 'errorMissingColumn'
+2026-07-01 00:00:29: }
+2026-07-01 00:01:20: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:01:20:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:01:20:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:01:20:   length: 113,
+2026-07-01 00:01:20:   severity: 'ERROR',
+2026-07-01 00:01:20:   code: '42703',
+2026-07-01 00:01:20:   detail: undefined,
+2026-07-01 00:01:20:   hint: undefined,
+2026-07-01 00:01:20:   position: '21',
+2026-07-01 00:01:20:   internalPosition: undefined,
+2026-07-01 00:01:20:   internalQuery: undefined,
+2026-07-01 00:01:20:   where: undefined,
+2026-07-01 00:01:20:   schema: undefined,
+2026-07-01 00:01:20:   table: undefined,
+2026-07-01 00:01:20:   column: undefined,
+2026-07-01 00:01:20:   dataType: undefined,
+2026-07-01 00:01:20:   constraint: undefined,
+2026-07-01 00:01:20:   file: 'parse_relation.c',
+2026-07-01 00:01:20:   line: '3722',
+2026-07-01 00:01:20:   routine: 'errorMissingColumn'
+2026-07-01 00:01:20: }
+2026-07-01 00:01:20: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:01:20:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:01:20:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:01:20:   length: 113,
+2026-07-01 00:01:20:   severity: 'ERROR',
+2026-07-01 00:01:20:   code: '42703',
+2026-07-01 00:01:20:   detail: undefined,
+2026-07-01 00:01:20:   hint: undefined,
+2026-07-01 00:01:20:   position: '21',
+2026-07-01 00:01:20:   internalPosition: undefined,
+2026-07-01 00:01:20:   internalQuery: undefined,
+2026-07-01 00:01:20:   where: undefined,
+2026-07-01 00:01:20:   schema: undefined,
+2026-07-01 00:01:20:   table: undefined,
+2026-07-01 00:01:20:   column: undefined,
+2026-07-01 00:01:20:   dataType: undefined,
+2026-07-01 00:01:20:   constraint: undefined,
+2026-07-01 00:01:20:   file: 'parse_relation.c',
+2026-07-01 00:01:20:   line: '3722',
+2026-07-01 00:01:20:   routine: 'errorMissingColumn'
+2026-07-01 00:01:20: }
+2026-07-01 00:01:20: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:01:20:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:01:20:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:01:20:   length: 113,
+2026-07-01 00:01:20:   severity: 'ERROR',
+2026-07-01 00:01:20:   code: '42703',
+2026-07-01 00:01:20:   detail: undefined,
+2026-07-01 00:01:20:   hint: undefined,
+2026-07-01 00:01:20:   position: '21',
+2026-07-01 00:01:20:   internalPosition: undefined,
+2026-07-01 00:01:20:   internalQuery: undefined,
+2026-07-01 00:01:20:   where: undefined,
+2026-07-01 00:01:20:   schema: undefined,
+2026-07-01 00:01:20:   table: undefined,
+2026-07-01 00:01:20:   column: undefined,
+2026-07-01 00:01:20:   dataType: undefined,
+2026-07-01 00:01:20:   constraint: undefined,
+2026-07-01 00:01:20:   file: 'parse_relation.c',
+2026-07-01 00:01:20:   line: '3722',
+2026-07-01 00:01:20:   routine: 'errorMissingColumn'
+2026-07-01 00:01:20: }
+2026-07-01 00:01:21: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:01:21:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:01:21:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:01:21:   length: 113,
+2026-07-01 00:01:21:   severity: 'ERROR',
+2026-07-01 00:01:21:   code: '42703',
+2026-07-01 00:01:21:   detail: undefined,
+2026-07-01 00:01:21:   hint: undefined,
+2026-07-01 00:01:21:   position: '21',
+2026-07-01 00:01:21:   internalPosition: undefined,
+2026-07-01 00:01:21:   internalQuery: undefined,
+2026-07-01 00:01:21:   where: undefined,
+2026-07-01 00:01:21:   schema: undefined,
+2026-07-01 00:01:21:   table: undefined,
+2026-07-01 00:01:21:   column: undefined,
+2026-07-01 00:01:21:   dataType: undefined,
+2026-07-01 00:01:21:   constraint: undefined,
+2026-07-01 00:01:21:   file: 'parse_relation.c',
+2026-07-01 00:01:21:   line: '3722',
+2026-07-01 00:01:21:   routine: 'errorMissingColumn'
+2026-07-01 00:01:21: }
+2026-07-01 00:01:22: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:01:22:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:01:22:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:01:22:   length: 113,
+2026-07-01 00:01:22:   severity: 'ERROR',
+2026-07-01 00:01:22:   code: '42703',
+2026-07-01 00:01:22:   detail: undefined,
+2026-07-01 00:01:22:   hint: undefined,
+2026-07-01 00:01:22:   position: '21',
+2026-07-01 00:01:22:   internalPosition: undefined,
+2026-07-01 00:01:22:   internalQuery: undefined,
+2026-07-01 00:01:22:   where: undefined,
+2026-07-01 00:01:22:   schema: undefined,
+2026-07-01 00:01:22:   table: undefined,
+2026-07-01 00:01:22:   column: undefined,
+2026-07-01 00:01:22:   dataType: undefined,
+2026-07-01 00:01:22:   constraint: undefined,
+2026-07-01 00:01:22:   file: 'parse_relation.c',
+2026-07-01 00:01:22:   line: '3722',
+2026-07-01 00:01:22:   routine: 'errorMissingColumn'
+2026-07-01 00:01:22: }
+2026-07-01 00:01:51: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:01:51:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:01:51:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:01:51:   length: 113,
+2026-07-01 00:01:51:   severity: 'ERROR',
+2026-07-01 00:01:51:   code: '42703',
+2026-07-01 00:01:51:   detail: undefined,
+2026-07-01 00:01:51:   hint: undefined,
+2026-07-01 00:01:51:   position: '21',
+2026-07-01 00:01:51:   internalPosition: undefined,
+2026-07-01 00:01:51:   internalQuery: undefined,
+2026-07-01 00:01:51:   where: undefined,
+2026-07-01 00:01:51:   schema: undefined,
+2026-07-01 00:01:51:   table: undefined,
+2026-07-01 00:01:51:   column: undefined,
+2026-07-01 00:01:51:   dataType: undefined,
+2026-07-01 00:01:51:   constraint: undefined,
+2026-07-01 00:01:51:   file: 'parse_relation.c',
+2026-07-01 00:01:51:   line: '3722',
+2026-07-01 00:01:51:   routine: 'errorMissingColumn'
+2026-07-01 00:01:51: }
+2026-07-01 00:03:32: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:03:32:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:03:32:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:03:32:   length: 113,
+2026-07-01 00:03:32:   severity: 'ERROR',
+2026-07-01 00:03:32:   code: '42703',
+2026-07-01 00:03:32:   detail: undefined,
+2026-07-01 00:03:32:   hint: undefined,
+2026-07-01 00:03:32:   position: '21',
+2026-07-01 00:03:32:   internalPosition: undefined,
+2026-07-01 00:03:32:   internalQuery: undefined,
+2026-07-01 00:03:32:   where: undefined,
+2026-07-01 00:03:32:   schema: undefined,
+2026-07-01 00:03:32:   table: undefined,
+2026-07-01 00:03:32:   column: undefined,
+2026-07-01 00:03:32:   dataType: undefined,
+2026-07-01 00:03:32:   constraint: undefined,
+2026-07-01 00:03:32:   file: 'parse_relation.c',
+2026-07-01 00:03:32:   line: '3722',
+2026-07-01 00:03:32:   routine: 'errorMissingColumn'
+2026-07-01 00:03:32: }
+2026-07-01 00:03:33: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:03:33:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:03:33:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:03:33:   length: 113,
+2026-07-01 00:03:33:   severity: 'ERROR',
+2026-07-01 00:03:33:   code: '42703',
+2026-07-01 00:03:33:   detail: undefined,
+2026-07-01 00:03:33:   hint: undefined,
+2026-07-01 00:03:33:   position: '21',
+2026-07-01 00:03:33:   internalPosition: undefined,
+2026-07-01 00:03:33:   internalQuery: undefined,
+2026-07-01 00:03:33:   where: undefined,
+2026-07-01 00:03:33:   schema: undefined,
+2026-07-01 00:03:33:   table: undefined,
+2026-07-01 00:03:33:   column: undefined,
+2026-07-01 00:03:33:   dataType: undefined,
+2026-07-01 00:03:33:   constraint: undefined,
+2026-07-01 00:03:33:   file: 'parse_relation.c',
+2026-07-01 00:03:33:   line: '3722',
+2026-07-01 00:03:33:   routine: 'errorMissingColumn'
+2026-07-01 00:03:33: }
+2026-07-01 00:03:33: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:03:33:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:03:33:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:03:33:   length: 113,
+2026-07-01 00:03:33:   severity: 'ERROR',
+2026-07-01 00:03:33:   code: '42703',
+2026-07-01 00:03:33:   detail: undefined,
+2026-07-01 00:03:33:   hint: undefined,
+2026-07-01 00:03:33:   position: '21',
+2026-07-01 00:03:33:   internalPosition: undefined,
+2026-07-01 00:03:33:   internalQuery: undefined,
+2026-07-01 00:03:33:   where: undefined,
+2026-07-01 00:03:33:   schema: undefined,
+2026-07-01 00:03:33:   table: undefined,
+2026-07-01 00:03:33:   column: undefined,
+2026-07-01 00:03:33:   dataType: undefined,
+2026-07-01 00:03:33:   constraint: undefined,
+2026-07-01 00:03:33:   file: 'parse_relation.c',
+2026-07-01 00:03:33:   line: '3722',
+2026-07-01 00:03:33:   routine: 'errorMissingColumn'
+2026-07-01 00:03:33: }
+2026-07-01 00:03:33: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:03:33:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:03:33:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:03:33:   length: 113,
+2026-07-01 00:03:33:   severity: 'ERROR',
+2026-07-01 00:03:33:   code: '42703',
+2026-07-01 00:03:33:   detail: undefined,
+2026-07-01 00:03:33:   hint: undefined,
+2026-07-01 00:03:33:   position: '21',
+2026-07-01 00:03:33:   internalPosition: undefined,
+2026-07-01 00:03:33:   internalQuery: undefined,
+2026-07-01 00:03:33:   where: undefined,
+2026-07-01 00:03:33:   schema: undefined,
+2026-07-01 00:03:33:   table: undefined,
+2026-07-01 00:03:33:   column: undefined,
+2026-07-01 00:03:33:   dataType: undefined,
+2026-07-01 00:03:33:   constraint: undefined,
+2026-07-01 00:03:33:   file: 'parse_relation.c',
+2026-07-01 00:03:33:   line: '3722',
+2026-07-01 00:03:33:   routine: 'errorMissingColumn'
+2026-07-01 00:03:33: }
+2026-07-01 00:04:03: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:03:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:03:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:03:   length: 113,
+2026-07-01 00:04:03:   severity: 'ERROR',
+2026-07-01 00:04:03:   code: '42703',
+2026-07-01 00:04:03:   detail: undefined,
+2026-07-01 00:04:03:   hint: undefined,
+2026-07-01 00:04:03:   position: '21',
+2026-07-01 00:04:03:   internalPosition: undefined,
+2026-07-01 00:04:03:   internalQuery: undefined,
+2026-07-01 00:04:03:   where: undefined,
+2026-07-01 00:04:03:   schema: undefined,
+2026-07-01 00:04:03:   table: undefined,
+2026-07-01 00:04:03:   column: undefined,
+2026-07-01 00:04:03:   dataType: undefined,
+2026-07-01 00:04:03:   constraint: undefined,
+2026-07-01 00:04:03:   file: 'parse_relation.c',
+2026-07-01 00:04:03:   line: '3722',
+2026-07-01 00:04:03:   routine: 'errorMissingColumn'
+2026-07-01 00:04:03: }
+2026-07-01 00:04:09: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:09:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:09:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:09:   length: 113,
+2026-07-01 00:04:09:   severity: 'ERROR',
+2026-07-01 00:04:09:   code: '42703',
+2026-07-01 00:04:09:   detail: undefined,
+2026-07-01 00:04:09:   hint: undefined,
+2026-07-01 00:04:09:   position: '21',
+2026-07-01 00:04:09:   internalPosition: undefined,
+2026-07-01 00:04:09:   internalQuery: undefined,
+2026-07-01 00:04:09:   where: undefined,
+2026-07-01 00:04:09:   schema: undefined,
+2026-07-01 00:04:09:   table: undefined,
+2026-07-01 00:04:09:   column: undefined,
+2026-07-01 00:04:09:   dataType: undefined,
+2026-07-01 00:04:09:   constraint: undefined,
+2026-07-01 00:04:09:   file: 'parse_relation.c',
+2026-07-01 00:04:09:   line: '3722',
+2026-07-01 00:04:09:   routine: 'errorMissingColumn'
+2026-07-01 00:04:09: }
+2026-07-01 00:04:09: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:09:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:09:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:09:   length: 113,
+2026-07-01 00:04:09:   severity: 'ERROR',
+2026-07-01 00:04:09:   code: '42703',
+2026-07-01 00:04:09:   detail: undefined,
+2026-07-01 00:04:09:   hint: undefined,
+2026-07-01 00:04:09:   position: '21',
+2026-07-01 00:04:09:   internalPosition: undefined,
+2026-07-01 00:04:09:   internalQuery: undefined,
+2026-07-01 00:04:09:   where: undefined,
+2026-07-01 00:04:09:   schema: undefined,
+2026-07-01 00:04:09:   table: undefined,
+2026-07-01 00:04:09:   column: undefined,
+2026-07-01 00:04:09:   dataType: undefined,
+2026-07-01 00:04:09:   constraint: undefined,
+2026-07-01 00:04:09:   file: 'parse_relation.c',
+2026-07-01 00:04:09:   line: '3722',
+2026-07-01 00:04:09:   routine: 'errorMissingColumn'
+2026-07-01 00:04:09: }
+2026-07-01 00:04:09: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:09:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:09:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:09:   length: 113,
+2026-07-01 00:04:09:   severity: 'ERROR',
+2026-07-01 00:04:09:   code: '42703',
+2026-07-01 00:04:09:   detail: undefined,
+2026-07-01 00:04:09:   hint: undefined,
+2026-07-01 00:04:09:   position: '21',
+2026-07-01 00:04:09:   internalPosition: undefined,
+2026-07-01 00:04:09:   internalQuery: undefined,
+2026-07-01 00:04:09:   where: undefined,
+2026-07-01 00:04:09:   schema: undefined,
+2026-07-01 00:04:09:   table: undefined,
+2026-07-01 00:04:09:   column: undefined,
+2026-07-01 00:04:09:   dataType: undefined,
+2026-07-01 00:04:09:   constraint: undefined,
+2026-07-01 00:04:09:   file: 'parse_relation.c',
+2026-07-01 00:04:09:   line: '3722',
+2026-07-01 00:04:09:   routine: 'errorMissingColumn'
+2026-07-01 00:04:09: }
+2026-07-01 00:04:09: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:09:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:09:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:09:   length: 113,
+2026-07-01 00:04:09:   severity: 'ERROR',
+2026-07-01 00:04:09:   code: '42703',
+2026-07-01 00:04:09:   detail: undefined,
+2026-07-01 00:04:09:   hint: undefined,
+2026-07-01 00:04:09:   position: '21',
+2026-07-01 00:04:09:   internalPosition: undefined,
+2026-07-01 00:04:09:   internalQuery: undefined,
+2026-07-01 00:04:09:   where: undefined,
+2026-07-01 00:04:09:   schema: undefined,
+2026-07-01 00:04:09:   table: undefined,
+2026-07-01 00:04:09:   column: undefined,
+2026-07-01 00:04:09:   dataType: undefined,
+2026-07-01 00:04:09:   constraint: undefined,
+2026-07-01 00:04:09:   file: 'parse_relation.c',
+2026-07-01 00:04:09:   line: '3722',
+2026-07-01 00:04:09:   routine: 'errorMissingColumn'
+2026-07-01 00:04:09: }
+2026-07-01 00:04:10: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:10:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:10:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:10:   length: 113,
+2026-07-01 00:04:10:   severity: 'ERROR',
+2026-07-01 00:04:10:   code: '42703',
+2026-07-01 00:04:10:   detail: undefined,
+2026-07-01 00:04:10:   hint: undefined,
+2026-07-01 00:04:10:   position: '21',
+2026-07-01 00:04:10:   internalPosition: undefined,
+2026-07-01 00:04:10:   internalQuery: undefined,
+2026-07-01 00:04:10:   where: undefined,
+2026-07-01 00:04:10:   schema: undefined,
+2026-07-01 00:04:10:   table: undefined,
+2026-07-01 00:04:10:   column: undefined,
+2026-07-01 00:04:10:   dataType: undefined,
+2026-07-01 00:04:10:   constraint: undefined,
+2026-07-01 00:04:10:   file: 'parse_relation.c',
+2026-07-01 00:04:10:   line: '3722',
+2026-07-01 00:04:10:   routine: 'errorMissingColumn'
+2026-07-01 00:04:10: }
+2026-07-01 00:04:10: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:10:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:10:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:10:   length: 113,
+2026-07-01 00:04:10:   severity: 'ERROR',
+2026-07-01 00:04:10:   code: '42703',
+2026-07-01 00:04:10:   detail: undefined,
+2026-07-01 00:04:10:   hint: undefined,
+2026-07-01 00:04:10:   position: '21',
+2026-07-01 00:04:10:   internalPosition: undefined,
+2026-07-01 00:04:10:   internalQuery: undefined,
+2026-07-01 00:04:10:   where: undefined,
+2026-07-01 00:04:10:   schema: undefined,
+2026-07-01 00:04:10:   table: undefined,
+2026-07-01 00:04:10:   column: undefined,
+2026-07-01 00:04:10:   dataType: undefined,
+2026-07-01 00:04:10:   constraint: undefined,
+2026-07-01 00:04:10:   file: 'parse_relation.c',
+2026-07-01 00:04:10:   line: '3722',
+2026-07-01 00:04:10:   routine: 'errorMissingColumn'
+2026-07-01 00:04:10: }
+2026-07-01 00:04:10: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:10:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:10:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:10:   length: 113,
+2026-07-01 00:04:10:   severity: 'ERROR',
+2026-07-01 00:04:10:   code: '42703',
+2026-07-01 00:04:10:   detail: undefined,
+2026-07-01 00:04:10:   hint: undefined,
+2026-07-01 00:04:10:   position: '21',
+2026-07-01 00:04:10:   internalPosition: undefined,
+2026-07-01 00:04:10:   internalQuery: undefined,
+2026-07-01 00:04:10:   where: undefined,
+2026-07-01 00:04:10:   schema: undefined,
+2026-07-01 00:04:10:   table: undefined,
+2026-07-01 00:04:10:   column: undefined,
+2026-07-01 00:04:10:   dataType: undefined,
+2026-07-01 00:04:10:   constraint: undefined,
+2026-07-01 00:04:10:   file: 'parse_relation.c',
+2026-07-01 00:04:10:   line: '3722',
+2026-07-01 00:04:10:   routine: 'errorMissingColumn'
+2026-07-01 00:04:10: }
+2026-07-01 00:04:16: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:16:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:16:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:16:   length: 113,
+2026-07-01 00:04:16:   severity: 'ERROR',
+2026-07-01 00:04:16:   code: '42703',
+2026-07-01 00:04:16:   detail: undefined,
+2026-07-01 00:04:16:   hint: undefined,
+2026-07-01 00:04:16:   position: '21',
+2026-07-01 00:04:16:   internalPosition: undefined,
+2026-07-01 00:04:16:   internalQuery: undefined,
+2026-07-01 00:04:16:   where: undefined,
+2026-07-01 00:04:16:   schema: undefined,
+2026-07-01 00:04:16:   table: undefined,
+2026-07-01 00:04:16:   column: undefined,
+2026-07-01 00:04:16:   dataType: undefined,
+2026-07-01 00:04:16:   constraint: undefined,
+2026-07-01 00:04:16:   file: 'parse_relation.c',
+2026-07-01 00:04:16:   line: '3722',
+2026-07-01 00:04:16:   routine: 'errorMissingColumn'
+2026-07-01 00:04:16: }
+2026-07-01 00:04:16: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:16:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:16:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:16:   length: 113,
+2026-07-01 00:04:16:   severity: 'ERROR',
+2026-07-01 00:04:16:   code: '42703',
+2026-07-01 00:04:16:   detail: undefined,
+2026-07-01 00:04:16:   hint: undefined,
+2026-07-01 00:04:16:   position: '21',
+2026-07-01 00:04:16:   internalPosition: undefined,
+2026-07-01 00:04:16:   internalQuery: undefined,
+2026-07-01 00:04:16:   where: undefined,
+2026-07-01 00:04:16:   schema: undefined,
+2026-07-01 00:04:16:   table: undefined,
+2026-07-01 00:04:16:   column: undefined,
+2026-07-01 00:04:16:   dataType: undefined,
+2026-07-01 00:04:16:   constraint: undefined,
+2026-07-01 00:04:16:   file: 'parse_relation.c',
+2026-07-01 00:04:16:   line: '3722',
+2026-07-01 00:04:16:   routine: 'errorMissingColumn'
+2026-07-01 00:04:16: }
+2026-07-01 00:04:16: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:16:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:16:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:16:   length: 113,
+2026-07-01 00:04:16:   severity: 'ERROR',
+2026-07-01 00:04:16:   code: '42703',
+2026-07-01 00:04:16:   detail: undefined,
+2026-07-01 00:04:16:   hint: undefined,
+2026-07-01 00:04:16:   position: '21',
+2026-07-01 00:04:16:   internalPosition: undefined,
+2026-07-01 00:04:16:   internalQuery: undefined,
+2026-07-01 00:04:16:   where: undefined,
+2026-07-01 00:04:16:   schema: undefined,
+2026-07-01 00:04:16:   table: undefined,
+2026-07-01 00:04:16:   column: undefined,
+2026-07-01 00:04:16:   dataType: undefined,
+2026-07-01 00:04:16:   constraint: undefined,
+2026-07-01 00:04:16:   file: 'parse_relation.c',
+2026-07-01 00:04:16:   line: '3722',
+2026-07-01 00:04:16:   routine: 'errorMissingColumn'
+2026-07-01 00:04:16: }
+2026-07-01 00:04:17: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:17:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:17:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:17:   length: 113,
+2026-07-01 00:04:17:   severity: 'ERROR',
+2026-07-01 00:04:17:   code: '42703',
+2026-07-01 00:04:17:   detail: undefined,
+2026-07-01 00:04:17:   hint: undefined,
+2026-07-01 00:04:17:   position: '21',
+2026-07-01 00:04:17:   internalPosition: undefined,
+2026-07-01 00:04:17:   internalQuery: undefined,
+2026-07-01 00:04:17:   where: undefined,
+2026-07-01 00:04:17:   schema: undefined,
+2026-07-01 00:04:17:   table: undefined,
+2026-07-01 00:04:17:   column: undefined,
+2026-07-01 00:04:17:   dataType: undefined,
+2026-07-01 00:04:17:   constraint: undefined,
+2026-07-01 00:04:17:   file: 'parse_relation.c',
+2026-07-01 00:04:17:   line: '3722',
+2026-07-01 00:04:17:   routine: 'errorMissingColumn'
+2026-07-01 00:04:17: }
+2026-07-01 00:04:24: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:24:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:24:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:24:   length: 113,
+2026-07-01 00:04:24:   severity: 'ERROR',
+2026-07-01 00:04:24:   code: '42703',
+2026-07-01 00:04:24:   detail: undefined,
+2026-07-01 00:04:24:   hint: undefined,
+2026-07-01 00:04:24:   position: '21',
+2026-07-01 00:04:24:   internalPosition: undefined,
+2026-07-01 00:04:24:   internalQuery: undefined,
+2026-07-01 00:04:24:   where: undefined,
+2026-07-01 00:04:24:   schema: undefined,
+2026-07-01 00:04:24:   table: undefined,
+2026-07-01 00:04:24:   column: undefined,
+2026-07-01 00:04:24:   dataType: undefined,
+2026-07-01 00:04:24:   constraint: undefined,
+2026-07-01 00:04:24:   file: 'parse_relation.c',
+2026-07-01 00:04:24:   line: '3722',
+2026-07-01 00:04:24:   routine: 'errorMissingColumn'
+2026-07-01 00:04:24: }
+2026-07-01 00:04:24: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:24:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:24:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:24:   length: 113,
+2026-07-01 00:04:24:   severity: 'ERROR',
+2026-07-01 00:04:24:   code: '42703',
+2026-07-01 00:04:24:   detail: undefined,
+2026-07-01 00:04:24:   hint: undefined,
+2026-07-01 00:04:24:   position: '21',
+2026-07-01 00:04:24:   internalPosition: undefined,
+2026-07-01 00:04:24:   internalQuery: undefined,
+2026-07-01 00:04:24:   where: undefined,
+2026-07-01 00:04:24:   schema: undefined,
+2026-07-01 00:04:24:   table: undefined,
+2026-07-01 00:04:24:   column: undefined,
+2026-07-01 00:04:24:   dataType: undefined,
+2026-07-01 00:04:24:   constraint: undefined,
+2026-07-01 00:04:24:   file: 'parse_relation.c',
+2026-07-01 00:04:24:   line: '3722',
+2026-07-01 00:04:24:   routine: 'errorMissingColumn'
+2026-07-01 00:04:24: }
+2026-07-01 00:04:24: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:24:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:24:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:24:   length: 113,
+2026-07-01 00:04:24:   severity: 'ERROR',
+2026-07-01 00:04:24:   code: '42703',
+2026-07-01 00:04:24:   detail: undefined,
+2026-07-01 00:04:24:   hint: undefined,
+2026-07-01 00:04:24:   position: '21',
+2026-07-01 00:04:24:   internalPosition: undefined,
+2026-07-01 00:04:24:   internalQuery: undefined,
+2026-07-01 00:04:24:   where: undefined,
+2026-07-01 00:04:24:   schema: undefined,
+2026-07-01 00:04:24:   table: undefined,
+2026-07-01 00:04:24:   column: undefined,
+2026-07-01 00:04:24:   dataType: undefined,
+2026-07-01 00:04:24:   constraint: undefined,
+2026-07-01 00:04:24:   file: 'parse_relation.c',
+2026-07-01 00:04:24:   line: '3722',
+2026-07-01 00:04:24:   routine: 'errorMissingColumn'
+2026-07-01 00:04:24: }
+2026-07-01 00:04:24: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:24:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:24:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:24:   length: 113,
+2026-07-01 00:04:24:   severity: 'ERROR',
+2026-07-01 00:04:24:   code: '42703',
+2026-07-01 00:04:24:   detail: undefined,
+2026-07-01 00:04:24:   hint: undefined,
+2026-07-01 00:04:24:   position: '21',
+2026-07-01 00:04:24:   internalPosition: undefined,
+2026-07-01 00:04:24:   internalQuery: undefined,
+2026-07-01 00:04:24:   where: undefined,
+2026-07-01 00:04:24:   schema: undefined,
+2026-07-01 00:04:24:   table: undefined,
+2026-07-01 00:04:24:   column: undefined,
+2026-07-01 00:04:24:   dataType: undefined,
+2026-07-01 00:04:24:   constraint: undefined,
+2026-07-01 00:04:24:   file: 'parse_relation.c',
+2026-07-01 00:04:24:   line: '3722',
+2026-07-01 00:04:24:   routine: 'errorMissingColumn'
+2026-07-01 00:04:24: }
+2026-07-01 00:04:32: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:32:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:32:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:32:   length: 113,
+2026-07-01 00:04:32:   severity: 'ERROR',
+2026-07-01 00:04:32:   code: '42703',
+2026-07-01 00:04:32:   detail: undefined,
+2026-07-01 00:04:32:   hint: undefined,
+2026-07-01 00:04:32:   position: '21',
+2026-07-01 00:04:32:   internalPosition: undefined,
+2026-07-01 00:04:32:   internalQuery: undefined,
+2026-07-01 00:04:32:   where: undefined,
+2026-07-01 00:04:32:   schema: undefined,
+2026-07-01 00:04:32:   table: undefined,
+2026-07-01 00:04:32:   column: undefined,
+2026-07-01 00:04:32:   dataType: undefined,
+2026-07-01 00:04:32:   constraint: undefined,
+2026-07-01 00:04:32:   file: 'parse_relation.c',
+2026-07-01 00:04:32:   line: '3722',
+2026-07-01 00:04:32:   routine: 'errorMissingColumn'
+2026-07-01 00:04:32: }
+2026-07-01 00:04:33: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:33:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:33:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:33:   length: 113,
+2026-07-01 00:04:33:   severity: 'ERROR',
+2026-07-01 00:04:33:   code: '42703',
+2026-07-01 00:04:33:   detail: undefined,
+2026-07-01 00:04:33:   hint: undefined,
+2026-07-01 00:04:33:   position: '21',
+2026-07-01 00:04:33:   internalPosition: undefined,
+2026-07-01 00:04:33:   internalQuery: undefined,
+2026-07-01 00:04:33:   where: undefined,
+2026-07-01 00:04:33:   schema: undefined,
+2026-07-01 00:04:33:   table: undefined,
+2026-07-01 00:04:33:   column: undefined,
+2026-07-01 00:04:33:   dataType: undefined,
+2026-07-01 00:04:33:   constraint: undefined,
+2026-07-01 00:04:33:   file: 'parse_relation.c',
+2026-07-01 00:04:33:   line: '3722',
+2026-07-01 00:04:33:   routine: 'errorMissingColumn'
+2026-07-01 00:04:33: }
+2026-07-01 00:04:34: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:34:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:34:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:34:   length: 113,
+2026-07-01 00:04:34:   severity: 'ERROR',
+2026-07-01 00:04:34:   code: '42703',
+2026-07-01 00:04:34:   detail: undefined,
+2026-07-01 00:04:34:   hint: undefined,
+2026-07-01 00:04:34:   position: '21',
+2026-07-01 00:04:34:   internalPosition: undefined,
+2026-07-01 00:04:34:   internalQuery: undefined,
+2026-07-01 00:04:34:   where: undefined,
+2026-07-01 00:04:34:   schema: undefined,
+2026-07-01 00:04:34:   table: undefined,
+2026-07-01 00:04:34:   column: undefined,
+2026-07-01 00:04:34:   dataType: undefined,
+2026-07-01 00:04:34:   constraint: undefined,
+2026-07-01 00:04:34:   file: 'parse_relation.c',
+2026-07-01 00:04:34:   line: '3722',
+2026-07-01 00:04:34:   routine: 'errorMissingColumn'
+2026-07-01 00:04:34: }
+2026-07-01 00:04:34: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:34:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:34:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:34:   length: 113,
+2026-07-01 00:04:34:   severity: 'ERROR',
+2026-07-01 00:04:34:   code: '42703',
+2026-07-01 00:04:34:   detail: undefined,
+2026-07-01 00:04:34:   hint: undefined,
+2026-07-01 00:04:34:   position: '21',
+2026-07-01 00:04:34:   internalPosition: undefined,
+2026-07-01 00:04:34:   internalQuery: undefined,
+2026-07-01 00:04:34:   where: undefined,
+2026-07-01 00:04:34:   schema: undefined,
+2026-07-01 00:04:34:   table: undefined,
+2026-07-01 00:04:34:   column: undefined,
+2026-07-01 00:04:34:   dataType: undefined,
+2026-07-01 00:04:34:   constraint: undefined,
+2026-07-01 00:04:34:   file: 'parse_relation.c',
+2026-07-01 00:04:34:   line: '3722',
+2026-07-01 00:04:34:   routine: 'errorMissingColumn'
+2026-07-01 00:04:34: }
+2026-07-01 00:04:57: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:04:57:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:04:57:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:04:57:   length: 113,
+2026-07-01 00:04:57:   severity: 'ERROR',
+2026-07-01 00:04:57:   code: '42703',
+2026-07-01 00:04:57:   detail: undefined,
+2026-07-01 00:04:57:   hint: undefined,
+2026-07-01 00:04:57:   position: '21',
+2026-07-01 00:04:57:   internalPosition: undefined,
+2026-07-01 00:04:57:   internalQuery: undefined,
+2026-07-01 00:04:57:   where: undefined,
+2026-07-01 00:04:57:   schema: undefined,
+2026-07-01 00:04:57:   table: undefined,
+2026-07-01 00:04:57:   column: undefined,
+2026-07-01 00:04:57:   dataType: undefined,
+2026-07-01 00:04:57:   constraint: undefined,
+2026-07-01 00:04:57:   file: 'parse_relation.c',
+2026-07-01 00:04:57:   line: '3722',
+2026-07-01 00:04:57:   routine: 'errorMissingColumn'
+2026-07-01 00:04:57: }
+2026-07-01 00:05:03: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:05:03:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:05:03:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:05:03:   length: 113,
+2026-07-01 00:05:03:   severity: 'ERROR',
+2026-07-01 00:05:03:   code: '42703',
+2026-07-01 00:05:03:   detail: undefined,
+2026-07-01 00:05:03:   hint: undefined,
+2026-07-01 00:05:03:   position: '21',
+2026-07-01 00:05:03:   internalPosition: undefined,
+2026-07-01 00:05:03:   internalQuery: undefined,
+2026-07-01 00:05:03:   where: undefined,
+2026-07-01 00:05:03:   schema: undefined,
+2026-07-01 00:05:03:   table: undefined,
+2026-07-01 00:05:03:   column: undefined,
+2026-07-01 00:05:03:   dataType: undefined,
+2026-07-01 00:05:03:   constraint: undefined,
+2026-07-01 00:05:03:   file: 'parse_relation.c',
+2026-07-01 00:05:03:   line: '3722',
+2026-07-01 00:05:03:   routine: 'errorMissingColumn'
+2026-07-01 00:05:03: }
+2026-07-01 00:05:04: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:05:04:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:05:04:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:05:04:   length: 113,
+2026-07-01 00:05:04:   severity: 'ERROR',
+2026-07-01 00:05:04:   code: '42703',
+2026-07-01 00:05:04:   detail: undefined,
+2026-07-01 00:05:04:   hint: undefined,
+2026-07-01 00:05:04:   position: '21',
+2026-07-01 00:05:04:   internalPosition: undefined,
+2026-07-01 00:05:04:   internalQuery: undefined,
+2026-07-01 00:05:04:   where: undefined,
+2026-07-01 00:05:04:   schema: undefined,
+2026-07-01 00:05:04:   table: undefined,
+2026-07-01 00:05:04:   column: undefined,
+2026-07-01 00:05:04:   dataType: undefined,
+2026-07-01 00:05:04:   constraint: undefined,
+2026-07-01 00:05:04:   file: 'parse_relation.c',
+2026-07-01 00:05:04:   line: '3722',
+2026-07-01 00:05:04:   routine: 'errorMissingColumn'
+2026-07-01 00:05:04: }
+2026-07-01 00:05:34: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:05:34:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:05:34:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:05:34:   length: 113,
+2026-07-01 00:05:34:   severity: 'ERROR',
+2026-07-01 00:05:34:   code: '42703',
+2026-07-01 00:05:34:   detail: undefined,
+2026-07-01 00:05:34:   hint: undefined,
+2026-07-01 00:05:34:   position: '21',
+2026-07-01 00:05:34:   internalPosition: undefined,
+2026-07-01 00:05:34:   internalQuery: undefined,
+2026-07-01 00:05:34:   where: undefined,
+2026-07-01 00:05:34:   schema: undefined,
+2026-07-01 00:05:34:   table: undefined,
+2026-07-01 00:05:34:   column: undefined,
+2026-07-01 00:05:34:   dataType: undefined,
+2026-07-01 00:05:34:   constraint: undefined,
+2026-07-01 00:05:34:   file: 'parse_relation.c',
+2026-07-01 00:05:34:   line: '3722',
+2026-07-01 00:05:34:   routine: 'errorMissingColumn'
+2026-07-01 00:05:34: }
+2026-07-01 00:05:34: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:05:34:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:05:34:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:05:34:   length: 113,
+2026-07-01 00:05:34:   severity: 'ERROR',
+2026-07-01 00:05:34:   code: '42703',
+2026-07-01 00:05:34:   detail: undefined,
+2026-07-01 00:05:34:   hint: undefined,
+2026-07-01 00:05:34:   position: '21',
+2026-07-01 00:05:34:   internalPosition: undefined,
+2026-07-01 00:05:34:   internalQuery: undefined,
+2026-07-01 00:05:34:   where: undefined,
+2026-07-01 00:05:34:   schema: undefined,
+2026-07-01 00:05:34:   table: undefined,
+2026-07-01 00:05:34:   column: undefined,
+2026-07-01 00:05:34:   dataType: undefined,
+2026-07-01 00:05:34:   constraint: undefined,
+2026-07-01 00:05:34:   file: 'parse_relation.c',
+2026-07-01 00:05:34:   line: '3722',
+2026-07-01 00:05:34:   routine: 'errorMissingColumn'
+2026-07-01 00:05:34: }
+2026-07-01 00:05:34: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:05:34:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:05:34:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:05:34:   length: 113,
+2026-07-01 00:05:34:   severity: 'ERROR',
+2026-07-01 00:05:34:   code: '42703',
+2026-07-01 00:05:34:   detail: undefined,
+2026-07-01 00:05:34:   hint: undefined,
+2026-07-01 00:05:34:   position: '21',
+2026-07-01 00:05:34:   internalPosition: undefined,
+2026-07-01 00:05:34:   internalQuery: undefined,
+2026-07-01 00:05:34:   where: undefined,
+2026-07-01 00:05:34:   schema: undefined,
+2026-07-01 00:05:34:   table: undefined,
+2026-07-01 00:05:34:   column: undefined,
+2026-07-01 00:05:34:   dataType: undefined,
+2026-07-01 00:05:34:   constraint: undefined,
+2026-07-01 00:05:34:   file: 'parse_relation.c',
+2026-07-01 00:05:34:   line: '3722',
+2026-07-01 00:05:34:   routine: 'errorMissingColumn'
+2026-07-01 00:05:34: }
+2026-07-01 00:05:38: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:05:38:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:05:38:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:05:38:   length: 113,
+2026-07-01 00:05:38:   severity: 'ERROR',
+2026-07-01 00:05:38:   code: '42703',
+2026-07-01 00:05:38:   detail: undefined,
+2026-07-01 00:05:38:   hint: undefined,
+2026-07-01 00:05:38:   position: '21',
+2026-07-01 00:05:38:   internalPosition: undefined,
+2026-07-01 00:05:38:   internalQuery: undefined,
+2026-07-01 00:05:38:   where: undefined,
+2026-07-01 00:05:38:   schema: undefined,
+2026-07-01 00:05:38:   table: undefined,
+2026-07-01 00:05:38:   column: undefined,
+2026-07-01 00:05:38:   dataType: undefined,
+2026-07-01 00:05:38:   constraint: undefined,
+2026-07-01 00:05:38:   file: 'parse_relation.c',
+2026-07-01 00:05:38:   line: '3722',
+2026-07-01 00:05:38:   routine: 'errorMissingColumn'
+2026-07-01 00:05:38: }
+2026-07-01 00:05:38: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:05:38:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:05:38:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:05:38:   length: 113,
+2026-07-01 00:05:38:   severity: 'ERROR',
+2026-07-01 00:05:38:   code: '42703',
+2026-07-01 00:05:38:   detail: undefined,
+2026-07-01 00:05:38:   hint: undefined,
+2026-07-01 00:05:38:   position: '21',
+2026-07-01 00:05:38:   internalPosition: undefined,
+2026-07-01 00:05:38:   internalQuery: undefined,
+2026-07-01 00:05:38:   where: undefined,
+2026-07-01 00:05:38:   schema: undefined,
+2026-07-01 00:05:38:   table: undefined,
+2026-07-01 00:05:38:   column: undefined,
+2026-07-01 00:05:38:   dataType: undefined,
+2026-07-01 00:05:38:   constraint: undefined,
+2026-07-01 00:05:38:   file: 'parse_relation.c',
+2026-07-01 00:05:38:   line: '3722',
+2026-07-01 00:05:38:   routine: 'errorMissingColumn'
+2026-07-01 00:05:38: }
+2026-07-01 00:12:01: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:12:01:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:12:01:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:12:01:   length: 113,
+2026-07-01 00:12:01:   severity: 'ERROR',
+2026-07-01 00:12:01:   code: '42703',
+2026-07-01 00:12:01:   detail: undefined,
+2026-07-01 00:12:01:   hint: undefined,
+2026-07-01 00:12:01:   position: '21',
+2026-07-01 00:12:01:   internalPosition: undefined,
+2026-07-01 00:12:01:   internalQuery: undefined,
+2026-07-01 00:12:01:   where: undefined,
+2026-07-01 00:12:01:   schema: undefined,
+2026-07-01 00:12:01:   table: undefined,
+2026-07-01 00:12:01:   column: undefined,
+2026-07-01 00:12:01:   dataType: undefined,
+2026-07-01 00:12:01:   constraint: undefined,
+2026-07-01 00:12:01:   file: 'parse_relation.c',
+2026-07-01 00:12:01:   line: '3722',
+2026-07-01 00:12:01:   routine: 'errorMissingColumn'
+2026-07-01 00:12:01: }
+2026-07-01 00:12:01: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:12:01:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:12:01:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:12:01:   length: 113,
+2026-07-01 00:12:01:   severity: 'ERROR',
+2026-07-01 00:12:01:   code: '42703',
+2026-07-01 00:12:01:   detail: undefined,
+2026-07-01 00:12:01:   hint: undefined,
+2026-07-01 00:12:01:   position: '21',
+2026-07-01 00:12:01:   internalPosition: undefined,
+2026-07-01 00:12:01:   internalQuery: undefined,
+2026-07-01 00:12:01:   where: undefined,
+2026-07-01 00:12:01:   schema: undefined,
+2026-07-01 00:12:01:   table: undefined,
+2026-07-01 00:12:01:   column: undefined,
+2026-07-01 00:12:01:   dataType: undefined,
+2026-07-01 00:12:01:   constraint: undefined,
+2026-07-01 00:12:01:   file: 'parse_relation.c',
+2026-07-01 00:12:01:   line: '3722',
+2026-07-01 00:12:01:   routine: 'errorMissingColumn'
+2026-07-01 00:12:01: }
+2026-07-01 00:12:02: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:12:02:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:12:02:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:12:02:   length: 113,
+2026-07-01 00:12:02:   severity: 'ERROR',
+2026-07-01 00:12:02:   code: '42703',
+2026-07-01 00:12:02:   detail: undefined,
+2026-07-01 00:12:02:   hint: undefined,
+2026-07-01 00:12:02:   position: '21',
+2026-07-01 00:12:02:   internalPosition: undefined,
+2026-07-01 00:12:02:   internalQuery: undefined,
+2026-07-01 00:12:02:   where: undefined,
+2026-07-01 00:12:02:   schema: undefined,
+2026-07-01 00:12:02:   table: undefined,
+2026-07-01 00:12:02:   column: undefined,
+2026-07-01 00:12:02:   dataType: undefined,
+2026-07-01 00:12:02:   constraint: undefined,
+2026-07-01 00:12:02:   file: 'parse_relation.c',
+2026-07-01 00:12:02:   line: '3722',
+2026-07-01 00:12:02:   routine: 'errorMissingColumn'
+2026-07-01 00:12:02: }
+2026-07-01 00:12:02: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:12:02:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:12:02:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:12:02:   length: 113,
+2026-07-01 00:12:02:   severity: 'ERROR',
+2026-07-01 00:12:02:   code: '42703',
+2026-07-01 00:12:02:   detail: undefined,
+2026-07-01 00:12:02:   hint: undefined,
+2026-07-01 00:12:02:   position: '21',
+2026-07-01 00:12:02:   internalPosition: undefined,
+2026-07-01 00:12:02:   internalQuery: undefined,
+2026-07-01 00:12:02:   where: undefined,
+2026-07-01 00:12:02:   schema: undefined,
+2026-07-01 00:12:02:   table: undefined,
+2026-07-01 00:12:02:   column: undefined,
+2026-07-01 00:12:02:   dataType: undefined,
+2026-07-01 00:12:02:   constraint: undefined,
+2026-07-01 00:12:02:   file: 'parse_relation.c',
+2026-07-01 00:12:02:   line: '3722',
+2026-07-01 00:12:02:   routine: 'errorMissingColumn'
+2026-07-01 00:12:02: }
+2026-07-01 00:12:02: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:12:02:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:12:02:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:12:02:   length: 113,
+2026-07-01 00:12:02:   severity: 'ERROR',
+2026-07-01 00:12:02:   code: '42703',
+2026-07-01 00:12:02:   detail: undefined,
+2026-07-01 00:12:02:   hint: undefined,
+2026-07-01 00:12:02:   position: '21',
+2026-07-01 00:12:02:   internalPosition: undefined,
+2026-07-01 00:12:02:   internalQuery: undefined,
+2026-07-01 00:12:02:   where: undefined,
+2026-07-01 00:12:02:   schema: undefined,
+2026-07-01 00:12:02:   table: undefined,
+2026-07-01 00:12:02:   column: undefined,
+2026-07-01 00:12:02:   dataType: undefined,
+2026-07-01 00:12:02:   constraint: undefined,
+2026-07-01 00:12:02:   file: 'parse_relation.c',
+2026-07-01 00:12:02:   line: '3722',
+2026-07-01 00:12:02:   routine: 'errorMissingColumn'
+2026-07-01 00:12:02: }
+2026-07-01 00:12:14: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:12:14:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:12:14:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:12:14:   length: 113,
+2026-07-01 00:12:14:   severity: 'ERROR',
+2026-07-01 00:12:14:   code: '42703',
+2026-07-01 00:12:14:   detail: undefined,
+2026-07-01 00:12:14:   hint: undefined,
+2026-07-01 00:12:14:   position: '21',
+2026-07-01 00:12:14:   internalPosition: undefined,
+2026-07-01 00:12:14:   internalQuery: undefined,
+2026-07-01 00:12:14:   where: undefined,
+2026-07-01 00:12:14:   schema: undefined,
+2026-07-01 00:12:14:   table: undefined,
+2026-07-01 00:12:14:   column: undefined,
+2026-07-01 00:12:14:   dataType: undefined,
+2026-07-01 00:12:14:   constraint: undefined,
+2026-07-01 00:12:14:   file: 'parse_relation.c',
+2026-07-01 00:12:14:   line: '3722',
+2026-07-01 00:12:14:   routine: 'errorMissingColumn'
+2026-07-01 00:12:14: }
+2026-07-01 00:12:14: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:12:14:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:12:14:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:12:14:   length: 113,
+2026-07-01 00:12:14:   severity: 'ERROR',
+2026-07-01 00:12:14:   code: '42703',
+2026-07-01 00:12:14:   detail: undefined,
+2026-07-01 00:12:14:   hint: undefined,
+2026-07-01 00:12:14:   position: '21',
+2026-07-01 00:12:14:   internalPosition: undefined,
+2026-07-01 00:12:14:   internalQuery: undefined,
+2026-07-01 00:12:14:   where: undefined,
+2026-07-01 00:12:14:   schema: undefined,
+2026-07-01 00:12:14:   table: undefined,
+2026-07-01 00:12:14:   column: undefined,
+2026-07-01 00:12:14:   dataType: undefined,
+2026-07-01 00:12:14:   constraint: undefined,
+2026-07-01 00:12:14:   file: 'parse_relation.c',
+2026-07-01 00:12:14:   line: '3722',
+2026-07-01 00:12:14:   routine: 'errorMissingColumn'
+2026-07-01 00:12:14: }
+2026-07-01 00:12:44: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:12:44:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:12:44:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:12:44:   length: 113,
+2026-07-01 00:12:44:   severity: 'ERROR',
+2026-07-01 00:12:44:   code: '42703',
+2026-07-01 00:12:44:   detail: undefined,
+2026-07-01 00:12:44:   hint: undefined,
+2026-07-01 00:12:44:   position: '21',
+2026-07-01 00:12:44:   internalPosition: undefined,
+2026-07-01 00:12:44:   internalQuery: undefined,
+2026-07-01 00:12:44:   where: undefined,
+2026-07-01 00:12:44:   schema: undefined,
+2026-07-01 00:12:44:   table: undefined,
+2026-07-01 00:12:44:   column: undefined,
+2026-07-01 00:12:44:   dataType: undefined,
+2026-07-01 00:12:44:   constraint: undefined,
+2026-07-01 00:12:44:   file: 'parse_relation.c',
+2026-07-01 00:12:44:   line: '3722',
+2026-07-01 00:12:44:   routine: 'errorMissingColumn'
+2026-07-01 00:12:44: }
+2026-07-01 00:12:44: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:12:44:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:12:44:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:12:44:   length: 113,
+2026-07-01 00:12:44:   severity: 'ERROR',
+2026-07-01 00:12:44:   code: '42703',
+2026-07-01 00:12:44:   detail: undefined,
+2026-07-01 00:12:44:   hint: undefined,
+2026-07-01 00:12:44:   position: '21',
+2026-07-01 00:12:44:   internalPosition: undefined,
+2026-07-01 00:12:44:   internalQuery: undefined,
+2026-07-01 00:12:44:   where: undefined,
+2026-07-01 00:12:44:   schema: undefined,
+2026-07-01 00:12:44:   table: undefined,
+2026-07-01 00:12:44:   column: undefined,
+2026-07-01 00:12:44:   dataType: undefined,
+2026-07-01 00:12:44:   constraint: undefined,
+2026-07-01 00:12:44:   file: 'parse_relation.c',
+2026-07-01 00:12:44:   line: '3722',
+2026-07-01 00:12:44:   routine: 'errorMissingColumn'
+2026-07-01 00:12:44: }
+2026-07-01 00:12:47: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:12:47:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:12:47:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:12:47:   length: 113,
+2026-07-01 00:12:47:   severity: 'ERROR',
+2026-07-01 00:12:47:   code: '42703',
+2026-07-01 00:12:47:   detail: undefined,
+2026-07-01 00:12:47:   hint: undefined,
+2026-07-01 00:12:47:   position: '21',
+2026-07-01 00:12:47:   internalPosition: undefined,
+2026-07-01 00:12:47:   internalQuery: undefined,
+2026-07-01 00:12:47:   where: undefined,
+2026-07-01 00:12:47:   schema: undefined,
+2026-07-01 00:12:47:   table: undefined,
+2026-07-01 00:12:47:   column: undefined,
+2026-07-01 00:12:47:   dataType: undefined,
+2026-07-01 00:12:47:   constraint: undefined,
+2026-07-01 00:12:47:   file: 'parse_relation.c',
+2026-07-01 00:12:47:   line: '3722',
+2026-07-01 00:12:47:   routine: 'errorMissingColumn'
+2026-07-01 00:12:47: }
+2026-07-01 00:12:53: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:12:53:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:12:53:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:12:53:   length: 113,
+2026-07-01 00:12:53:   severity: 'ERROR',
+2026-07-01 00:12:53:   code: '42703',
+2026-07-01 00:12:53:   detail: undefined,
+2026-07-01 00:12:53:   hint: undefined,
+2026-07-01 00:12:53:   position: '21',
+2026-07-01 00:12:53:   internalPosition: undefined,
+2026-07-01 00:12:53:   internalQuery: undefined,
+2026-07-01 00:12:53:   where: undefined,
+2026-07-01 00:12:53:   schema: undefined,
+2026-07-01 00:12:53:   table: undefined,
+2026-07-01 00:12:53:   column: undefined,
+2026-07-01 00:12:53:   dataType: undefined,
+2026-07-01 00:12:53:   constraint: undefined,
+2026-07-01 00:12:53:   file: 'parse_relation.c',
+2026-07-01 00:12:53:   line: '3722',
+2026-07-01 00:12:53:   routine: 'errorMissingColumn'
+2026-07-01 00:12:53: }
+2026-07-01 00:12:53: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:12:53:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:12:53:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:12:53:   length: 113,
+2026-07-01 00:12:53:   severity: 'ERROR',
+2026-07-01 00:12:53:   code: '42703',
+2026-07-01 00:12:53:   detail: undefined,
+2026-07-01 00:12:53:   hint: undefined,
+2026-07-01 00:12:53:   position: '21',
+2026-07-01 00:12:53:   internalPosition: undefined,
+2026-07-01 00:12:53:   internalQuery: undefined,
+2026-07-01 00:12:53:   where: undefined,
+2026-07-01 00:12:53:   schema: undefined,
+2026-07-01 00:12:53:   table: undefined,
+2026-07-01 00:12:53:   column: undefined,
+2026-07-01 00:12:53:   dataType: undefined,
+2026-07-01 00:12:53:   constraint: undefined,
+2026-07-01 00:12:53:   file: 'parse_relation.c',
+2026-07-01 00:12:53:   line: '3722',
+2026-07-01 00:12:53:   routine: 'errorMissingColumn'
+2026-07-01 00:12:53: }
+2026-07-01 00:12:53: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:12:53:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:12:53:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:12:53:   length: 113,
+2026-07-01 00:12:53:   severity: 'ERROR',
+2026-07-01 00:12:53:   code: '42703',
+2026-07-01 00:12:53:   detail: undefined,
+2026-07-01 00:12:53:   hint: undefined,
+2026-07-01 00:12:53:   position: '21',
+2026-07-01 00:12:53:   internalPosition: undefined,
+2026-07-01 00:12:53:   internalQuery: undefined,
+2026-07-01 00:12:53:   where: undefined,
+2026-07-01 00:12:53:   schema: undefined,
+2026-07-01 00:12:53:   table: undefined,
+2026-07-01 00:12:53:   column: undefined,
+2026-07-01 00:12:53:   dataType: undefined,
+2026-07-01 00:12:53:   constraint: undefined,
+2026-07-01 00:12:53:   file: 'parse_relation.c',
+2026-07-01 00:12:53:   line: '3722',
+2026-07-01 00:12:53:   routine: 'errorMissingColumn'
+2026-07-01 00:12:53: }
+2026-07-01 00:12:53: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:12:53:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:12:53:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:12:53:   length: 113,
+2026-07-01 00:12:53:   severity: 'ERROR',
+2026-07-01 00:12:53:   code: '42703',
+2026-07-01 00:12:53:   detail: undefined,
+2026-07-01 00:12:53:   hint: undefined,
+2026-07-01 00:12:53:   position: '21',
+2026-07-01 00:12:53:   internalPosition: undefined,
+2026-07-01 00:12:53:   internalQuery: undefined,
+2026-07-01 00:12:53:   where: undefined,
+2026-07-01 00:12:53:   schema: undefined,
+2026-07-01 00:12:53:   table: undefined,
+2026-07-01 00:12:53:   column: undefined,
+2026-07-01 00:12:53:   dataType: undefined,
+2026-07-01 00:12:53:   constraint: undefined,
+2026-07-01 00:12:53:   file: 'parse_relation.c',
+2026-07-01 00:12:53:   line: '3722',
+2026-07-01 00:12:53:   routine: 'errorMissingColumn'
+2026-07-01 00:12:53: }
+2026-07-01 00:14:16: [31m[auth][error][0m MissingCSRF: CSRF token was missing during an action callback. Read more at https://errors.authjs.dev#missingcsrf
+2026-07-01 00:14:16:     at ri (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:1:82486)
+2026-07-01 00:14:16:     at iC (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:50543)
+2026-07-01 00:14:16:     at async iU (/home/ubuntu/nanaai/.next/server/chunks/_0ll32wc._.js:404:54801)
+2026-07-01 00:14:16:     at async rJ.do (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:20930)
+2026-07-01 00:14:16:     at async rJ.handle (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:5:25785)
+2026-07-01 00:14:16:     at async d (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:4813)
+2026-07-01 00:14:16:     at async rJ.handleResponse (/home/ubuntu/nanaai/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.prod.js:1:119701)
+2026-07-01 00:14:16:     at async l (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:5854)
+2026-07-01 00:14:16:     at async Module.y [as handler] (/home/ubuntu/nanaai/.next/server/chunks/[root-of-the-server]__037vi40._.js:1:6961)
+2026-07-01 00:14:16:     at async NextNodeServer.renderToResponseWithComponentsImpl (/home/ubuntu/nanaai/node_modules/next/dist/server/base-server.js:1462:9)
+2026-07-01 00:15:06: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:15:06:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:15:06:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:15:06:   length: 113,
+2026-07-01 00:15:06:   severity: 'ERROR',
+2026-07-01 00:15:06:   code: '42703',
+2026-07-01 00:15:06:   detail: undefined,
+2026-07-01 00:15:06:   hint: undefined,
+2026-07-01 00:15:06:   position: '21',
+2026-07-01 00:15:06:   internalPosition: undefined,
+2026-07-01 00:15:06:   internalQuery: undefined,
+2026-07-01 00:15:06:   where: undefined,
+2026-07-01 00:15:06:   schema: undefined,
+2026-07-01 00:15:06:   table: undefined,
+2026-07-01 00:15:06:   column: undefined,
+2026-07-01 00:15:06:   dataType: undefined,
+2026-07-01 00:15:06:   constraint: undefined,
+2026-07-01 00:15:06:   file: 'parse_relation.c',
+2026-07-01 00:15:06:   line: '3722',
+2026-07-01 00:15:06:   routine: 'errorMissingColumn'
+2026-07-01 00:15:06: }
+2026-07-01 00:15:06: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:15:06:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:15:06:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:15:06:   length: 113,
+2026-07-01 00:15:06:   severity: 'ERROR',
+2026-07-01 00:15:06:   code: '42703',
+2026-07-01 00:15:06:   detail: undefined,
+2026-07-01 00:15:06:   hint: undefined,
+2026-07-01 00:15:06:   position: '21',
+2026-07-01 00:15:06:   internalPosition: undefined,
+2026-07-01 00:15:06:   internalQuery: undefined,
+2026-07-01 00:15:06:   where: undefined,
+2026-07-01 00:15:06:   schema: undefined,
+2026-07-01 00:15:06:   table: undefined,
+2026-07-01 00:15:06:   column: undefined,
+2026-07-01 00:15:06:   dataType: undefined,
+2026-07-01 00:15:06:   constraint: undefined,
+2026-07-01 00:15:06:   file: 'parse_relation.c',
+2026-07-01 00:15:06:   line: '3722',
+2026-07-01 00:15:06:   routine: 'errorMissingColumn'
+2026-07-01 00:15:06: }
+2026-07-01 00:15:06: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:15:06:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:15:06:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:15:06:   length: 113,
+2026-07-01 00:15:06:   severity: 'ERROR',
+2026-07-01 00:15:06:   code: '42703',
+2026-07-01 00:15:06:   detail: undefined,
+2026-07-01 00:15:06:   hint: undefined,
+2026-07-01 00:15:06:   position: '21',
+2026-07-01 00:15:06:   internalPosition: undefined,
+2026-07-01 00:15:06:   internalQuery: undefined,
+2026-07-01 00:15:06:   where: undefined,
+2026-07-01 00:15:06:   schema: undefined,
+2026-07-01 00:15:06:   table: undefined,
+2026-07-01 00:15:06:   column: undefined,
+2026-07-01 00:15:06:   dataType: undefined,
+2026-07-01 00:15:06:   constraint: undefined,
+2026-07-01 00:15:06:   file: 'parse_relation.c',
+2026-07-01 00:15:06:   line: '3722',
+2026-07-01 00:15:06:   routine: 'errorMissingColumn'
+2026-07-01 00:15:06: }
+2026-07-01 00:15:06: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:15:06:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:15:06:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:15:06:   length: 113,
+2026-07-01 00:15:06:   severity: 'ERROR',
+2026-07-01 00:15:06:   code: '42703',
+2026-07-01 00:15:06:   detail: undefined,
+2026-07-01 00:15:06:   hint: undefined,
+2026-07-01 00:15:06:   position: '21',
+2026-07-01 00:15:06:   internalPosition: undefined,
+2026-07-01 00:15:06:   internalQuery: undefined,
+2026-07-01 00:15:06:   where: undefined,
+2026-07-01 00:15:06:   schema: undefined,
+2026-07-01 00:15:06:   table: undefined,
+2026-07-01 00:15:06:   column: undefined,
+2026-07-01 00:15:06:   dataType: undefined,
+2026-07-01 00:15:06:   constraint: undefined,
+2026-07-01 00:15:06:   file: 'parse_relation.c',
+2026-07-01 00:15:06:   line: '3722',
+2026-07-01 00:15:06:   routine: 'errorMissingColumn'
+2026-07-01 00:15:06: }
+2026-07-01 00:15:06: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 00:15:06:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:15:06:     at async o (src/app/api/user/free-tier-usage/route.ts:31:35) {
+2026-07-01 00:15:06:   length: 113,
+2026-07-01 00:15:06:   severity: 'ERROR',
+2026-07-01 00:15:06:   code: '42703',
+2026-07-01 00:15:06:   detail: undefined,
+2026-07-01 00:15:06:   hint: undefined,
+2026-07-01 00:15:06:   position: '21',
+2026-07-01 00:15:06:   internalPosition: undefined,
+2026-07-01 00:15:06:   internalQuery: undefined,
+2026-07-01 00:15:06:   where: undefined,
+2026-07-01 00:15:06:   schema: undefined,
+2026-07-01 00:15:06:   table: undefined,
+2026-07-01 00:15:06:   column: undefined,
+2026-07-01 00:15:06:   dataType: undefined,
+2026-07-01 00:15:06:   constraint: undefined,
+2026-07-01 00:15:06:   file: 'parse_relation.c',
+2026-07-01 00:15:06:   line: '3722',
+2026-07-01 00:15:06:   routine: 'errorMissingColumn'
+2026-07-01 00:15:06: }
+2026-07-01 00:46:32: Error [InvariantError]: Invariant: The client reference manifest for route "/dashboard" does not exist. This is a bug in Next.js.
+2026-07-01 00:46:32:     at ignore-listed frames
+2026-07-01 00:46:32: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/dashboard" does not exist. This is a bug in Next.js.
+2026-07-01 00:46:32:     at ignore-listed frames
+2026-07-01 00:46:32: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/dashboard" does not exist. This is a bug in Next.js.
+2026-07-01 00:46:32:     at ignore-listed frames
+2026-07-01 00:46:32: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-07-01 00:46:32:     at ignore-listed frames
+2026-07-01 00:46:33: Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 00:46:33:     at ignore-listed frames
+2026-07-01 00:46:33: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 00:46:33:     at ignore-listed frames
+2026-07-01 00:46:33: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 00:46:33:     at ignore-listed frames
+2026-07-01 00:46:48: Error [InvariantError]: Invariant: The client reference manifest for route "/dashboard" does not exist. This is a bug in Next.js.
+2026-07-01 00:46:48:     at ignore-listed frames
+2026-07-01 00:46:48: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/dashboard" does not exist. This is a bug in Next.js.
+2026-07-01 00:46:48:     at ignore-listed frames
+2026-07-01 00:46:48: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/dashboard" does not exist. This is a bug in Next.js.
+2026-07-01 00:46:48:     at ignore-listed frames
+2026-07-01 00:46:48: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-07-01 00:46:48:     at ignore-listed frames
+2026-07-01 00:46:49: Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 00:46:49:     at ignore-listed frames
+2026-07-01 00:46:49: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 00:46:49:     at ignore-listed frames
+2026-07-01 00:46:49: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 00:46:49:     at ignore-listed frames
+2026-07-01 00:47:45: ⨯ error: column reference "created_at" is ambiguous
+2026-07-01 00:47:45:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:47:45:     at async o (src/app/api/usage/route.ts:21:31) {
+2026-07-01 00:47:45:   length: 116,
+2026-07-01 00:47:45:   severity: 'ERROR',
+2026-07-01 00:47:45:   code: '42702',
+2026-07-01 00:47:45:   detail: undefined,
+2026-07-01 00:47:45:   hint: undefined,
+2026-07-01 00:47:45:   position: '226',
+2026-07-01 00:47:45:   internalPosition: undefined,
+2026-07-01 00:47:45:   internalQuery: undefined,
+2026-07-01 00:47:45:   where: undefined,
+2026-07-01 00:47:45:   schema: undefined,
+2026-07-01 00:47:45:   table: undefined,
+2026-07-01 00:47:45:   column: undefined,
+2026-07-01 00:47:45:   dataType: undefined,
+2026-07-01 00:47:45:   constraint: undefined,
+2026-07-01 00:47:45:   file: 'parse_relation.c',
+2026-07-01 00:47:45:   line: '831',
+2026-07-01 00:47:45:   routine: 'scanRTEForColumn'
+2026-07-01 00:47:45: }
+2026-07-01 00:47:45: ⨯ error: column reference "created_at" is ambiguous
+2026-07-01 00:47:45:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:47:45:     at async i (src/app/api/usage/models/route.ts:16:15) {
+2026-07-01 00:47:45:   length: 116,
+2026-07-01 00:47:45:   severity: 'ERROR',
+2026-07-01 00:47:45:   code: '42702',
+2026-07-01 00:47:45:   detail: undefined,
+2026-07-01 00:47:45:   hint: undefined,
+2026-07-01 00:47:45:   position: '329',
+2026-07-01 00:47:45:   internalPosition: undefined,
+2026-07-01 00:47:45:   internalQuery: undefined,
+2026-07-01 00:47:45:   where: undefined,
+2026-07-01 00:47:45:   schema: undefined,
+2026-07-01 00:47:45:   table: undefined,
+2026-07-01 00:47:45:   column: undefined,
+2026-07-01 00:47:45:   dataType: undefined,
+2026-07-01 00:47:45:   constraint: undefined,
+2026-07-01 00:47:45:   file: 'parse_relation.c',
+2026-07-01 00:47:45:   line: '831',
+2026-07-01 00:47:45:   routine: 'scanRTEForColumn'
+2026-07-01 00:47:45: }
+2026-07-01 00:47:50: ⨯ error: column reference "created_at" is ambiguous
+2026-07-01 00:47:50:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:47:50:     at async o (src/app/api/usage/route.ts:21:31) {
+2026-07-01 00:47:50:   length: 116,
+2026-07-01 00:47:50:   severity: 'ERROR',
+2026-07-01 00:47:50:   code: '42702',
+2026-07-01 00:47:50:   detail: undefined,
+2026-07-01 00:47:50:   hint: undefined,
+2026-07-01 00:47:50:   position: '226',
+2026-07-01 00:47:50:   internalPosition: undefined,
+2026-07-01 00:47:50:   internalQuery: undefined,
+2026-07-01 00:47:50:   where: undefined,
+2026-07-01 00:47:50:   schema: undefined,
+2026-07-01 00:47:50:   table: undefined,
+2026-07-01 00:47:50:   column: undefined,
+2026-07-01 00:47:50:   dataType: undefined,
+2026-07-01 00:47:50:   constraint: undefined,
+2026-07-01 00:47:50:   file: 'parse_relation.c',
+2026-07-01 00:47:50:   line: '831',
+2026-07-01 00:47:50:   routine: 'scanRTEForColumn'
+2026-07-01 00:47:50: }
+2026-07-01 00:47:50: ⨯ error: column reference "created_at" is ambiguous
+2026-07-01 00:47:50:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:47:50:     at async i (src/app/api/usage/models/route.ts:16:15) {
+2026-07-01 00:47:50:   length: 116,
+2026-07-01 00:47:50:   severity: 'ERROR',
+2026-07-01 00:47:50:   code: '42702',
+2026-07-01 00:47:50:   detail: undefined,
+2026-07-01 00:47:50:   hint: undefined,
+2026-07-01 00:47:50:   position: '329',
+2026-07-01 00:47:50:   internalPosition: undefined,
+2026-07-01 00:47:50:   internalQuery: undefined,
+2026-07-01 00:47:50:   where: undefined,
+2026-07-01 00:47:50:   schema: undefined,
+2026-07-01 00:47:50:   table: undefined,
+2026-07-01 00:47:50:   column: undefined,
+2026-07-01 00:47:50:   dataType: undefined,
+2026-07-01 00:47:50:   constraint: undefined,
+2026-07-01 00:47:50:   file: 'parse_relation.c',
+2026-07-01 00:47:50:   line: '831',
+2026-07-01 00:47:50:   routine: 'scanRTEForColumn'
+2026-07-01 00:47:50: }
+2026-07-01 00:47:56: ⨯ error: column reference "created_at" is ambiguous
+2026-07-01 00:47:56:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:47:56:     at async o (src/app/api/usage/route.ts:21:31) {
+2026-07-01 00:47:56:   length: 116,
+2026-07-01 00:47:56:   severity: 'ERROR',
+2026-07-01 00:47:56:   code: '42702',
+2026-07-01 00:47:56:   detail: undefined,
+2026-07-01 00:47:56:   hint: undefined,
+2026-07-01 00:47:56:   position: '226',
+2026-07-01 00:47:56:   internalPosition: undefined,
+2026-07-01 00:47:56:   internalQuery: undefined,
+2026-07-01 00:47:56:   where: undefined,
+2026-07-01 00:47:56:   schema: undefined,
+2026-07-01 00:47:56:   table: undefined,
+2026-07-01 00:47:56:   column: undefined,
+2026-07-01 00:47:56:   dataType: undefined,
+2026-07-01 00:47:56:   constraint: undefined,
+2026-07-01 00:47:56:   file: 'parse_relation.c',
+2026-07-01 00:47:56:   line: '831',
+2026-07-01 00:47:56:   routine: 'scanRTEForColumn'
+2026-07-01 00:47:56: }
+2026-07-01 00:47:56: ⨯ error: column reference "created_at" is ambiguous
+2026-07-01 00:47:56:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:47:56:     at async i (src/app/api/usage/models/route.ts:16:15) {
+2026-07-01 00:47:56:   length: 116,
+2026-07-01 00:47:56:   severity: 'ERROR',
+2026-07-01 00:47:56:   code: '42702',
+2026-07-01 00:47:56:   detail: undefined,
+2026-07-01 00:47:56:   hint: undefined,
+2026-07-01 00:47:56:   position: '329',
+2026-07-01 00:47:56:   internalPosition: undefined,
+2026-07-01 00:47:56:   internalQuery: undefined,
+2026-07-01 00:47:56:   where: undefined,
+2026-07-01 00:47:56:   schema: undefined,
+2026-07-01 00:47:56:   table: undefined,
+2026-07-01 00:47:56:   column: undefined,
+2026-07-01 00:47:56:   dataType: undefined,
+2026-07-01 00:47:56:   constraint: undefined,
+2026-07-01 00:47:56:   file: 'parse_relation.c',
+2026-07-01 00:47:56:   line: '831',
+2026-07-01 00:47:56:   routine: 'scanRTEForColumn'
+2026-07-01 00:47:56: }
+2026-07-01 00:48:06: ⨯ error: column reference "created_at" is ambiguous
+2026-07-01 00:48:06:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:48:06:     at async o (src/app/api/usage/route.ts:21:31) {
+2026-07-01 00:48:06:   length: 116,
+2026-07-01 00:48:06:   severity: 'ERROR',
+2026-07-01 00:48:06:   code: '42702',
+2026-07-01 00:48:06:   detail: undefined,
+2026-07-01 00:48:06:   hint: undefined,
+2026-07-01 00:48:06:   position: '226',
+2026-07-01 00:48:06:   internalPosition: undefined,
+2026-07-01 00:48:06:   internalQuery: undefined,
+2026-07-01 00:48:06:   where: undefined,
+2026-07-01 00:48:06:   schema: undefined,
+2026-07-01 00:48:06:   table: undefined,
+2026-07-01 00:48:06:   column: undefined,
+2026-07-01 00:48:06:   dataType: undefined,
+2026-07-01 00:48:06:   constraint: undefined,
+2026-07-01 00:48:06:   file: 'parse_relation.c',
+2026-07-01 00:48:06:   line: '831',
+2026-07-01 00:48:06:   routine: 'scanRTEForColumn'
+2026-07-01 00:48:06: }
+2026-07-01 00:48:06: ⨯ error: column reference "created_at" is ambiguous
+2026-07-01 00:48:06:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:48:06:     at async i (src/app/api/usage/models/route.ts:16:15) {
+2026-07-01 00:48:06:   length: 116,
+2026-07-01 00:48:06:   severity: 'ERROR',
+2026-07-01 00:48:06:   code: '42702',
+2026-07-01 00:48:06:   detail: undefined,
+2026-07-01 00:48:06:   hint: undefined,
+2026-07-01 00:48:06:   position: '329',
+2026-07-01 00:48:06:   internalPosition: undefined,
+2026-07-01 00:48:06:   internalQuery: undefined,
+2026-07-01 00:48:06:   where: undefined,
+2026-07-01 00:48:06:   schema: undefined,
+2026-07-01 00:48:06:   table: undefined,
+2026-07-01 00:48:06:   column: undefined,
+2026-07-01 00:48:06:   dataType: undefined,
+2026-07-01 00:48:06:   constraint: undefined,
+2026-07-01 00:48:06:   file: 'parse_relation.c',
+2026-07-01 00:48:06:   line: '831',
+2026-07-01 00:48:06:   routine: 'scanRTEForColumn'
+2026-07-01 00:48:06: }
+2026-07-01 00:48:59: ⨯ error: column reference "created_at" is ambiguous
+2026-07-01 00:48:59:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:48:59:     at async o (src/app/api/usage/route.ts:21:31) {
+2026-07-01 00:48:59:   length: 116,
+2026-07-01 00:48:59:   severity: 'ERROR',
+2026-07-01 00:48:59:   code: '42702',
+2026-07-01 00:48:59:   detail: undefined,
+2026-07-01 00:48:59:   hint: undefined,
+2026-07-01 00:48:59:   position: '226',
+2026-07-01 00:48:59:   internalPosition: undefined,
+2026-07-01 00:48:59:   internalQuery: undefined,
+2026-07-01 00:48:59:   where: undefined,
+2026-07-01 00:48:59:   schema: undefined,
+2026-07-01 00:48:59:   table: undefined,
+2026-07-01 00:48:59:   column: undefined,
+2026-07-01 00:48:59:   dataType: undefined,
+2026-07-01 00:48:59:   constraint: undefined,
+2026-07-01 00:48:59:   file: 'parse_relation.c',
+2026-07-01 00:48:59:   line: '831',
+2026-07-01 00:48:59:   routine: 'scanRTEForColumn'
+2026-07-01 00:48:59: }
+2026-07-01 00:48:59: ⨯ error: column reference "created_at" is ambiguous
+2026-07-01 00:48:59:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:48:59:     at async i (src/app/api/usage/models/route.ts:16:15) {
+2026-07-01 00:48:59:   length: 116,
+2026-07-01 00:48:59:   severity: 'ERROR',
+2026-07-01 00:48:59:   code: '42702',
+2026-07-01 00:48:59:   detail: undefined,
+2026-07-01 00:48:59:   hint: undefined,
+2026-07-01 00:48:59:   position: '329',
+2026-07-01 00:48:59:   internalPosition: undefined,
+2026-07-01 00:48:59:   internalQuery: undefined,
+2026-07-01 00:48:59:   where: undefined,
+2026-07-01 00:48:59:   schema: undefined,
+2026-07-01 00:48:59:   table: undefined,
+2026-07-01 00:48:59:   column: undefined,
+2026-07-01 00:48:59:   dataType: undefined,
+2026-07-01 00:48:59:   constraint: undefined,
+2026-07-01 00:48:59:   file: 'parse_relation.c',
+2026-07-01 00:48:59:   line: '831',
+2026-07-01 00:48:59:   routine: 'scanRTEForColumn'
+2026-07-01 00:48:59: }
+2026-07-01 00:49:02: ⨯ error: column reference "created_at" is ambiguous
+2026-07-01 00:49:02:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:49:02:     at async o (src/app/api/usage/route.ts:21:31) {
+2026-07-01 00:49:02:   length: 116,
+2026-07-01 00:49:02:   severity: 'ERROR',
+2026-07-01 00:49:02:   code: '42702',
+2026-07-01 00:49:02:   detail: undefined,
+2026-07-01 00:49:02:   hint: undefined,
+2026-07-01 00:49:02:   position: '226',
+2026-07-01 00:49:02:   internalPosition: undefined,
+2026-07-01 00:49:02:   internalQuery: undefined,
+2026-07-01 00:49:02:   where: undefined,
+2026-07-01 00:49:02:   schema: undefined,
+2026-07-01 00:49:02:   table: undefined,
+2026-07-01 00:49:02:   column: undefined,
+2026-07-01 00:49:02:   dataType: undefined,
+2026-07-01 00:49:02:   constraint: undefined,
+2026-07-01 00:49:02:   file: 'parse_relation.c',
+2026-07-01 00:49:02:   line: '831',
+2026-07-01 00:49:02:   routine: 'scanRTEForColumn'
+2026-07-01 00:49:02: }
+2026-07-01 00:49:02: ⨯ error: column reference "created_at" is ambiguous
+2026-07-01 00:49:02:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:49:02:     at async i (src/app/api/usage/models/route.ts:16:15) {
+2026-07-01 00:49:02:   length: 116,
+2026-07-01 00:49:02:   severity: 'ERROR',
+2026-07-01 00:49:02:   code: '42702',
+2026-07-01 00:49:02:   detail: undefined,
+2026-07-01 00:49:02:   hint: undefined,
+2026-07-01 00:49:02:   position: '329',
+2026-07-01 00:49:02:   internalPosition: undefined,
+2026-07-01 00:49:02:   internalQuery: undefined,
+2026-07-01 00:49:02:   where: undefined,
+2026-07-01 00:49:02:   schema: undefined,
+2026-07-01 00:49:02:   table: undefined,
+2026-07-01 00:49:02:   column: undefined,
+2026-07-01 00:49:02:   dataType: undefined,
+2026-07-01 00:49:02:   constraint: undefined,
+2026-07-01 00:49:02:   file: 'parse_relation.c',
+2026-07-01 00:49:02:   line: '831',
+2026-07-01 00:49:02:   routine: 'scanRTEForColumn'
+2026-07-01 00:49:02: }
+2026-07-01 00:49:03: ⨯ error: column reference "created_at" is ambiguous
+2026-07-01 00:49:03:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:49:03:     at async o (src/app/api/usage/route.ts:21:31) {
+2026-07-01 00:49:03:   length: 116,
+2026-07-01 00:49:03:   severity: 'ERROR',
+2026-07-01 00:49:03:   code: '42702',
+2026-07-01 00:49:03:   detail: undefined,
+2026-07-01 00:49:03:   hint: undefined,
+2026-07-01 00:49:03:   position: '226',
+2026-07-01 00:49:03:   internalPosition: undefined,
+2026-07-01 00:49:03:   internalQuery: undefined,
+2026-07-01 00:49:03:   where: undefined,
+2026-07-01 00:49:03:   schema: undefined,
+2026-07-01 00:49:03:   table: undefined,
+2026-07-01 00:49:03:   column: undefined,
+2026-07-01 00:49:03:   dataType: undefined,
+2026-07-01 00:49:03:   constraint: undefined,
+2026-07-01 00:49:03:   file: 'parse_relation.c',
+2026-07-01 00:49:03:   line: '831',
+2026-07-01 00:49:03:   routine: 'scanRTEForColumn'
+2026-07-01 00:49:03: }
+2026-07-01 00:49:03: ⨯ error: column reference "created_at" is ambiguous
+2026-07-01 00:49:03:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:49:03:     at async i (src/app/api/usage/models/route.ts:16:15) {
+2026-07-01 00:49:03:   length: 116,
+2026-07-01 00:49:03:   severity: 'ERROR',
+2026-07-01 00:49:03:   code: '42702',
+2026-07-01 00:49:03:   detail: undefined,
+2026-07-01 00:49:03:   hint: undefined,
+2026-07-01 00:49:03:   position: '329',
+2026-07-01 00:49:03:   internalPosition: undefined,
+2026-07-01 00:49:03:   internalQuery: undefined,
+2026-07-01 00:49:03:   where: undefined,
+2026-07-01 00:49:03:   schema: undefined,
+2026-07-01 00:49:03:   table: undefined,
+2026-07-01 00:49:03:   column: undefined,
+2026-07-01 00:49:03:   dataType: undefined,
+2026-07-01 00:49:03:   constraint: undefined,
+2026-07-01 00:49:03:   file: 'parse_relation.c',
+2026-07-01 00:49:03:   line: '831',
+2026-07-01 00:49:03:   routine: 'scanRTEForColumn'
+2026-07-01 00:49:03: }
+2026-07-01 00:51:24: ⨯ error: missing FROM-clause entry for table "ul"
+2026-07-01 00:51:24:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:51:24:     at async o (src/app/api/usage/route.ts:21:31) {
+2026-07-01 00:51:24:   length: 113,
+2026-07-01 00:51:24:   severity: 'ERROR',
+2026-07-01 00:51:24:   code: '42P01',
+2026-07-01 00:51:24:   detail: undefined,
+2026-07-01 00:51:24:   hint: undefined,
+2026-07-01 00:51:24:   position: '65',
+2026-07-01 00:51:24:   internalPosition: undefined,
+2026-07-01 00:51:24:   internalQuery: undefined,
+2026-07-01 00:51:24:   where: undefined,
+2026-07-01 00:51:24:   schema: undefined,
+2026-07-01 00:51:24:   table: undefined,
+2026-07-01 00:51:24:   column: undefined,
+2026-07-01 00:51:24:   dataType: undefined,
+2026-07-01 00:51:24:   constraint: undefined,
+2026-07-01 00:51:24:   file: 'parse_relation.c',
+2026-07-01 00:51:24:   line: '3657',
+2026-07-01 00:51:24:   routine: 'errorMissingRTE'
+2026-07-01 00:51:24: }
+2026-07-01 00:51:27: ⨯ error: missing FROM-clause entry for table "ul"
+2026-07-01 00:51:27:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:51:27:     at async o (src/app/api/usage/route.ts:21:31) {
+2026-07-01 00:51:27:   length: 113,
+2026-07-01 00:51:27:   severity: 'ERROR',
+2026-07-01 00:51:27:   code: '42P01',
+2026-07-01 00:51:27:   detail: undefined,
+2026-07-01 00:51:27:   hint: undefined,
+2026-07-01 00:51:27:   position: '65',
+2026-07-01 00:51:27:   internalPosition: undefined,
+2026-07-01 00:51:27:   internalQuery: undefined,
+2026-07-01 00:51:27:   where: undefined,
+2026-07-01 00:51:27:   schema: undefined,
+2026-07-01 00:51:27:   table: undefined,
+2026-07-01 00:51:27:   column: undefined,
+2026-07-01 00:51:27:   dataType: undefined,
+2026-07-01 00:51:27:   constraint: undefined,
+2026-07-01 00:51:27:   file: 'parse_relation.c',
+2026-07-01 00:51:27:   line: '3657',
+2026-07-01 00:51:27:   routine: 'errorMissingRTE'
+2026-07-01 00:51:27: }
+2026-07-01 00:56:29: ⨯ error: missing FROM-clause entry for table "ul"
+2026-07-01 00:56:29:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:56:29:     at async o (src/app/api/usage/route.ts:21:31) {
+2026-07-01 00:56:29:   length: 113,
+2026-07-01 00:56:29:   severity: 'ERROR',
+2026-07-01 00:56:29:   code: '42P01',
+2026-07-01 00:56:29:   detail: undefined,
+2026-07-01 00:56:29:   hint: undefined,
+2026-07-01 00:56:29:   position: '65',
+2026-07-01 00:56:29:   internalPosition: undefined,
+2026-07-01 00:56:29:   internalQuery: undefined,
+2026-07-01 00:56:29:   where: undefined,
+2026-07-01 00:56:29:   schema: undefined,
+2026-07-01 00:56:29:   table: undefined,
+2026-07-01 00:56:29:   column: undefined,
+2026-07-01 00:56:29:   dataType: undefined,
+2026-07-01 00:56:29:   constraint: undefined,
+2026-07-01 00:56:29:   file: 'parse_relation.c',
+2026-07-01 00:56:29:   line: '3657',
+2026-07-01 00:56:29:   routine: 'errorMissingRTE'
+2026-07-01 00:56:29: }
+2026-07-01 00:56:31: ⨯ error: missing FROM-clause entry for table "ul"
+2026-07-01 00:56:31:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:56:31:     at async o (src/app/api/usage/route.ts:21:31) {
+2026-07-01 00:56:31:   length: 113,
+2026-07-01 00:56:31:   severity: 'ERROR',
+2026-07-01 00:56:31:   code: '42P01',
+2026-07-01 00:56:31:   detail: undefined,
+2026-07-01 00:56:31:   hint: undefined,
+2026-07-01 00:56:31:   position: '65',
+2026-07-01 00:56:31:   internalPosition: undefined,
+2026-07-01 00:56:31:   internalQuery: undefined,
+2026-07-01 00:56:31:   where: undefined,
+2026-07-01 00:56:31:   schema: undefined,
+2026-07-01 00:56:31:   table: undefined,
+2026-07-01 00:56:31:   column: undefined,
+2026-07-01 00:56:31:   dataType: undefined,
+2026-07-01 00:56:31:   constraint: undefined,
+2026-07-01 00:56:31:   file: 'parse_relation.c',
+2026-07-01 00:56:31:   line: '3657',
+2026-07-01 00:56:31:   routine: 'errorMissingRTE'
+2026-07-01 00:56:31: }
+2026-07-01 00:56:44: ⨯ error: missing FROM-clause entry for table "ul"
+2026-07-01 00:56:44:     at async i (src/lib/db.ts:12:17)
+2026-07-01 00:56:44:     at async o (src/app/api/usage/route.ts:21:31) {
+2026-07-01 00:56:44:   length: 113,
+2026-07-01 00:56:44:   severity: 'ERROR',
+2026-07-01 00:56:44:   code: '42P01',
+2026-07-01 00:56:44:   detail: undefined,
+2026-07-01 00:56:44:   hint: undefined,
+2026-07-01 00:56:44:   position: '65',
+2026-07-01 00:56:44:   internalPosition: undefined,
+2026-07-01 00:56:44:   internalQuery: undefined,
+2026-07-01 00:56:44:   where: undefined,
+2026-07-01 00:56:44:   schema: undefined,
+2026-07-01 00:56:44:   table: undefined,
+2026-07-01 00:56:44:   column: undefined,
+2026-07-01 00:56:44:   dataType: undefined,
+2026-07-01 00:56:44:   constraint: undefined,
+2026-07-01 00:56:44:   file: 'parse_relation.c',
+2026-07-01 00:56:44:   line: '3657',
+2026-07-01 00:56:44:   routine: 'errorMissingRTE'
+2026-07-01 00:56:44: }
+2026-07-01 01:01:12: ⨯ error: missing FROM-clause entry for table "ul"
+2026-07-01 01:01:12:     at async i (src/lib/db.ts:12:17)
+2026-07-01 01:01:12:     at async o (src/app/api/usage/route.ts:21:31) {
+2026-07-01 01:01:12:   length: 113,
+2026-07-01 01:01:12:   severity: 'ERROR',
+2026-07-01 01:01:12:   code: '42P01',
+2026-07-01 01:01:12:   detail: undefined,
+2026-07-01 01:01:12:   hint: undefined,
+2026-07-01 01:01:12:   position: '65',
+2026-07-01 01:01:12:   internalPosition: undefined,
+2026-07-01 01:01:12:   internalQuery: undefined,
+2026-07-01 01:01:12:   where: undefined,
+2026-07-01 01:01:12:   schema: undefined,
+2026-07-01 01:01:12:   table: undefined,
+2026-07-01 01:01:12:   column: undefined,
+2026-07-01 01:01:12:   dataType: undefined,
+2026-07-01 01:01:12:   constraint: undefined,
+2026-07-01 01:01:12:   file: 'parse_relation.c',
+2026-07-01 01:01:12:   line: '3657',
+2026-07-01 01:01:12:   routine: 'errorMissingRTE'
+2026-07-01 01:01:12: }
+2026-07-01 01:12:09: ⨯ error: missing FROM-clause entry for table "ul"
+2026-07-01 01:12:09:     at async i (src/lib/db.ts:12:17)
+2026-07-01 01:12:09:     at async o (src/app/api/usage/route.ts:21:31) {
+2026-07-01 01:12:09:   length: 113,
+2026-07-01 01:12:09:   severity: 'ERROR',
+2026-07-01 01:12:09:   code: '42P01',
+2026-07-01 01:12:09:   detail: undefined,
+2026-07-01 01:12:09:   hint: undefined,
+2026-07-01 01:12:09:   position: '65',
+2026-07-01 01:12:09:   internalPosition: undefined,
+2026-07-01 01:12:09:   internalQuery: undefined,
+2026-07-01 01:12:09:   where: undefined,
+2026-07-01 01:12:09:   schema: undefined,
+2026-07-01 01:12:09:   table: undefined,
+2026-07-01 01:12:09:   column: undefined,
+2026-07-01 01:12:09:   dataType: undefined,
+2026-07-01 01:12:09:   constraint: undefined,
+2026-07-01 01:12:09:   file: 'parse_relation.c',
+2026-07-01 01:12:09:   line: '3657',
+2026-07-01 01:12:09:   routine: 'errorMissingRTE'
+2026-07-01 01:12:09: }
+2026-07-01 03:27:35: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-07-01 03:27:35: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-07-01 03:27:35:     at ignore-listed frames
+2026-07-01 03:27:37: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-07-01 03:27:37: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-07-01 03:27:37:     at ignore-listed frames
+2026-07-01 03:27:37: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-07-01 03:27:37: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-07-01 03:27:37:     at ignore-listed frames
+2026-07-01 03:27:38: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-07-01 03:27:38: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-07-01 03:27:38:     at ignore-listed frames
+2026-07-01 03:27:38: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-07-01 03:27:38: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-07-01 03:27:38:     at ignore-listed frames
+2026-07-01 03:27:39: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-07-01 03:27:39: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-07-01 03:27:39:     at ignore-listed frames
+2026-07-01 12:30:49: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-07-01 12:30:49: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-07-01 12:30:49:     at ignore-listed frames
+2026-07-01 17:25:39: Error [InvariantError]: Invariant: The client reference manifest for route "/login" does not exist. This is a bug in Next.js.
+2026-07-01 17:25:39:     at ignore-listed frames
+2026-07-01 17:25:40: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/login" does not exist. This is a bug in Next.js.
+2026-07-01 17:25:40:     at ignore-listed frames
+2026-07-01 17:25:40: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/login" does not exist. This is a bug in Next.js.
+2026-07-01 17:25:40:     at ignore-listed frames
+2026-07-01 17:25:40: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-07-01 17:25:40:     at ignore-listed frames
+2026-07-01 17:25:41: Error [InvariantError]: Invariant: The client reference manifest for route "/login" does not exist. This is a bug in Next.js.
+2026-07-01 17:25:41:     at ignore-listed frames
+2026-07-01 17:25:41: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/login" does not exist. This is a bug in Next.js.
+2026-07-01 17:25:41:     at ignore-listed frames
+2026-07-01 17:25:41: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/login" does not exist. This is a bug in Next.js.
+2026-07-01 17:25:41:     at ignore-listed frames
+2026-07-01 17:25:41: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-07-01 17:25:41:     at ignore-listed frames
+2026-07-01 17:25:42: Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 17:25:42:     at ignore-listed frames
+2026-07-01 17:25:42: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 17:25:42:     at ignore-listed frames
+2026-07-01 17:25:42: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 17:25:42:     at ignore-listed frames
+2026-07-01 17:26:48: Error [InvariantError]: Invariant: The client reference manifest for route "/login" does not exist. This is a bug in Next.js.
+2026-07-01 17:26:48:     at ignore-listed frames
+2026-07-01 17:26:49: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/login" does not exist. This is a bug in Next.js.
+2026-07-01 17:26:49:     at ignore-listed frames
+2026-07-01 17:26:49: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/login" does not exist. This is a bug in Next.js.
+2026-07-01 17:26:49:     at ignore-listed frames
+2026-07-01 17:26:49: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-07-01 17:26:49:     at ignore-listed frames
+2026-07-01 17:26:49: Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 17:26:49:     at ignore-listed frames
+2026-07-01 17:26:50: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 17:26:50:     at ignore-listed frames
+2026-07-01 17:26:50: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 17:26:50:     at ignore-listed frames
+2026-07-01 17:26:51: Error [InvariantError]: Invariant: The client reference manifest for route "/login" does not exist. This is a bug in Next.js.
+2026-07-01 17:26:51:     at ignore-listed frames
+2026-07-01 17:26:51: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/login" does not exist. This is a bug in Next.js.
+2026-07-01 17:26:51:     at ignore-listed frames
+2026-07-01 17:26:51: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/login" does not exist. This is a bug in Next.js.
+2026-07-01 17:26:51:     at ignore-listed frames
+2026-07-01 17:26:51: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/home/ubuntu/nanaai/.next/server/pages/500.html'
+2026-07-01 17:26:51:     at ignore-listed frames
+2026-07-01 17:26:52: Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 17:26:52:     at ignore-listed frames
+2026-07-01 17:26:52: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 17:26:52:     at ignore-listed frames
+2026-07-01 17:26:52: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-07-01 17:26:52:     at ignore-listed frames

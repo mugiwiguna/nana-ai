@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { validateApiKey, calculateCost, deductBalance, getCustomModelRoute, checkFreeTier, logFreeUsage, checkTokenLimits, checkFreeTierUsage } from "@/lib/billing";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -12,6 +13,16 @@ export async function POST(req: Request) {
     }
 
     const apiKey = authHeader.slice(7);
+
+    // Rate limit per API key: 30 req/min
+    const rl = checkRateLimit(`chat:${apiKey}`, 30, 60000);
+    if (!rl.ok) {
+      return NextResponse.json(
+        { error: { message: `Rate limit exceeded. Try again in ${rl.retryAfter}s`, type: "rate_limit_error" } },
+        { status: 429, headers: { "Retry-After": String(rl.retryAfter), "X-RateLimit-Remaining": "0" } }
+      );
+    }
+
     const user = await validateApiKey(apiKey);
     if (!user) {
       return NextResponse.json({ error: { message: "Invalid or inactive API key", type: "auth_error" } }, { status: 401 });

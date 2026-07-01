@@ -2,10 +2,15 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { query } from "@/lib/db";
 import { v4 as uuidv4 } from "uuid";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: Request) {
   const session = await auth();
   if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  // Rate limit: 5 purchases per hour
+  const rl = checkRateLimit(`subscribe:${session.user.id}`, 5, 3600000);
+  if (!rl.ok) return NextResponse.json({ error: `Terlalu cepat. Coba lagi dalam ${rl.retryAfter}s` }, { status: 429 });
 
   const { plan_id, payment_method } = await req.json();
 
@@ -75,6 +80,11 @@ export async function POST(req: Request) {
           throw e;
         }
 
+        await query(`
+          INSERT INTO payment_history (user_id, subscription_id, plan_name, amount, payment_method, status)
+          VALUES ($1, $2, $3, $4, 'balance', 'completed')
+        `, [session.user.id, existing.id, plan.name, plan.price]);
+
         return NextResponse.json({
           payment_id: paymentId,
           status: "active",
@@ -134,6 +144,11 @@ export async function POST(req: Request) {
       await query("ROLLBACK");
       throw e;
     }
+
+    await query(`
+      INSERT INTO payment_history (user_id, subscription_id, plan_name, amount, payment_method, status)
+      VALUES ($1, $2, $3, $4, 'balance', 'completed')
+    `, [session.user.id, existing ? existing.id : null, plan.name, plan.price]);
 
     return NextResponse.json({
       payment_id: paymentId,

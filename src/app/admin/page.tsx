@@ -9,6 +9,7 @@ import PlanSection from "@/components/admin/PlanSection";
 import NotificationSection from "@/components/admin/NotificationSection";
 import HeadlineSection from "@/components/admin/HeadlineSection";
 import UsersSection from "@/components/admin/UsersSection";
+import AnalyticsSection from "@/components/admin/AnalyticsSection";
 
 function Toast({ msg, onClose }: { msg: string; onClose: () => void }) {
   useEffect(() => {
@@ -34,7 +35,7 @@ function scrollToInfo() {
   }, 100);
 }
 
-type Tab = "users" | "user-plans" | "providers" | "models" | "plans" | "notifications" | "headlines";
+type Tab = "users" | "user-plans" | "providers" | "models" | "plans" | "notifications" | "headlines" | "analytics";
 
 export default function AdminPage() {
   const { data: session, status } = useSession();
@@ -197,6 +198,7 @@ export default function AdminPage() {
           ["plans", "Paket"],
           ["notifications", "Notifikasi"],
           ["headlines", "Headline"],
+          ["analytics", "Analytics"],
         ] as [Tab, string][]).map(([key, label]) => (
           <button
             key={key}
@@ -218,6 +220,7 @@ export default function AdminPage() {
       {tab === "notifications" && <NotificationSection showToast={showToast} />}
       {tab === "headlines" && <HeadlineSection showToast={showToast} />}
       {tab === "user-plans" && <UsersSection />}
+      {tab === "analytics" && <AnalyticsSection />}
       {tab === "users" && (
         <>
 
