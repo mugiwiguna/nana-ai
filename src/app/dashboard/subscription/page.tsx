@@ -431,15 +431,15 @@ export default function SubscriptionPage() {
       {/* Payment Method Picker Modal */}
       {paymentPicker && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md">
-          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border-2 border-gray-300 dark:border-gray-600 shadow-2xl !bg-white dark:!bg-zinc-900">
+          <div className="rounded-2xl p-6 w-[90vw] max-w-sm border-[3px] border-black dark:border-white shadow-2xl bg-white dark:bg-zinc-900">
             <h3 className="text-lg font-bold mb-1 text-gray-900 dark:text-white">Beli {paymentPicker.planName}</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-5">Pilih metode pembayaran</p>
+            <p className="text-sm text-gray-700 dark:text-gray-400 mb-5">Pilih metode pembayaran</p>
 
             <div className="space-y-3 mb-5">
               <button
                 onClick={() => handleSubscribe(paymentPicker.planId, "balance")}
                 disabled={buying === paymentPicker.planId}
-                className="w-full flex items-center gap-3 p-4 rounded-xl border-2 border-emerald-500 dark:border-emerald-600/50 bg-emerald-50 dark:bg-emerald-900/20 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-all"
+                className="w-full flex items-center gap-3 p-4 rounded-xl border-2 border-emerald-600 dark:border-emerald-500/50 bg-emerald-50 dark:bg-emerald-900/20 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-all"
               >
                 <div className="w-11 h-11 rounded-full bg-emerald-100 dark:bg-emerald-800/30 flex items-center justify-center">
                   <svg className="w-6 h-6 text-emerald-700 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -447,8 +447,8 @@ export default function SubscriptionPage() {
                   </svg>
                 </div>
                 <div className="text-left flex-1">
-                  <p className="text-sm font-semibold text-emerald-800 dark:text-emerald-300">Bayar dengan Saldo</p>
-                  <p className="text-[11px] text-gray-600 dark:text-gray-400">
+                  <p className="text-sm font-bold text-emerald-800 dark:text-emerald-300">Bayar dengan Saldo</p>
+                  <p className="text-[11px] text-gray-700 dark:text-gray-400">
                     ${Number(paymentPicker.price).toLocaleString()} dari saldo akun
                   </p>
                 </div>
@@ -457,7 +457,7 @@ export default function SubscriptionPage() {
               <button
                 onClick={() => handleSubscribe(paymentPicker.planId, "qris")}
                 disabled={buying === paymentPicker.planId}
-                className="w-full flex items-center gap-3 p-4 rounded-xl border-2 border-violet-500 dark:border-violet-600/50 bg-violet-50 dark:bg-violet-900/20 hover:bg-violet-100 dark:hover:bg-violet-900/30 transition-all"
+                className="w-full flex items-center gap-3 p-4 rounded-xl border-2 border-violet-600 dark:border-violet-500/50 bg-violet-50 dark:bg-violet-900/20 hover:bg-violet-100 dark:hover:bg-violet-900/30 transition-all"
               >
                 <div className="w-11 h-11 rounded-full bg-violet-100 dark:bg-violet-800/30 flex items-center justify-center">
                   <svg className="w-6 h-6 text-violet-700 dark:text-violet-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -466,15 +466,15 @@ export default function SubscriptionPage() {
                   </svg>
                 </div>
                 <div className="text-left flex-1">
-                  <p className="text-sm font-semibold text-violet-800 dark:text-violet-300">Scan QRIS</p>
-                  <p className="text-[11px] text-gray-600 dark:text-gray-400">${Number(paymentPicker.price).toLocaleString()} · ~Rp {Math.round(Number(paymentPicker.price) * idrRate).toLocaleString("id-ID")}</p>
+                  <p className="text-sm font-bold text-violet-800 dark:text-violet-300">Scan QRIS</p>
+                  <p className="text-[11px] text-gray-700 dark:text-gray-400">${Number(paymentPicker.price).toLocaleString()} · ~Rp {Math.round(Number(paymentPicker.price) * idrRate).toLocaleString("id-ID")}</p>
                 </div>
               </button>
             </div>
 
             <button
               onClick={() => setPaymentPicker(null)}
-              className="w-full text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white py-2 font-medium transition-colors"
+              className="w-full text-sm text-gray-800 dark:text-gray-300 hover:text-black dark:hover:text-white py-2 font-semibold transition-colors"
             >
               Batal
             </button>
@@ -485,9 +485,9 @@ export default function SubscriptionPage() {
       {/* Free Tier Info Modal */}
       {showFreeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md">
-          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border-2 border-gray-300 dark:border-gray-600 shadow-2xl !bg-white dark:!bg-zinc-900">
+          <div className="rounded-2xl p-6 w-[90vw] max-w-sm border-[3px] border-black dark:border-white shadow-2xl bg-white dark:bg-zinc-900">
             <h3 className="text-lg font-bold mb-1 text-gray-900 dark:text-white">Aktifkan Free Tier</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-5">
+            <p className="text-sm text-gray-700 dark:text-gray-400 mb-5">
               Topup minimal $1 (~Rp {Math.round(idrRate).toLocaleString("id-ID")}) untuk mengaktifkan free tier. Saldo bisa digunakan untuk beli plan nanti.
             </p>
             <button
@@ -498,7 +498,7 @@ export default function SubscriptionPage() {
             </button>
             <button
               onClick={() => setShowFreeModal(false)}
-              className="w-full text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white py-2 font-medium transition-colors"
+              className="w-full text-sm text-gray-800 dark:text-gray-300 hover:text-black dark:hover:text-white py-2 font-semibold transition-colors"
             >
               Nanti Saja
             </button>
