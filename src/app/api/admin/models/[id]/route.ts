@@ -4,7 +4,7 @@ import { query } from "@/lib/db";
 
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
-  if (session?.user?.email !== "admin@nanaai.id")
+  if (!session?.user || (session.user as any).role !== "admin")
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const { id } = await params;
@@ -14,7 +14,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
 
 export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
-  if (session?.user?.email !== "admin@nanaai.id")
+  if (!session?.user || (session.user as any).role !== "admin")
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const { id } = await params;

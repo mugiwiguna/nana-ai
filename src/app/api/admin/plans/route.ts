@@ -4,7 +4,7 @@ import { query } from "@/lib/db";
 
 export async function GET() {
   const session = await auth();
-  if (session?.user?.email !== "admin@nanaai.id")
+  if (!session?.user || (session.user as any).role !== "admin")
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const res = await query("SELECT * FROM plans ORDER BY price ASC");
@@ -13,7 +13,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const session = await auth();
-  if (session?.user?.email !== "admin@nanaai.id")
+  if (!session?.user || (session.user as any).role !== "admin")
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const { name, slug, price, credits, duration_days, description, features, model_ids, daily_token_limit, weekly_token_limit, monthly_token_limit, is_popular, is_active } = await req.json();

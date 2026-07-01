@@ -2407,3 +2407,66 @@
 2026-07-01 17:26:52:     at ignore-listed frames
 2026-07-01 17:26:52: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
 2026-07-01 17:26:52:     at ignore-listed frames
+2026-07-01 20:13:09: ⨯ error: column "total_tokens" does not exist
+2026-07-01 20:13:09:     at async i (src/lib/db.ts:12:17)
+2026-07-01 20:13:09:     at async i (src/app/api/admin/analytics/route.ts:15:22) {
+2026-07-01 20:13:09:   length: 112,
+2026-07-01 20:13:09:   severity: 'ERROR',
+2026-07-01 20:13:09:   code: '42703',
+2026-07-01 20:13:09:   detail: undefined,
+2026-07-01 20:13:09:   hint: undefined,
+2026-07-01 20:13:09:   position: '88',
+2026-07-01 20:13:09:   internalPosition: undefined,
+2026-07-01 20:13:09:   internalQuery: undefined,
+2026-07-01 20:13:09:   where: undefined,
+2026-07-01 20:13:09:   schema: undefined,
+2026-07-01 20:13:09:   table: undefined,
+2026-07-01 20:13:09:   column: undefined,
+2026-07-01 20:13:09:   dataType: undefined,
+2026-07-01 20:13:09:   constraint: undefined,
+2026-07-01 20:13:09:   file: 'parse_relation.c',
+2026-07-01 20:13:09:   line: '3722',
+2026-07-01 20:13:09:   routine: 'errorMissingColumn'
+2026-07-01 20:13:09: }
+2026-07-01 20:24:29: ⨯ error: column "total_tokens" does not exist
+2026-07-01 20:24:29:     at async i (src/lib/db.ts:12:17)
+2026-07-01 20:24:29:     at async i (src/app/api/admin/analytics/route.ts:15:22) {
+2026-07-01 20:24:29:   length: 112,
+2026-07-01 20:24:29:   severity: 'ERROR',
+2026-07-01 20:24:29:   code: '42703',
+2026-07-01 20:24:29:   detail: undefined,
+2026-07-01 20:24:29:   hint: undefined,
+2026-07-01 20:24:29:   position: '88',
+2026-07-01 20:24:29:   internalPosition: undefined,
+2026-07-01 20:24:29:   internalQuery: undefined,
+2026-07-01 20:24:29:   where: undefined,
+2026-07-01 20:24:29:   schema: undefined,
+2026-07-01 20:24:29:   table: undefined,
+2026-07-01 20:24:29:   column: undefined,
+2026-07-01 20:24:29:   dataType: undefined,
+2026-07-01 20:24:29:   constraint: undefined,
+2026-07-01 20:24:29:   file: 'parse_relation.c',
+2026-07-01 20:24:29:   line: '3722',
+2026-07-01 20:24:29:   routine: 'errorMissingColumn'
+2026-07-01 20:24:29: }
+2026-07-01 20:24:43: ⨯ error: column "total_tokens" does not exist
+2026-07-01 20:24:43:     at async i (src/lib/db.ts:12:17)
+2026-07-01 20:24:43:     at async i (src/app/api/admin/analytics/route.ts:15:22) {
+2026-07-01 20:24:43:   length: 112,
+2026-07-01 20:24:43:   severity: 'ERROR',
+2026-07-01 20:24:43:   code: '42703',
+2026-07-01 20:24:43:   detail: undefined,
+2026-07-01 20:24:43:   hint: undefined,
+2026-07-01 20:24:43:   position: '88',
+2026-07-01 20:24:43:   internalPosition: undefined,
+2026-07-01 20:24:43:   internalQuery: undefined,
+2026-07-01 20:24:43:   where: undefined,
+2026-07-01 20:24:43:   schema: undefined,
+2026-07-01 20:24:43:   table: undefined,
+2026-07-01 20:24:43:   column: undefined,
+2026-07-01 20:24:43:   dataType: undefined,
+2026-07-01 20:24:43:   constraint: undefined,
+2026-07-01 20:24:43:   file: 'parse_relation.c',
+2026-07-01 20:24:43:   line: '3722',
+2026-07-01 20:24:43:   routine: 'errorMissingColumn'
+2026-07-01 20:24:43: }

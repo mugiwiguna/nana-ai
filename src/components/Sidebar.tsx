@@ -210,7 +210,7 @@ interface SidebarProps {
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   const { data: session } = useSession();
-  const isAdmin = session?.user?.email === "admin@nanaai.id";
+  const isAdmin = (session?.user as any)?.role === "admin";
 
   const groups = isAdmin
     ? [

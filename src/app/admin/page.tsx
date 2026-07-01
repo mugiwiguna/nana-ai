@@ -63,7 +63,7 @@ export default function AdminPage() {
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
     if (status === "authenticated") {
-      if (session?.user?.email !== "admin@nanaai.id") { router.push("/dashboard"); return; }
+      if (!(session?.user as any) || (session.user as any).role !== "admin") { router.push("/dashboard"); return; }
       loadUsers();
     }
   }, [status, session, router]);
@@ -76,7 +76,7 @@ export default function AdminPage() {
   };
 
   useEffect(() => {
-    if (status !== "authenticated" || session?.user?.email !== "admin@nanaai.id") return;
+    if (status !== "authenticated" || !(session?.user as any) || (session.user as any).role !== "admin") return;
     const timer = setTimeout(loadUsers, search ? 300 : 0);
     return () => clearTimeout(timer);
   }, [search]);
@@ -159,7 +159,7 @@ export default function AdminPage() {
 
   const handleResetAllSmart = async () => {
     if (!confirm("Reset SEMUA user dengan saldo+topup terakhir?")) return;
-    await Promise.all(users.filter(u => u.email !== "admin@nanaai.id").map(async (u) => {
+    await Promise.all(users.filter(u => u.role !== "admin").map(async (u) => {
       const a = await getSmartResetAmount(u.id);
       await fetch("/api/admin/reset-quota", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ userId: u.id, amount: a }) });
     }));
@@ -179,11 +179,11 @@ export default function AdminPage() {
     totalKeys: acc.totalKeys + Number(u.api_key_count),
   }), { totalUsers: 0, totalBalance: 0, totalUsage: 0, totalKeys: 0 });
 
-  const pickerItems = users.filter(u => u.email !== "admin@nanaai.id" && (!pickerSearch || u.email.toLowerCase().includes(pickerSearch.toLowerCase()) || u.name?.toLowerCase().includes(pickerSearch.toLowerCase())));
+  const pickerItems = users.filter(u => u.role !== "admin" && (!pickerSearch || u.email.toLowerCase().includes(pickerSearch.toLowerCase()) || u.name?.toLowerCase().includes(pickerSearch.toLowerCase())));
   const topupUserObj = users.find(u => u.id === topupHistoryUser);
 
   if (status === "loading") return <p className="text-center mt-20 text-[var(--text-secondary)]">Loading...</p>;
-  if (session?.user?.email !== "admin@nanaai.id") return null;
+  if (!session?.user || (session.user as any).role !== "admin") return null;
 
   return (
     <div className="space-y-8">
@@ -326,7 +326,7 @@ export default function AdminPage() {
                     <button onClick={() => setEditBalanceOpen("")} className="text-xs text-[var(--text-secondary)] hover:underline">batal</button>
                   </div>
                 )}
-                <p className="text-[var(--text-secondary)]"><span className="text-[var(--text-primary)]">Status:</span> {u.email === "admin@nanaai.id" ? "🔧 Admin" : u.status === "active" ? "✅ Aktif" : u.status === "suspended" ? "⏸ Suspend" : "🚫 Banned"}</p>
+                <p className="text-[var(--text-secondary)]"><span className="text-[var(--text-primary)]">Status:</span> {u.role === "admin" ? "🔧 Admin" : u.status === "active" ? "✅ Aktif" : u.status === "suspended" ? "⏸ Suspend" : "🚫 Banned"}</p>
                 <p className="text-[var(--text-secondary)]"><span className="text-[var(--text-primary)]">Keys:</span> {u.api_key_count}</p>
                 <p className="text-[var(--text-secondary)]"><span className="text-[var(--text-primary)]">Usage:</span> ${Number(u.total_usage).toFixed(4)}</p>
                 {topupHistory.length > 0 && (
@@ -380,13 +380,13 @@ export default function AdminPage() {
                   </td>
                   <td className="py-2 px-4 text-center">
                     <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                      u.email === "admin@nanaai.id"
+                      u.role === "admin"
                         ? "bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400"
                         : u.status === "active" ? "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400"
                       : u.status === "suspended" ? "bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400"
                       : "bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400"
                     }`}>
-                      {u.email === "admin@nanaai.id" ? "Admin" : u.status === "active" ? "Aktif" : u.status === "suspended" ? "Suspend" : "Banned"}
+                      {u.role === "admin" ? "Admin" : u.status === "active" ? "Aktif" : u.status === "suspended" ? "Suspend" : "Banned"}
                     </span>
                   </td>
                   <td className="py-2 px-4 text-right text-[var(--text-secondary)]">{u.api_key_count}</td>
@@ -397,7 +397,7 @@ export default function AdminPage() {
                   </td>
                   <td className="py-2 px-4 text-right">
                     <div className="flex items-center justify-end gap-1">
-                      {u.email !== "admin@nanaai.id" && (
+                      {u.role !== "admin" && (
                         <>
                           <button onClick={() => { setSelectedUser(u.id); handleResetUser(u.id); }}
                             className="text-xs text-blue-500 hover:text-blue-400 px-1" title="Reset quota">↺</button>

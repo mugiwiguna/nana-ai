@@ -5,7 +5,7 @@ import { query } from "@/lib/db";
 // Blast: create notification for ALL users
 export async function POST(req: Request) {
   const session = await auth();
-  if (session?.user?.email !== "admin@nanaai.id")
+  if (!session?.user || (session.user as any).role !== "admin")
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const { title, message, type } = await req.json();
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
 
   // Get all non-admin users
   const usersRes = await query(
-    "SELECT id FROM users WHERE email != 'admin@nanaai.id' AND status = 'active'"
+    "SELECT id FROM users WHERE role != 'admin' AND status = 'active'"
   );
 
   // Insert one notification per user

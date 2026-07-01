@@ -191,7 +191,7 @@ export default function DashboardPage() {
 
       <div className="flex items-center gap-3 mb-1">
         <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">Dashboard</h1>
-        <StatusBadge status={(session.user as any)?.status} email={(session.user as any)?.email} />
+        <StatusBadge status={(session.user as any)?.status} role={(session.user as any)?.role} />
       </div>
 
       {/* Stat cards */}
@@ -403,8 +403,8 @@ function Card({ title, value, accent, link, linkText, subtitle, icon }: {
 
 function Empty() { return <p className="text-sm text-[var(--text-secondary)] py-8 text-center">Belum ada data</p>; }
 
-function StatusBadge({ status, email }: { status?: string; email?: string }) {
-  if (email === "admin@nanaai.id") {
+function StatusBadge({ status, role }: { status?: string; role?: string }) {
+  if (role === "admin") {
     return (
       <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
         Admin

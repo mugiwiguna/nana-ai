@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 // POST: assign plan to user manually
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
-  if (session?.user?.email !== "admin@nanaai.id") {
+  if (!session?.user || (session.user as any).role !== "admin") {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
@@ -43,7 +43,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 // DELETE: cancel user's active subscription
 export async function DELETE(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
-  if (session?.user?.email !== "admin@nanaai.id") {
+  if (!session?.user || (session.user as any).role !== "admin") {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 

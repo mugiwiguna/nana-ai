@@ -31,6 +31,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           name: user.name,
           balance: user.balance,
           status: user.status,
+          role: user.role,
         };
       },
     }),
@@ -86,13 +87,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.id = user.id;
         token.balance = (user as any).balance ?? 0;
         token.status = (user as any).status ?? "active";
+        token.role = (user as any).role ?? "user";
       } else {
-        const res = await query("SELECT balance, status FROM users WHERE id = $1", [
+        const res = await query("SELECT balance, status, role FROM users WHERE id = $1", [
           token.id,
         ]);
         if (res.rows[0]) {
           token.balance = res.rows[0].balance;
           token.status = res.rows[0].status;
+          token.role = res.rows[0].role;
         }
       }
       return token;
@@ -102,6 +105,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         (session.user as any).id = token.id;
         (session.user as any).balance = token.balance;
         (session.user as any).status = token.status;
+        (session.user as any).role = token.role;
       }
       return session;
     },
