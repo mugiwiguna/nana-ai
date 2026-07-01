@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { validateApiKey, calculateCost, deductBalance, getCustomModelRoute, checkFreeTier, logFreeUsage } from "@/lib/billing";
+import { validateApiKey, calculateCost, deductBalance, getCustomModelRoute, checkFreeTier, logFreeUsage, checkTokenLimits } from "@/lib/billing";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -26,6 +26,23 @@ export async function POST(req: Request) {
 
     // Check free tier eligibility
     const freeTier = await checkFreeTier(user.id, model);
+
+    // Check token limits (daily/weekly/monthly) for subscribed users
+    const tokenLimits = await checkTokenLimits(user.id);
+    if (!tokenLimits.allowed) {
+      const exceeded: string[] = [];
+      const l = tokenLimits.limits;
+      if (l.daily.limit && l.daily.remaining === 0) exceeded.push(`daily: ${l.daily.used.toLocaleString()}/${l.daily.limit.toLocaleString()}`);
+      if (l.weekly.limit && l.weekly.remaining === 0) exceeded.push(`weekly: ${l.weekly.used.toLocaleString()}/${l.weekly.limit.toLocaleString()}`);
+      if (l.monthly.limit && l.monthly.remaining === 0) exceeded.push(`monthly: ${l.monthly.used.toLocaleString()}/${l.monthly.limit.toLocaleString()}`);
+      return NextResponse.json({
+        error: {
+          message: `Token limit reached (${exceeded.join(", ")}). Please wait for the next period.`,
+          type: "rate_limit_error",
+          limits: l,
+        },
+      }, { status: 429 });
+    }
 
     if (!freeTier.eligible && Number(user.balance) <= 0) {
       return NextResponse.json({ error: { message: "Insufficient balance", type: "insufficient_quota" } }, { status: 402 });

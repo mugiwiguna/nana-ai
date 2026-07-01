@@ -5,6 +5,9 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import ProviderSection from "@/components/admin/ProviderSection";
 import ModelSection from "@/components/admin/ModelSection";
+import PlanSection from "@/components/admin/PlanSection";
+import NotificationSection from "@/components/admin/NotificationSection";
+import HeadlineSection from "@/components/admin/HeadlineSection";
 
 function Toast({ msg, onClose }: { msg: string; onClose: () => void }) {
   useEffect(() => {
@@ -30,7 +33,7 @@ function scrollToInfo() {
   }, 100);
 }
 
-type Tab = "users" | "providers" | "models";
+type Tab = "users" | "providers" | "models" | "plans" | "notifications" | "headlines";
 
 export default function AdminPage() {
   const { data: session, status } = useSession();
@@ -189,6 +192,9 @@ export default function AdminPage() {
           ["users", "Pengguna"],
           ["providers", "Provider"],
           ["models", "Model Kustom"],
+          ["plans", "Paket"],
+          ["notifications", "Notifikasi"],
+          ["headlines", "Headline"],
         ] as [Tab, string][]).map(([key, label]) => (
           <button
             key={key}
@@ -206,6 +212,9 @@ export default function AdminPage() {
 
       {tab === "providers" && <ProviderSection showToast={showToast} />}
       {tab === "models" && <ModelSection showToast={showToast} />}
+      {tab === "plans" && <PlanSection showToast={showToast} />}
+      {tab === "notifications" && <NotificationSection showToast={showToast} />}
+      {tab === "headlines" && <HeadlineSection showToast={showToast} />}
       {tab === "users" && (
         <>
 

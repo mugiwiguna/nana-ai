@@ -24,6 +24,10 @@ export default function DashboardPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [, setStats] = useState<any>({ recent: [], daily: [], dailyModels: [], modelBreakdown: [] });
+  const [headlines, setHeadlines] = useState<any[]>([]);
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [showNotifPanel, setShowNotifPanel] = useState(false);
   const [cardData, setCardData] = useState<any>({ balance: 0, activeKeys: 0, totalReqs: 0, totalTokens: 0, totalCost: 0 });
   const [recentUsage, setRecentUsage] = useState<any[]>([]);
   const [dailyModels, setDailyModels] = useState<any[]>([]);
@@ -42,7 +46,9 @@ export default function DashboardPage() {
       fetch("/api/usage/daily-models").then(r => r.json()).catch(e => ({ error: e.message })),
       fetch("/api/usage/models").then(r => r.json()).catch(e => ({ error: e.message })),
       fetch("/api/user/free-tier-usage", { cache: "no-store" }).then(r => r.json()).catch(e => null),
-    ]).then(([keyCount, recent, dailyData, dailyModelsData, modelsRes, freeData]) => {
+      fetch("/api/headlines").then(r => r.json()).catch(e => ({ headlines: [] })),
+      fetch("/api/notifications").then(r => r.json()).catch(e => ({ notifications: [], unread: 0 })),
+    ]).then(([keyCount, recent, dailyData, dailyModelsData, modelsRes, freeData, headlineData, notifData]) => {
       if (keyCount.error || recent.error || dailyData.error || dailyModelsData.error || modelsRes.error) {
         const errs = [keyCount, recent, dailyData, dailyModelsData, modelsRes]
           .map((r:any,i) => r.error ? ["keys/count","usage","usage/daily","usage/daily-models","usage/models"][i]+": "+r.error : null).filter(Boolean);
@@ -61,6 +67,9 @@ export default function DashboardPage() {
         totalCost: keyCount.totalCost ?? 0,
       });
       if (freeData && !freeData.error) setFreeUsage(freeData);
+      setHeadlines(headlineData.headlines || []);
+      setNotifications(notifData.notifications || []);
+      setUnreadCount(notifData.unread || 0);
       setStats({ keyCount, recent: recent.usage || [], daily: d, dailyModels: dailyModelsData.days || [], modelBreakdown: modelsRes.models || [] });
     });
   }, [status, router, session]);
@@ -72,6 +81,90 @@ export default function DashboardPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16 space-y-8">
+      {/* Headlines Banner */}
+      {headlines.length > 0 && (
+        <div className="space-y-2">
+          {headlines.map((h: any) => {
+            const typeStyles: Record<string, string> = {
+              info: "border-blue-500/30 bg-blue-500/5",
+              warning: "border-amber-500/30 bg-amber-500/5",
+              promo: "border-violet-500/30 bg-violet-500/5",
+              maintenance: "border-red-500/30 bg-red-500/5",
+              success: "border-emerald-500/30 bg-emerald-500/5",
+            };
+            const typeBadge: Record<string, string> = {
+              info: "bg-blue-500/10 text-blue-400",
+              warning: "bg-amber-500/10 text-amber-400",
+              promo: "bg-violet-500/10 text-violet-400",
+              maintenance: "bg-red-500/10 text-red-400",
+              success: "bg-emerald-500/10 text-emerald-400",
+            };
+            return (
+              <div key={h.id} className={`p-4 rounded-xl border ${typeStyles[h.type] || typeStyles.info}`}>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold ${typeBadge[h.type] || typeBadge.info}`}>{h.type}</span>
+                      <h3 className="text-sm font-semibold text-[var(--text-primary)]">{h.title}</h3>
+                    </div>
+                    {h.content && <p className="text-xs text-[var(--text-secondary)] mt-1">{h.content}</p>}
+                  </div>
+                  {h.link_url && (
+                    <a href={h.link_url} className="text-xs gradient-text hover:underline font-medium shrink-0">{h.link_text || "Detail →"}</a>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Notification Bell + Panel */}
+      <div className="relative">
+        <button onClick={() => setShowNotifPanel(!showNotifPanel)}
+          className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-[var(--accent-bg)] text-[var(--accent-fg)] shadow-lg hover:opacity-90 transition flex items-center justify-center">
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+          </svg>
+          {unreadCount > 0 && (
+            <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">{unreadCount}</span>
+          )}
+        </button>
+        {showNotifPanel && (
+          <>
+            <div className="fixed inset-0 z-40" onClick={() => setShowNotifPanel(false)} />
+            <div className="fixed bottom-20 right-6 z-50 w-80 max-w-[90vw] bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-xl shadow-2xl overflow-hidden">
+              <div className="p-3 border-b border-[var(--border-color)]">
+                <h3 className="text-sm font-semibold text-[var(--text-primary)]">Notifikasi</h3>
+              </div>
+              <div className="max-h-80 overflow-y-auto">
+                {notifications.length === 0 ? (
+                  <p className="text-xs text-[var(--text-secondary)] p-4 text-center">Tidak ada notifikasi</p>
+                ) : notifications.map((n: any) => (
+                  <div key={n.id} className={`p-3 border-b border-[var(--border-color)] last:border-0 ${!n.is_read ? "bg-[var(--gradient-start)]/5" : ""}`}>
+                    <div className="flex items-center gap-2">
+                      {!n.is_read && <span className="w-2 h-2 rounded-full bg-[var(--gradient-start)] shrink-0" />}
+                      <span className="text-xs font-semibold text-[var(--text-primary)]">{n.title}</span>
+                    </div>
+                    <p className="text-[11px] text-[var(--text-secondary)] mt-0.5 line-clamp-2">{n.message}</p>
+                    <div className="flex items-center justify-between mt-1">
+                      <span className="text-[10px] text-[var(--text-secondary)]">{new Date(n.created_at).toLocaleDateString("id-ID")}</span>
+                      {!n.is_read && (
+                        <button onClick={async () => {
+                          await fetch("/api/notifications", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: n.id }) });
+                          setNotifications(ns => ns.map(x => x.id === n.id ? { ...x, is_read: true } : x));
+                          setUnreadCount(c => Math.max(0, c - 1));
+                        }} className="text-[10px] text-[var(--gradient-start)] hover:underline">Tandai dibaca</button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
       {/* Fetch error */}
       {fetchErr && (
         <div className="p-3 rounded-lg border border-red-500/30 bg-red-500/5 text-xs text-red-400">{fetchErr}</div>

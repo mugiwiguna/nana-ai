@@ -111,22 +111,24 @@ Cara kerja:
 6. Log usage
 7. Return response + info cost & sisa saldo
 
-## Harga Model (per 1K token)
+## Harga Model (per token)
 
 | Model | Input | Output |
 |-------|-------|--------|
-| GPT-4o | $0.0025 | $0.01 |
-| GPT-4o-mini | $0.00015 | $0.0006 |
-| GPT-3.5 Turbo | $0.0005 | $0.0015 |
-| DeepSeek Chat | $0.00014 | $0.00028 |
-| Claude 3.5 Sonnet | $0.003 | $0.015 |
+| GPT-4o | $0.0000025 | $0.00001 |
+| GPT-4o-mini | $0.00000015 | $0.0000006 |
+| GPT-3.5 Turbo | $0.0000005 | $0.0000015 |
+| DeepSeek Chat | $0.00000014 | $0.00000028 |
+| Claude 3.5 Sonnet | $0.000003 | $0.000015 |
+| Llama 3.3 70B | $0.0000005 | $0.000002 |
+| Llama 3.1 8B | $0.00000015 | $0.0000006 |
+| Llama 4 Scout 17B | $0.0000003 | $0.000001 |
+| Qwen 3 32B | $0.0000003 | $0.000001 |
+| Qwen 3.6 27B | $0.0000003 | $0.000001 |
 
 ## Yang Belum
 
 - **Payment Gateway** — Top-up masih mock auto-approve. Integrasi Midtrans/Xendit perlu dilakukan.
-- **Streaming** — API proxy belum support streaming response.
-- **Upstream API Key** — Butuh API key real dari OpenRouter atau OpenAI.
 - **Email verification** — Register langsung aktif tanpa verifikasi email.
-- **Rate limiting** — Belum ada pembatasan request per user/key.
 - **Domain & SSL** — Masih pakai IP VPS.
 - **Unit tests** — Belum ada.

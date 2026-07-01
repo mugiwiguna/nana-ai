@@ -145,3 +145,148 @@ export async function deductBalance(
     [userId, apiKeyId, model, tokensIn, tokensOut, cost]
   );
 }
+
+/**
+ * Token limit periods.
+ * Free plan: reset follows calendar (daily=midnight WITA, weekly=Monday, monthly=1st).
+ * Paid plan: daily=midnight WITA, weekly=7-day cycle from sub start, monthly=same day as sub start.
+ */
+export interface TokenLimitResult {
+  allowed: boolean;
+  limits: {
+    daily: { limit: number | null; used: number; remaining: number | null };
+    weekly: { limit: number | null; used: number; remaining: number | null };
+    monthly: { limit: number | null; used: number; remaining: number | null };
+  };
+}
+
+export async function checkTokenLimits(userId: string): Promise<TokenLimitResult> {
+  // Get active subscription + plan limits
+  const subRes = await query(
+    `SELECT p.daily_token_limit, p.weekly_token_limit, p.monthly_token_limit, us.starts_at
+     FROM user_subscriptions us
+     JOIN plans p ON p.id = us.plan_id
+     WHERE us.user_id = $1 AND us.status = 'active' AND us.expires_at > now()
+     ORDER BY us.created_at DESC LIMIT 1`,
+    [userId]
+  );
+
+  const sub = subRes.rows[0];
+  const dailyLimit = sub?.daily_token_limit ? Number(sub.daily_token_limit) : null;
+  const weeklyLimit = sub?.weekly_token_limit ? Number(sub.weekly_token_limit) : null;
+  const monthlyLimit = sub?.monthly_token_limit ? Number(sub.monthly_token_limit) : null;
+
+  // No limits at all → allowed
+  if (!dailyLimit && !weeklyLimit && !monthlyLimit) {
+    return {
+      allowed: true,
+      limits: {
+        daily: { limit: null, used: 0, remaining: null },
+        weekly: { limit: null, used: 0, remaining: null },
+        monthly: { limit: null, used: 0, remaining: null },
+      },
+    };
+  }
+
+  const now = new Date();
+  const WITA_OFFSET = 8 * 60 * 60 * 1000;
+
+  // Daily window: always calendar-based (midnight WITA)
+  const witaNow = new Date(now.getTime() + WITA_OFFSET);
+  const dayStart = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), witaNow.getUTCDate()));
+  const dayStartUTC = new Date(dayStart.getTime() - WITA_OFFSET);
+
+  // Weekly + Monthly windows: calendar for free, purchase-date cycle for paid
+  let weekStartUTC: Date;
+  let monthStartUTC: Date;
+
+  if (sub?.starts_at) {
+    // Paid plan: cycle based on subscription start date
+    const subStart = new Date(sub.starts_at);
+
+    // Weekly: find most recent weekly cycle boundary
+    const msPerWeek = 7 * 24 * 60 * 60 * 1000;
+    const elapsed = now.getTime() - subStart.getTime();
+    const weeksSinceStart = Math.floor(elapsed / msPerWeek);
+    weekStartUTC = new Date(subStart.getTime() + weeksSinceStart * msPerWeek);
+
+    // Monthly: same day-of-month as subscription start
+    const subDay = subStart.getUTCDate();
+    const curMonth = witaNow.getUTCMonth();
+    const curYear = witaNow.getUTCFullYear();
+    // Walk back to find the most recent month that has subDay
+    let m = new Date(Date.UTC(curYear, curMonth + 1, 1)); // next month 1st
+    while (true) {
+      m = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth() - 1, 1));
+      const dim = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth() + 1, 0)).getUTCDate();
+      const clampedDay = Math.min(subDay, dim);
+      const candidate = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth(), clampedDay));
+      if (candidate <= now) {
+        monthStartUTC = new Date(candidate.getTime() - WITA_OFFSET);
+        break;
+      }
+    }
+  } else {
+    // Free plan: calendar-based
+    // Week start: Monday 00:00 WITA
+    const dayOfWeek = witaNow.getUTCDay(); // 0=Sun, 1=Mon...
+    const daysSinceMon = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+    const monDate = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), witaNow.getUTCDate() - daysSinceMon));
+    weekStartUTC = new Date(monDate.getTime() - WITA_OFFSET);
+
+    // Month start: 1st of current month 00:00 WITA
+    const monthStart = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), 1));
+    monthStartUTC = new Date(monthStart.getTime() - WITA_OFFSET);
+  }
+
+  // Query usage for all 3 windows in one shot
+  const usageRes = await query(
+    `SELECT
+       COALESCE(SUM(CASE WHEN created_at >= $2 THEN tokens_in + tokens_out ELSE 0 END), 0) as daily_used,
+       COALESCE(SUM(CASE WHEN created_at >= $3 THEN tokens_in + tokens_out ELSE 0 END), 0) as weekly_used,
+       COALESCE(SUM(CASE WHEN created_at >= $4 THEN tokens_in + tokens_out ELSE 0 END), 0) as monthly_used
+     FROM usage_logs WHERE user_id = $1`,
+    [userId, dayStartUTC.toISOString(), weekStartUTC.toISOString(), monthStartUTC.toISOString()]
+  );
+
+  const row = usageRes.rows[0];
+  const dailyUsed = Number(row.daily_used);
+  const weeklyUsed = Number(row.weekly_used);
+  const monthlyUsed = Number(row.monthly_used);
+
+  const dailyRemaining = dailyLimit ? Math.max(0, dailyLimit - dailyUsed) : null;
+  const weeklyRemaining = weeklyLimit ? Math.max(0, weeklyLimit - weeklyUsed) : null;
+  const monthlyRemaining = monthlyLimit ? Math.max(0, monthlyLimit - monthlyUsed) : null;
+
+  const allowed =
+    (dailyLimit ? dailyRemaining! > 0 : true) &&
+    (weeklyLimit ? weeklyRemaining! > 0 : true) &&
+    (monthlyLimit ? monthlyRemaining! > 0 : true);
+
+  return {
+    allowed,
+    limits: {
+      daily: { limit: dailyLimit, used: dailyUsed, remaining: dailyRemaining },
+      weekly: { limit: weeklyLimit, used: weeklyUsed, remaining: weeklyRemaining },
+      monthly: { limit: monthlyLimit, used: monthlyUsed, remaining: monthlyRemaining },
+    },
+  };
+}
+
+/**
+ * Legacy single-limit check. Use checkTokenLimits for full picture.
+ */
+export async function checkDailyTokenLimit(userId: string): Promise<{
+  allowed: boolean;
+  limit: number | null;
+  used: number;
+  remaining: number | null;
+}> {
+  const full = await checkTokenLimits(userId);
+  return {
+    allowed: full.allowed,
+    limit: full.limits.daily.limit,
+    used: full.limits.daily.used,
+    remaining: full.limits.daily.remaining,
+  };
+}

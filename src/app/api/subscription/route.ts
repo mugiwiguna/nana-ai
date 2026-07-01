@@ -1,19 +1,22 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { query } from "@/lib/db";
+import { checkTokenLimits } from "@/lib/billing";
 
 export async function GET() {
   const session = await auth();
   if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const res = await query(
-    `SELECT us.*, p.name as plan_name, p.credits as plan_credits, p.duration_days
+    `SELECT us.*, p.name as plan_name, p.credits as plan_credits, p.duration_days, p.daily_token_limit, p.weekly_token_limit, p.monthly_token_limit
      FROM user_subscriptions us
      JOIN plans p ON us.plan_id = p.id
      WHERE us.user_id = $1 AND us.status = 'active' AND us.expires_at > now()
      ORDER BY us.created_at DESC LIMIT 1`,
     [session.user.id]
   );
+
+  const dailyLimit = await checkTokenLimits(session.user.id);
 
   const historyRes = await query(
     `SELECT us.*, p.name as plan_name, p.price
@@ -27,5 +30,6 @@ export async function GET() {
   return NextResponse.json({
     active: res.rows[0] || null,
     history: historyRes.rows,
+    tokenLimits: dailyLimit.limits,
   });
 }
