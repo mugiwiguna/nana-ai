@@ -245,8 +245,11 @@ export default function SubscriptionPage() {
       {/* Free Tier Limits — always shown for all users */}
       {sub?.freeTierLimits && (sub.freeTierLimits.daily.limit || sub.freeTierLimits.weekly.limit || sub.freeTierLimits.monthly.limit) && (
         <div className="glass-card rounded-2xl p-6">
-          <h2 className="text-lg font-semibold mb-4">
+          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
             <span className="text-violet-400">Free Tier</span> Limits
+            {freeUsage?.eligible && (
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-violet-500/10 text-violet-400 border border-violet-500/20">Aktif</span>
+            )}
           </h2>
           <div className="space-y-3">
             {([
@@ -284,7 +287,9 @@ export default function SubscriptionPage() {
       {/* Paid Plan Token Limits — shown if user has active subscription with limits */}
       {sub?.active && sub?.tokenLimits && (sub.tokenLimits.daily.limit || sub.tokenLimits.weekly.limit || sub.tokenLimits.monthly.limit) && (
         <div className="glass-card rounded-2xl p-6">
-          <h2 className="text-lg font-semibold mb-4">Plan Limits</h2>
+          <h2 className="text-lg font-semibold mb-4">
+            <span className="text-violet-400">{sub?.active?.plan_name || "Plan"}</span> Limits
+          </h2>
           <div className="space-y-3">
             {([
               ["daily", "Harian"],
