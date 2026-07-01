@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { query } from "@/lib/db";
 import { v4 as uuidv4 } from "uuid";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { notify } from "@/lib/notify";
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -85,6 +86,9 @@ export async function POST(req: Request) {
           VALUES ($1, $2, $3, $4, 'balance', 'completed')
         `, [session.user.id, existing.id, plan.name, plan.price]);
 
+        // Notify user
+        await notify({ userId: session.user.id, title: `✅ Buyback ${plan.name}!`, message: `Durasi +${plan.duration_days} hari, limit direset.`, type: "success" });
+
         return NextResponse.json({
           payment_id: paymentId,
           status: "active",
@@ -100,13 +104,16 @@ export async function POST(req: Request) {
          VALUES ($1, $2, now(), now(), 'pending', 'qris', $3, 1)`,
         [session.user.id, plan_id, paymentId]
       );
+      // Notify user (QRIS pending)
+      await notify({ userId: session.user.id, title: `⏳ Buyback ${plan.name} — QRIS`, message: `Scan QRIS untuk buyback. Limit akan direset setelah pembayaran.`, type: "info" });
+
       return NextResponse.json({
         payment_id: paymentId,
         status: "pending",
         plan: plan.name,
         buyback: true,
         amount: plan.price,
-        message: "Scan QRIS untuk buyback. Durasi +limit ditumpuk setelah pembayaran.",
+        message: "Scan QRIS untuk buyback. Limit akan direset setelah pembayaran.",
         qris_url: null,
       });
     }
@@ -150,6 +157,9 @@ export async function POST(req: Request) {
       VALUES ($1, $2, $3, $4, 'balance', 'completed')
     `, [session.user.id, existing ? existing.id : null, plan.name, plan.price]);
 
+    // Notify user
+    await notify({ userId: session.user.id, title: `✅ ${plan.name} activated!`, message: `Plan ${plan.name} telah aktif. Selamat menggunakan!`, type: "success" });
+
     return NextResponse.json({
       payment_id: paymentId,
       status: "active",
@@ -164,6 +174,9 @@ export async function POST(req: Request) {
      VALUES ($1, $2, now(), now() + interval '${plan.duration_days} days', 'pending', 'qris', $3)`,
     [session.user.id, plan_id, paymentId]
   );
+
+  // Notify user (QRIS pending)
+  await notify({ userId: session.user.id, title: `⏳ Pembayaran QRIS ${plan.name}`, message: `Scan QRIS untuk menyelesaikan pembelian ${plan.name} ($${plan.price}).`, type: "info" });
 
   return NextResponse.json({
     payment_id: paymentId,

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { query } from "@/lib/db";
+import { notify } from "@/lib/notify";
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -24,6 +25,11 @@ export async function POST(req: Request) {
      RETURNING user_id`,
     user_ids
   );
+
+  // Notify each user
+  for (const uid of user_ids) {
+    await notify({ userId: uid, title: `🔄 Limit di-reset`, message: `Token limit harian/mingguan/bulanan Anda telah di-reset oleh admin.`, type: "info" });
+  }
 
   return NextResponse.json({ 
     reset: result.rowCount,

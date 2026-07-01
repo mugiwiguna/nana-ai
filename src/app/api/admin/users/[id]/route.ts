@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { query } from "@/lib/db";
 import { v4 as uuidv4 } from "uuid";
+import { notify } from "@/lib/notify";
 
 // POST: assign plan to user manually
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -37,6 +38,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     [userId, plan_id, paymentId]
   );
 
+  await notify({ userId, title: `🎁 Paket ${plan.name} diaktifkan`, message: `Admin mengaktifkan paket ${plan.name} untuk akun Anda. Berlaku ${plan.duration_days} hari.`, type: "success" });
+
   return NextResponse.json({ subscription: subRes.rows[0], plan: plan.name });
 }
 
@@ -53,6 +56,10 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ id: 
     "UPDATE user_subscriptions SET status = 'cancelled' WHERE user_id = $1 AND status = 'active' RETURNING id",
     [userId]
   );
+
+  if (res.rowCount && res.rowCount > 0) {
+    await notify({ userId, title: `⚠️ Paket dibatalkan`, message: `Paket aktif Anda telah dibatalkan oleh admin.`, type: "warning" });
+  }
 
   return NextResponse.json({ cancelled: res.rowCount });
 }
