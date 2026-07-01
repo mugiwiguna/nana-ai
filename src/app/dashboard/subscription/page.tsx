@@ -61,6 +61,7 @@ export default function SubscriptionPage() {
   const [paymentPicker, setPaymentPicker] = useState<{ planId: string; planName: string; price: string } | null>(null);
   const [msg, setMsg] = useState<{ text: string; ok: boolean } | null>(null);
   const [freeUsage, setFreeUsage] = useState<any>(null);
+  const [showFreeModal, setShowFreeModal] = useState(false);
 
   useEffect(() => {
     Promise.all([
@@ -322,6 +323,13 @@ export default function SubscriptionPage() {
                   <button disabled className="w-full text-sm font-semibold py-2.5 rounded-xl bg-gray-500/10 text-gray-500 cursor-not-allowed">
                     Stok Habis
                   </button>
+                ) : plan.slug === "free" ? (
+                  <button
+                    onClick={() => setShowFreeModal(true)}
+                    className="w-full text-sm font-semibold py-2.5 rounded-xl border border-[var(--border-color)] hover:border-emerald-500/50 transition-all"
+                  >
+                    Aktifkan
+                  </button>
                 ) : (() => {
                   const activePrice = sub?.active ? parseFloat(sub.active.plan_credits) : 0;
                   const planPrice = parseFloat(plan.price);
@@ -430,6 +438,30 @@ export default function SubscriptionPage() {
               className="w-full text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] py-2"
             >
               Batal
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Free Tier Info Modal */}
+      {showFreeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border border-[var(--border-color)]">
+            <h3 className="text-lg font-semibold mb-1">Aktifkan Free Tier</h3>
+            <p className="text-sm text-[var(--text-secondary)] mb-4">
+              Topup minimal $1 (~Rp 16.000) untuk mengaktifkan free tier. Saldo bisa digunakan untuk beli plan nanti.
+            </p>
+            <button
+              onClick={() => { setShowFreeModal(false); window.location.href = "/dashboard/topup"; }}
+              className="w-full py-2.5 rounded-xl text-sm font-medium bg-[var(--accent-bg)] text-[var(--accent-fg)] mb-2"
+            >
+              Topup Sekarang
+            </button>
+            <button
+              onClick={() => setShowFreeModal(false)}
+              className="w-full text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] py-2"
+            >
+              Nanti Saja
             </button>
           </div>
         </div>
