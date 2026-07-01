@@ -1,0 +1,178 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+interface UserPlan {
+  id: string;
+  plan_name: string;
+  plan_slug: string;
+  status: string;
+  expires_at: string;
+  payment_method: string;
+}
+
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  balance: string;
+  status: string;
+  created_at: string;
+  api_key_count: number;
+  total_usage: string;
+  active_plan: UserPlan | null;
+  token_usage: { daily_used: string; monthly_used: string } | null;
+}
+
+interface Plan {
+  id: string;
+  name: string;
+  slug: string;
+  price: string;
+  duration_days: number;
+}
+
+export default function UsersSection() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [plans, setPlans] = useState<Plan[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [assigning, setAssigning] = useState<string | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState("");
+
+  const fetchAll = async () => {
+    setLoading(true);
+    const [uRes, pRes] = await Promise.all([
+      fetch("/api/admin/users"),
+      fetch("/api/plans"),
+    ]);
+    const uData = await uRes.json();
+    const pData = await pRes.json();
+    setUsers(uData.users || []);
+    setPlans(pData.filter((p: Plan & { is_active: boolean }) => p.is_active));
+    setLoading(false);
+  };
+
+  useEffect(() => { fetchAll(); }, []);
+
+  const assignPlan = async (userId: string) => {
+    if (!selectedPlan) return;
+    if (!confirm("Assign plan ke user ini?")) return;
+    const res = await fetch(`/api/admin/users/${userId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ plan_id: selectedPlan }),
+    });
+    if (res.ok) {
+      setAssigning(null);
+      setSelectedPlan("");
+      fetchAll();
+    }
+  };
+
+  const deletePlan = async (userId: string) => {
+    if (!confirm("Hapus plan aktif user ini?")) return;
+    const res = await fetch(`/api/admin/users/${userId}`, { method: "DELETE" });
+    if (res.ok) fetchAll();
+  };
+
+  if (loading) return <div className="animate-pulse h-40 rounded-xl bg-[var(--bg-secondary)]" />;
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h2 className="text-lg font-semibold">User & Paket</h2>
+        <span className="text-xs text-[var(--text-secondary)]">{users.length} user</span>
+      </div>
+
+      <div className="space-y-3">
+        {users.map((u) => (
+          <div key={u.id} className="glass-card rounded-xl p-4">
+            <div className="flex items-start justify-between mb-2">
+              <div>
+                <p className="font-medium text-sm">{u.name || u.email}</p>
+                <p className="text-[11px] text-[var(--text-secondary)]">{u.email}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                {u.active_plan ? (
+                  <span className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/20 text-emerald-400">
+                    {u.active_plan.plan_name}
+                  </span>
+                ) : (
+                  <span className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-zinc-500/20 text-zinc-400">
+                    Free
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 text-[11px] text-[var(--text-secondary)] mb-3">
+              <div>
+                <span className="block text-[var(--text-primary)] font-medium tabular-nums">${Number(u.balance).toFixed(2)}</span>
+                Saldo
+              </div>
+              <div>
+                <span className="block text-[var(--text-primary)] font-medium tabular-nums">
+                  {(u.token_usage ? Number(u.token_usage.daily_used) : 0).toLocaleString()}
+                </span>
+                Token hari ini
+              </div>
+              <div>
+                <span className="block text-[var(--text-primary)] font-medium tabular-nums">
+                  {Number(u.total_usage).toLocaleString()}
+                </span>
+                Total usage
+              </div>
+            </div>
+
+            {u.active_plan && (
+              <p className="text-[10px] text-[var(--text-secondary)] mb-2">
+                Aktif s/d {new Date(u.active_plan.expires_at).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })}
+                {" · "}via {u.active_plan.payment_method}
+              </p>
+            )}
+
+            <div className="flex items-center gap-2">
+              {assigning === u.id ? (
+                <div className="flex items-center gap-2 w-full">
+                  <select
+                    value={selectedPlan}
+                    onChange={(e) => setSelectedPlan(e.target.value)}
+                    className="flex-1 px-2 py-1 text-xs rounded-lg bg-[var(--bg-primary)] border border-[var(--border-color)]"
+                  >
+                    <option value="">Pilih plan...</option>
+                    {plans.filter(p => p.slug !== "free").map((p) => (
+                      <option key={p.id} value={p.id}>{p.name} (${p.price})</option>
+                    ))}
+                  </select>
+                  <button onClick={() => assignPlan(u.id)} className="px-2 py-1 text-[10px] font-medium rounded-lg bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30">
+                    Assign
+                  </button>
+                  <button onClick={() => { setAssigning(null); setSelectedPlan(""); }} className="px-2 py-1 text-[10px] rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
+                    Batal
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <button
+                    onClick={() => setAssigning(u.id)}
+                    className="px-2 py-1 text-[10px] font-medium rounded-lg bg-violet-500/20 text-violet-400 hover:bg-violet-500/30"
+                  >
+                    Assign Plan
+                  </button>
+                  {u.active_plan && (
+                    <button
+                      onClick={() => deletePlan(u.id)}
+                      className="px-2 py-1 text-[10px] font-medium rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30"
+                    >
+                      Hapus Plan
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

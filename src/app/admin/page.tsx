@@ -8,6 +8,7 @@ import ModelSection from "@/components/admin/ModelSection";
 import PlanSection from "@/components/admin/PlanSection";
 import NotificationSection from "@/components/admin/NotificationSection";
 import HeadlineSection from "@/components/admin/HeadlineSection";
+import UsersSection from "@/components/admin/UsersSection";
 
 function Toast({ msg, onClose }: { msg: string; onClose: () => void }) {
   useEffect(() => {
@@ -33,7 +34,7 @@ function scrollToInfo() {
   }, 100);
 }
 
-type Tab = "users" | "providers" | "models" | "plans" | "notifications" | "headlines";
+type Tab = "users" | "user-plans" | "providers" | "models" | "plans" | "notifications" | "headlines";
 
 export default function AdminPage() {
   const { data: session, status } = useSession();
@@ -190,6 +191,7 @@ export default function AdminPage() {
       <div className="flex gap-6 mt-6 border-b border-[var(--border-color)]">
         {([
           ["users", "Pengguna"],
+          ["user-plans", "Paket User"],
           ["providers", "Provider"],
           ["models", "Model Kustom"],
           ["plans", "Paket"],
@@ -215,6 +217,7 @@ export default function AdminPage() {
       {tab === "plans" && <PlanSection showToast={showToast} />}
       {tab === "notifications" && <NotificationSection showToast={showToast} />}
       {tab === "headlines" && <HeadlineSection showToast={showToast} />}
+      {tab === "user-plans" && <UsersSection />}
       {tab === "users" && (
         <>
 

@@ -57,7 +57,7 @@ export default function SubscriptionPage() {
   const [sub, setSub] = useState<Subscription | null>(null);
   const [loading, setLoading] = useState(true);
   const [buying, setBuying] = useState<string | null>(null);
-  const [payMethod, setPayMethod] = useState<"balance" | "qris">("balance");
+  const [paymentPicker, setPaymentPicker] = useState<{ planId: string; planName: string; price: string } | null>(null);
   const [msg, setMsg] = useState<{ text: string; ok: boolean } | null>(null);
   const [freeUsage, setFreeUsage] = useState<any>(null);
 
@@ -75,14 +75,15 @@ export default function SubscriptionPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  async function handleSubscribe(planId: string) {
+  async function handleSubscribe(planId: string, method: "balance" | "qris") {
     setBuying(planId);
+    setPaymentPicker(null);
     setMsg(null);
     try {
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan_id: planId, payment_method: payMethod }),
+        body: JSON.stringify({ plan_id: planId, payment_method: method }),
       });
       const json = await res.json();
       if (res.ok) {
@@ -315,7 +316,7 @@ export default function SubscriptionPage() {
                     Stok Habis
                   </button>
                 ) : (
-                  <button onClick={() => handleSubscribe(plan.id)} disabled={hasActivePlan || buying === plan.id}
+                  <button onClick={() => plan.is_active && setPaymentPicker({ planId: plan.id, planName: plan.name, price: plan.price })} disabled={hasActivePlan || buying === plan.id}
                     className={`w-full text-sm font-semibold py-2.5 rounded-xl transition-all duration-300 ${
                       plan.is_popular ? "bg-[var(--accent-bg)] text-[var(--accent-fg)]" : "border border-[var(--border-color)]"
                     } disabled:opacity-40 disabled:cursor-not-allowed`}>
@@ -361,6 +362,51 @@ export default function SubscriptionPage() {
           <p className="text-[var(--text-secondary)] text-sm text-center py-4">Belum ada riwayat</p>
         )}
       </div>
+
+      {/* Payment Method Picker Modal */}
+      {paymentPicker && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border border-[var(--border-color)]">
+            <h3 className="text-lg font-semibold mb-1">Beli {paymentPicker.planName}</h3>
+            <p className="text-sm text-[var(--text-secondary)] mb-4">Pilih metode pembayaran</p>
+
+            <div className="space-y-3 mb-4">
+              <button
+                onClick={() => handleSubscribe(paymentPicker.planId, "balance")}
+                disabled={buying === paymentPicker.planId}
+                className="w-full flex items-center gap-3 p-4 rounded-xl border border-[var(--border-color)] hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all"
+              >
+                <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-lg">💰</div>
+                <div className="text-left flex-1">
+                  <p className="text-sm font-medium">Bayar dengan Saldo</p>
+                  <p className="text-[11px] text-[var(--text-secondary)]">
+                    ${Number(paymentPicker.price).toLocaleString()} dari saldo akun
+                  </p>
+                </div>
+              </button>
+
+              <button
+                onClick={() => handleSubscribe(paymentPicker.planId, "qris")}
+                disabled={buying === paymentPicker.planId}
+                className="w-full flex items-center gap-3 p-4 rounded-xl border border-[var(--border-color)] hover:border-violet-500/50 hover:bg-violet-500/5 transition-all"
+              >
+                <div className="w-10 h-10 rounded-full bg-violet-500/20 flex items-center justify-center text-lg">📱</div>
+                <div className="text-left flex-1">
+                  <p className="text-sm font-medium">Scan QRIS</p>
+                  <p className="text-[11px] text-[var(--text-secondary)]">${Number(paymentPicker.price).toLocaleString()} · ~Rp {Math.round(Number(paymentPicker.price) * 16000).toLocaleString("id-ID")}</p>
+                </div>
+              </button>
+            </div>
+
+            <button
+              onClick={() => setPaymentPicker(null)}
+              className="w-full text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] py-2"
+            >
+              Batal
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
