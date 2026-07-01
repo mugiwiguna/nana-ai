@@ -229,7 +229,7 @@ export default function AdminPage() {
         <SumCard title="Total User" value={summary.totalUsers} />
         <SumCard title="Total Saldo" value={"$" + summary.totalBalance.toFixed(2)} />
         <SumCard title="API Key" value={summary.totalKeys} />
-        <SumCard title="Revenue" value={"$" + summary.totalUsage.toFixed(4)} />
+        <SumCard title="Total Token" value={summary.totalUsage.toLocaleString()} />
       </div>
 
       {/* Actions */}
@@ -328,7 +328,7 @@ export default function AdminPage() {
                 )}
                 <p className="text-[var(--text-secondary)]"><span className="text-[var(--text-primary)]">Status:</span> {u.role === "admin" ? "🔧 Admin" : u.status === "active" ? "✅ Aktif" : u.status === "suspended" ? "⏸ Suspend" : "🚫 Banned"}</p>
                 <p className="text-[var(--text-secondary)]"><span className="text-[var(--text-primary)]">Keys:</span> {u.api_key_count}</p>
-                <p className="text-[var(--text-secondary)]"><span className="text-[var(--text-primary)]">Usage:</span> ${Number(u.total_usage).toFixed(4)}</p>
+                <p className="text-[var(--text-secondary)]"><span className="text-[var(--text-primary)]">Usage:</span> {Number(u.total_usage).toLocaleString()} token</p>
                 {topupHistory.length > 0 && (
                   <div className="pt-2 border-t border-[var(--border-color)]">
                     <p className="text-xs font-semibold text-[var(--text-secondary)] mb-1">Top-up History</p>
@@ -390,7 +390,7 @@ export default function AdminPage() {
                     </span>
                   </td>
                   <td className="py-2 px-4 text-right text-[var(--text-secondary)]">{u.api_key_count}</td>
-                  <td className="py-2 px-4 text-right text-[var(--text-secondary)]">${Number(u.total_usage).toFixed(4)}</td>
+                  <td className="py-2 px-4 text-right text-[var(--text-secondary)]">{Number(u.total_usage).toLocaleString()}</td>
                   <td className="py-2 px-4 text-right">
                     <button onClick={() => handleInfoClick(u)}
                       className="text-xs text-blue-500 hover:text-blue-400 transition">Lihat</button>

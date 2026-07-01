@@ -2470,3 +2470,45 @@
 2026-07-01 20:24:43:   line: '3722',
 2026-07-01 20:24:43:   routine: 'errorMissingColumn'
 2026-07-01 20:24:43: }
+2026-07-01 22:56:06: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 22:56:06:     at async i (src/lib/db.ts:12:17)
+2026-07-01 22:56:06:     at async i (src/app/api/admin/analytics/route.ts:29:20) {
+2026-07-01 22:56:06:   length: 113,
+2026-07-01 22:56:06:   severity: 'ERROR',
+2026-07-01 22:56:06:   code: '42703',
+2026-07-01 22:56:06:   detail: undefined,
+2026-07-01 22:56:06:   hint: undefined,
+2026-07-01 22:56:06:   position: '80',
+2026-07-01 22:56:06:   internalPosition: undefined,
+2026-07-01 22:56:06:   internalQuery: undefined,
+2026-07-01 22:56:06:   where: undefined,
+2026-07-01 22:56:06:   schema: undefined,
+2026-07-01 22:56:06:   table: undefined,
+2026-07-01 22:56:06:   column: undefined,
+2026-07-01 22:56:06:   dataType: undefined,
+2026-07-01 22:56:06:   constraint: undefined,
+2026-07-01 22:56:06:   file: 'parse_relation.c',
+2026-07-01 22:56:06:   line: '3722',
+2026-07-01 22:56:06:   routine: 'errorMissingColumn'
+2026-07-01 22:56:06: }
+2026-07-01 23:04:57: ⨯ error: column ul.total_tokens does not exist
+2026-07-01 23:04:57:     at async i (src/lib/db.ts:12:17)
+2026-07-01 23:04:57:     at async i (src/app/api/admin/analytics/route.ts:29:20) {
+2026-07-01 23:04:57:   length: 113,
+2026-07-01 23:04:57:   severity: 'ERROR',
+2026-07-01 23:04:57:   code: '42703',
+2026-07-01 23:04:57:   detail: undefined,
+2026-07-01 23:04:57:   hint: undefined,
+2026-07-01 23:04:57:   position: '80',
+2026-07-01 23:04:57:   internalPosition: undefined,
+2026-07-01 23:04:57:   internalQuery: undefined,
+2026-07-01 23:04:57:   where: undefined,
+2026-07-01 23:04:57:   schema: undefined,
+2026-07-01 23:04:57:   table: undefined,
+2026-07-01 23:04:57:   column: undefined,
+2026-07-01 23:04:57:   dataType: undefined,
+2026-07-01 23:04:57:   constraint: undefined,
+2026-07-01 23:04:57:   file: 'parse_relation.c',
+2026-07-01 23:04:57:   line: '3722',
+2026-07-01 23:04:57:   routine: 'errorMissingColumn'
+2026-07-01 23:04:57: }
