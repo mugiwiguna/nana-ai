@@ -431,9 +431,9 @@ export default function SubscriptionPage() {
       {/* Payment Method Picker Modal */}
       {paymentPicker && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md">
-          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border-2 border-gray-300 dark:border-gray-600 shadow-2xl bg-white dark:bg-zinc-900">
+          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border-2 border-gray-300 dark:border-gray-600 shadow-2xl !bg-white dark:!bg-zinc-900">
             <h3 className="text-lg font-bold mb-1 text-gray-900 dark:text-white">Beli {paymentPicker.planName}</h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">Pilih metode pembayaran</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-5">Pilih metode pembayaran</p>
 
             <div className="space-y-3 mb-5">
               <button
@@ -448,7 +448,7 @@ export default function SubscriptionPage() {
                 </div>
                 <div className="text-left flex-1">
                   <p className="text-sm font-semibold text-emerald-800 dark:text-emerald-300">Bayar dengan Saldo</p>
-                  <p className="text-[11px] text-gray-500 dark:text-gray-400">
+                  <p className="text-[11px] text-gray-600 dark:text-gray-400">
                     ${Number(paymentPicker.price).toLocaleString()} dari saldo akun
                   </p>
                 </div>
@@ -467,7 +467,7 @@ export default function SubscriptionPage() {
                 </div>
                 <div className="text-left flex-1">
                   <p className="text-sm font-semibold text-violet-800 dark:text-violet-300">Scan QRIS</p>
-                  <p className="text-[11px] text-gray-500 dark:text-gray-400">${Number(paymentPicker.price).toLocaleString()} · ~Rp {Math.round(Number(paymentPicker.price) * idrRate).toLocaleString("id-ID")}</p>
+                  <p className="text-[11px] text-gray-600 dark:text-gray-400">${Number(paymentPicker.price).toLocaleString()} · ~Rp {Math.round(Number(paymentPicker.price) * idrRate).toLocaleString("id-ID")}</p>
                 </div>
               </button>
             </div>
@@ -485,9 +485,9 @@ export default function SubscriptionPage() {
       {/* Free Tier Info Modal */}
       {showFreeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md">
-          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border-2 border-gray-300 dark:border-gray-600 shadow-2xl bg-white dark:bg-zinc-900">
+          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border-2 border-gray-300 dark:border-gray-600 shadow-2xl !bg-white dark:!bg-zinc-900">
             <h3 className="text-lg font-bold mb-1 text-gray-900 dark:text-white">Aktifkan Free Tier</h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-5">
               Topup minimal $1 (~Rp {Math.round(idrRate).toLocaleString("id-ID")}) untuk mengaktifkan free tier. Saldo bisa digunakan untuk beli plan nanti.
             </p>
             <button
