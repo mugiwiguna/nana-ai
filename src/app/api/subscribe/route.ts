@@ -70,7 +70,7 @@ export async function POST(req: Request) {
           await query(
             `UPDATE user_subscriptions
              SET expires_at = $1::timestamp + interval '${plan.duration_days} days',
-                 limit_multiplier = limit_multiplier + 1
+                 usage_reset_at = now()
              WHERE id = $2`,
             [baseExpiry, existing.id]
           );
@@ -90,7 +90,7 @@ export async function POST(req: Request) {
           status: "active",
           plan: plan.name,
           buyback: true,
-          message: `Buyback ${plan.name}! Durasi +${plan.duration_days} hari, limit ditumpuk.`,
+          message: `Buyback ${plan.name}! Durasi +${plan.duration_days} hari, limit direset.`,
         });
       }
 

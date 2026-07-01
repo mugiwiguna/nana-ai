@@ -266,13 +266,7 @@ export default function SubscriptionPage() {
           <h2 className="text-lg font-semibold mb-4">Plan Aktif</h2>
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-2xl font-bold text-[var(--gradient-start)]">{sub!.active!.plan_name}
-                {(sub!.active!.limit_multiplier ?? 1) > 1 && (
-                  <span className="ml-2 text-sm font-normal px-2 py-0.5 rounded-full bg-violet-500/20 text-violet-400">
-                    x{sub!.active!.limit_multiplier}
-                  </span>
-                )}
-              </p>
+              <p className="text-2xl font-bold text-[var(--gradient-start)]">{sub!.active!.plan_name}</p>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
                 Berlaku hingga {new Date(sub!.active!.expires_at).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}
                 {countdown && countdown !== "Kadaluarsa" && (
@@ -444,7 +438,7 @@ export default function SubscriptionPage() {
 
                   let btnLabel = "Beli Paket";
                   if (buying === plan.id) btnLabel = "Memproses...";
-                  else if (canBuyback) btnLabel = "Buyback (+limit & durasi)";
+                  else if (canBuyback) btnLabel = "Buyback (reset limit + durasi)";
                   else if (canUpgrade) btnLabel = "Upgrade";
                   else if (hasActivePlan && !canAct) btnLabel = "Plan aktif lebih mahal";
 

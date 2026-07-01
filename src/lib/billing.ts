@@ -163,7 +163,7 @@ export interface TokenLimitResult {
 export async function checkTokenLimits(userId: string): Promise<TokenLimitResult> {
   // Get active subscription + plan limits
   const subRes = await query(
-    `SELECT p.daily_token_limit, p.weekly_token_limit, p.monthly_token_limit, us.starts_at, COALESCE(us.limit_multiplier, 1) as limit_multiplier
+    `SELECT p.daily_token_limit, p.weekly_token_limit, p.monthly_token_limit, us.starts_at, us.usage_reset_at
      FROM user_subscriptions us
      JOIN plans p ON p.id = us.plan_id
      WHERE us.user_id = $1 AND us.status = 'active' AND us.expires_at > now()
@@ -172,10 +172,10 @@ export async function checkTokenLimits(userId: string): Promise<TokenLimitResult
   );
 
   let sub = subRes.rows[0];
-  const multiplier = sub ? Number(sub.limit_multiplier) : 1;
-  let dailyLimit = sub?.daily_token_limit ? Number(sub.daily_token_limit) * multiplier : null;
-  let weeklyLimit = sub?.weekly_token_limit ? Number(sub.weekly_token_limit) * multiplier : null;
-  let monthlyLimit = sub?.monthly_token_limit ? Number(sub.monthly_token_limit) * multiplier : null;
+  const resetAt = sub?.usage_reset_at ? new Date(sub.usage_reset_at) : null;
+  let dailyLimit = sub?.daily_token_limit ? Number(sub.daily_token_limit) : null;
+  let weeklyLimit = sub?.weekly_token_limit ? Number(sub.weekly_token_limit) : null;
+  let monthlyLimit = sub?.monthly_token_limit ? Number(sub.monthly_token_limit) : null;
 
   // No active subscription — fall back to free plan limits
   if (!sub) {
@@ -209,7 +209,7 @@ export async function checkTokenLimits(userId: string): Promise<TokenLimitResult
   // Daily window: always calendar-based (midnight WIB)
   const wibNow = new Date(now.getTime() + WIB_OFFSET);
   const dayStart = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate()));
-  const dayStartUTC = new Date(dayStart.getTime() - WIB_OFFSET);
+  let dayStartUTC = new Date(dayStart.getTime() - WIB_OFFSET);
 
   // Weekly + Monthly windows: calendar for free, purchase-date cycle for paid
   let weekStartUTC: Date;
@@ -241,6 +241,11 @@ export async function checkTokenLimits(userId: string): Promise<TokenLimitResult
     const monthStart = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), 1));
     monthStartUTC = new Date(monthStart.getTime() - WIB_OFFSET);
   }
+
+  // After buyback: floor windows to usage_reset_at
+  if (resetAt && resetAt > dayStartUTC) dayStartUTC = resetAt;
+  if (resetAt && resetAt > weekStartUTC) weekStartUTC = resetAt;
+  if (resetAt && resetAt > monthStartUTC) monthStartUTC = resetAt;
 
   // Query usage for all 3 windows in one shot
   const usageRes = await query(
