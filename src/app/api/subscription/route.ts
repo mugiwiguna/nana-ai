@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { query } from "@/lib/db";
-import { checkTokenLimits } from "@/lib/billing";
+import { checkTokenLimits, checkFreeTierUsage } from "@/lib/billing";
 
 export async function GET() {
   const session = await auth();
@@ -16,7 +16,10 @@ export async function GET() {
     [session.user.id]
   );
 
-  const dailyLimit = await checkTokenLimits(session.user.id);
+  const [paidLimits, freeLimits] = await Promise.all([
+    checkTokenLimits(session.user.id),
+    checkFreeTierUsage(session.user.id),
+  ]);
 
   const historyRes = await query(
     `SELECT us.*, p.name as plan_name, p.price
@@ -30,6 +33,7 @@ export async function GET() {
   return NextResponse.json({
     active: res.rows[0] || null,
     history: historyRes.rows,
-    tokenLimits: dailyLimit.limits,
+    tokenLimits: paidLimits.limits,
+    freeTierLimits: freeLimits.limits,
   });
 }

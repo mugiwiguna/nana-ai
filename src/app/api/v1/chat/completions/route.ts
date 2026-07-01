@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { validateApiKey, calculateCost, deductBalance, getCustomModelRoute, checkFreeTier, logFreeUsage, checkTokenLimits } from "@/lib/billing";
+import { validateApiKey, calculateCost, deductBalance, getCustomModelRoute, checkFreeTier, logFreeUsage, checkTokenLimits, checkFreeTierUsage } from "@/lib/billing";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -27,7 +27,26 @@ export async function POST(req: Request) {
     // Check free tier eligibility
     const freeTier = await checkFreeTier(user.id, model);
 
-    // Check token limits (daily/weekly/monthly) for subscribed users
+    // Check free tier limits FIRST (for free models) — applies to ALL users
+    if (freeTier.eligible) {
+      const freeLimits = await checkFreeTierUsage(user.id);
+      if (!freeLimits.allowed) {
+        const exceeded: string[] = [];
+        const l = freeLimits.limits;
+        if (l.daily.limit && l.daily.remaining === 0) exceeded.push(`daily: ${l.daily.used.toLocaleString()}/${l.daily.limit.toLocaleString()}`);
+        if (l.weekly.limit && l.weekly.remaining === 0) exceeded.push(`weekly: ${l.weekly.used.toLocaleString()}/${l.weekly.limit.toLocaleString()}`);
+        if (l.monthly.limit && l.monthly.remaining === 0) exceeded.push(`monthly: ${l.monthly.used.toLocaleString()}/${l.monthly.limit.toLocaleString()}`);
+        return NextResponse.json({
+          error: {
+            message: `Free tier limit reached (${exceeded.join(", ")}). Upgrade plan atau tunggu reset berikutnya.`,
+            type: "rate_limit_error",
+            limits: l,
+          },
+        }, { status: 429 });
+      }
+    }
+
+    // Check paid plan token limits (daily/weekly/monthly) — for paid users or as fallback
     const tokenLimits = await checkTokenLimits(user.id);
     if (!tokenLimits.allowed) {
       const exceeded: string[] = [];
@@ -37,7 +56,7 @@ export async function POST(req: Request) {
       if (l.monthly.limit && l.monthly.remaining === 0) exceeded.push(`monthly: ${l.monthly.used.toLocaleString()}/${l.monthly.limit.toLocaleString()}`);
       return NextResponse.json({
         error: {
-          message: `Token limit reached (${exceeded.join(", ")}). Please wait for the next period.`,
+          message: `Token limit reached (${exceeded.join(", ")}). Upgrade plan atau tunggu reset berikutnya.`,
           type: "rate_limit_error",
           limits: l,
         },

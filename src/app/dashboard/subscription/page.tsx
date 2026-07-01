@@ -44,6 +44,11 @@ interface Subscription {
     weekly: { limit: number | null; used: number; remaining: number | null };
     monthly: { limit: number | null; used: number; remaining: number | null };
   } | null;
+  freeTierLimits: {
+    daily: { limit: number | null; used: number; remaining: number | null };
+    weekly: { limit: number | null; used: number; remaining: number | null };
+    monthly: { limit: number | null; used: number; remaining: number | null };
+  } | null;
 }
 
 export default function SubscriptionPage() {
@@ -182,15 +187,54 @@ export default function SubscriptionPage() {
         </div>
       )}
 
-      {/* Token Limits — shown for all users (free + paid) */}
-      {sub?.tokenLimits && (sub.tokenLimits.daily.limit || sub.tokenLimits.weekly.limit || sub.tokenLimits.monthly.limit) && (
+      {/* Free Tier Limits — always shown for all users */}
+      {sub?.freeTierLimits && (sub.freeTierLimits.daily.limit || sub.freeTierLimits.weekly.limit || sub.freeTierLimits.monthly.limit) && (
         <div className="glass-card rounded-2xl p-6">
-          <h2 className="text-lg font-semibold mb-4">Token Limits</h2>
+          <h2 className="text-lg font-semibold mb-4">
+            <span className="text-violet-400">Free Tier</span> Limits
+          </h2>
           <div className="space-y-3">
             {([
-              ["daily", "Harian", sub?.active?.starts_at ? "cycle dari tgl sub" : "midnight WITA"],
-              ["weekly", "Mingguan", sub?.active?.starts_at ? "cycle 7 hari dari tgl sub" : "Senin"],
-              ["monthly", "Bulanan", sub?.active?.starts_at ? "cycle 30 hari dari tgl sub" : "tgl 1"],
+              ["daily", "Harian", "midnight WITA"],
+              ["weekly", "Mingguan", "Senin"],
+              ["monthly", "Bulanan", "tgl 1"],
+            ] as const).map(([key, label, resetNote]) => {
+              const l = sub.freeTierLimits![key];
+              if (!l.limit) return null;
+              const pct = (l.used / l.limit) * 100;
+              return (
+                <div key={key} className="p-4 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)]">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-sm font-medium text-[var(--text-primary)]">Token {label}</p>
+                    <p className="text-xs text-[var(--text-secondary)]">{l.used.toLocaleString()} / {l.limit.toLocaleString()}</p>
+                  </div>
+                  <div className="w-full h-2 bg-[var(--bg-secondary)] rounded-full overflow-hidden">
+                    <div className={`h-full rounded-full transition-all duration-500 ${
+                      pct > 90 ? "bg-red-500" : pct > 70 ? "bg-amber-500" : "bg-emerald-500"
+                    }`} style={{ width: `${Math.min(100, pct)}%` }} />
+                  </div>
+                  <p className="text-[10px] text-[var(--text-secondary)] mt-1">
+                    Sisa: {(l.remaining ?? 0).toLocaleString()} · Reset {resetNote}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+          <p className="text-[11px] text-[var(--text-secondary)] mt-3">
+            Limit free tier selalu dicek duluan. Jika habis, gunakan limit plan.
+          </p>
+        </div>
+      )}
+
+      {/* Paid Plan Token Limits — shown if user has active subscription with limits */}
+      {sub?.active && sub?.tokenLimits && (sub.tokenLimits.daily.limit || sub.tokenLimits.weekly.limit || sub.tokenLimits.monthly.limit) && (
+        <div className="glass-card rounded-2xl p-6">
+          <h2 className="text-lg font-semibold mb-4">Plan Limits</h2>
+          <div className="space-y-3">
+            {([
+              ["daily", "Harian", "midnight WITA"],
+              ["weekly", "Mingguan", "cycle 7 hari dari tgl sub"],
+              ["monthly", "Bulanan", "cycle 30 hari dari tgl sub"],
             ] as const).map(([key, label, resetNote]) => {
               const l = sub.tokenLimits![key];
               if (!l.limit) return null;

@@ -276,6 +276,102 @@ export async function checkTokenLimits(userId: string): Promise<TokenLimitResult
 }
 
 /**
+ * Check free tier token limits (daily/weekly/monthly) for free model usage only.
+ * Uses calendar-based windows. Returns limits from the free plan in DB.
+ * Always checked FIRST before paid plan limits.
+ */
+export async function checkFreeTierUsage(userId: string): Promise<{
+  allowed: boolean;
+  limits: {
+    daily: { limit: number | null; used: number; remaining: number | null };
+    weekly: { limit: number | null; used: number; remaining: number | null };
+    monthly: { limit: number | null; used: number; remaining: number | null };
+  };
+}> {
+  const planRes = await query(
+    `SELECT daily_token_limit, weekly_token_limit, monthly_token_limit
+     FROM plans WHERE slug = 'free' AND is_active = true LIMIT 1`
+  );
+  const plan = planRes.rows[0];
+  if (!plan) {
+    return {
+      allowed: true,
+      limits: {
+        daily: { limit: null, used: 0, remaining: null },
+        weekly: { limit: null, used: 0, remaining: null },
+        monthly: { limit: null, used: 0, remaining: null },
+      },
+    };
+  }
+
+  const dailyLimit = plan.daily_token_limit ? Number(plan.daily_token_limit) : null;
+  const weeklyLimit = plan.weekly_token_limit ? Number(plan.weekly_token_limit) : null;
+  const monthlyLimit = plan.monthly_token_limit ? Number(plan.monthly_token_limit) : null;
+
+  if (!dailyLimit && !weeklyLimit && !monthlyLimit) {
+    return {
+      allowed: true,
+      limits: {
+        daily: { limit: null, used: 0, remaining: null },
+        weekly: { limit: null, used: 0, remaining: null },
+        monthly: { limit: null, used: 0, remaining: null },
+      },
+    };
+  }
+
+  const now = new Date();
+  const WITA_OFFSET = 8 * 60 * 60 * 1000;
+  const witaNow = new Date(now.getTime() + WITA_OFFSET);
+
+  // Calendar-based windows
+  const dayStart = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), witaNow.getUTCDate()));
+  const dayStartUTC = new Date(dayStart.getTime() - WITA_OFFSET);
+
+  const dayOfWeek = witaNow.getUTCDay();
+  const daysSinceMon = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+  const monDate = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), witaNow.getUTCDate() - daysSinceMon));
+  const weekStartUTC = new Date(monDate.getTime() - WITA_OFFSET);
+
+  const monthStart = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), 1));
+  const monthStartUTC = new Date(monthStart.getTime() - WITA_OFFSET);
+
+  // Only count free model usage
+  const usageRes = await query(
+    `SELECT
+       COALESCE(SUM(CASE WHEN ul.created_at >= $2 THEN ul.tokens_in + ul.tokens_out ELSE 0 END), 0) as daily_used,
+       COALESCE(SUM(CASE WHEN ul.created_at >= $3 THEN ul.tokens_in + ul.tokens_out ELSE 0 END), 0) as weekly_used,
+       COALESCE(SUM(CASE WHEN ul.created_at >= $4 THEN ul.tokens_in + ul.tokens_out ELSE 0 END), 0) as monthly_used
+     FROM usage_logs ul
+     JOIN custom_models cm ON ul.model = cm.name
+     WHERE ul.user_id = $1 AND cm.is_free = true`,
+    [userId, dayStartUTC.toISOString(), weekStartUTC.toISOString(), monthStartUTC.toISOString()]
+  );
+
+  const row = usageRes.rows[0];
+  const dailyUsed = Number(row.daily_used);
+  const weeklyUsed = Number(row.weekly_used);
+  const monthlyUsed = Number(row.monthly_used);
+
+  const dailyRemaining = dailyLimit ? Math.max(0, dailyLimit - dailyUsed) : null;
+  const weeklyRemaining = weeklyLimit ? Math.max(0, weeklyLimit - weeklyUsed) : null;
+  const monthlyRemaining = monthlyLimit ? Math.max(0, monthlyLimit - monthlyUsed) : null;
+
+  const allowed =
+    (dailyLimit ? dailyRemaining! > 0 : true) &&
+    (weeklyLimit ? weeklyRemaining! > 0 : true) &&
+    (monthlyLimit ? monthlyRemaining! > 0 : true);
+
+  return {
+    allowed,
+    limits: {
+      daily: { limit: dailyLimit, used: dailyUsed, remaining: dailyRemaining },
+      weekly: { limit: weeklyLimit, used: weeklyUsed, remaining: weeklyRemaining },
+      monthly: { limit: monthlyLimit, used: monthlyUsed, remaining: monthlyRemaining },
+    },
+  };
+}
+
+/**
  * Legacy single-limit check. Use checkTokenLimits for full picture.
  */
 export async function checkDailyTokenLimit(userId: string): Promise<{
