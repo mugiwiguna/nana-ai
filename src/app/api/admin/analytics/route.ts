@@ -31,7 +31,7 @@ export async function GET(req: Request) {
       u.email,
       u.name,
       COUNT(*) as requests,
-      SUM(ul.total_tokens) as tokens,
+      SUM(ul.tokens_in + ul.tokens_out) as tokens,
       SUM(ul.cost) as cost
     FROM usage_logs ul
     JOIN users u ON u.id = ul.user_id
