@@ -258,32 +258,43 @@ export default function DashboardPage() {
           </div>
 
           {freeUsage.eligible ? (
-            <>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs text-[var(--text-secondary)]">Token Terpakai Hari Ini</span>
-                <span className={`text-sm font-bold tabular-nums ${
-                  freeUsage.percentage > 90 ? "text-red-400" : freeUsage.percentage > 70 ? "text-amber-400" : "text-emerald-400"
-                }`}>
-                  {freeUsage.used.toLocaleString()} / {freeUsage.limit.toLocaleString()}
-                </span>
-              </div>
-              <div className="w-full h-3 bg-[var(--bg-primary)] rounded-full overflow-hidden border border-[var(--border-color)]">
-                <div
-                  className={`h-full rounded-full transition-all duration-700 ${
-                    freeUsage.percentage > 90 ? "bg-red-500" : freeUsage.percentage > 70 ? "bg-amber-500" : "bg-emerald-500"
-                  }`}
-                  style={{ width: `${Math.min(100, freeUsage.percentage)}%` }}
-                />
-              </div>
-              <div className="flex items-center justify-between mt-2">
-                <span className="text-[11px] text-[var(--text-secondary)]">
-                  Sisa: {freeUsage.remaining.toLocaleString()} token
-                </span>
-                <span className="text-[11px] text-[var(--text-secondary)]">
-                  Reset: {new Date(freeUsage.resetAt).toLocaleDateString("id-ID", { weekday: "short", day: "numeric", month: "short" })}
-                </span>
-              </div>
-            </>
+            <div className="space-y-3">
+              {([
+                ["daily", "Harian"],
+                ["weekly", "Mingguan"],
+                ["monthly", "Bulanan"],
+              ] as const).map(([key, label]) => {
+                const l = freeUsage[key] || { used: 0, limit: 0, remaining: 0, percentage: 0 };
+                return (
+                  <div key={key}>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs text-[var(--text-secondary)]">Token {label}</span>
+                      <span className={`text-sm font-bold tabular-nums ${
+                        l.percentage > 90 ? "text-red-400" : l.percentage > 70 ? "text-amber-400" : "text-emerald-400"
+                      }`}>
+                        {l.used.toLocaleString()} / {l.limit.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="w-full h-2.5 bg-[var(--bg-primary)] rounded-full overflow-hidden border border-[var(--border-color)]">
+                      <div
+                        className={`h-full rounded-full transition-all duration-700 ${
+                          l.percentage > 90 ? "bg-red-500" : l.percentage > 70 ? "bg-amber-500" : "bg-emerald-500"
+                        }`}
+                        style={{ width: `${Math.min(100, l.percentage)}%` }}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between mt-1">
+                      <span className="text-[10px] text-[var(--text-secondary)]">
+                        Sisa: {l.remaining.toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+              <p className="text-[10px] text-[var(--text-secondary)] pt-1">
+                Reset harian: midnight WITA · Reset mingguan: Senin · Reset bulanan: tgl 1
+              </p>
+            </div>
           ) : (
             <p className="text-xs text-[var(--text-secondary)]">
               Top-up minimal $1 untuk akses model free tier. {freeUsage.freeModels} model tersedia.
