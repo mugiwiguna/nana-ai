@@ -253,7 +253,7 @@ export async function checkTokenLimits(userId: string): Promise<TokenLimitResult
        COALESCE(SUM(CASE WHEN created_at >= $2 THEN tokens_in + tokens_out ELSE 0 END), 0) as daily_used,
        COALESCE(SUM(CASE WHEN created_at >= $3 THEN tokens_in + tokens_out ELSE 0 END), 0) as weekly_used,
        COALESCE(SUM(CASE WHEN created_at >= $4 THEN tokens_in + tokens_out ELSE 0 END), 0) as monthly_used
-     FROM usage_logs WHERE user_id = $1`,
+     FROM usage_logs WHERE user_id = $1 AND cost > 0`,
     [userId, dayStartUTC.toISOString(), weekStartUTC.toISOString(), monthStartUTC.toISOString()]
   );
 
