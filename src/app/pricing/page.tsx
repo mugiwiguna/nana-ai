@@ -21,11 +21,22 @@ interface Plan {
 
 export default function PricingPage() {
   const [plans, setPlans] = useState<Plan[]>([]);
+  const [idrRate, setIdrRate] = useState(16000);
 
   useEffect(() => {
     fetch("/api/plans")
       .then((r) => r.json())
       .then(setPlans);
+    const cached = localStorage.getItem("usd_idr_rate");
+    const cachedTs = localStorage.getItem("usd_idr_rate_ts");
+    if (cached && cachedTs && Date.now() - Number(cachedTs) < 86400000) {
+      setIdrRate(Number(cached));
+    } else {
+      fetch("https://open.er-api.com/v6/latest/USD")
+        .then(r => r.json())
+        .then(d => { if (d.rates?.IDR) { setIdrRate(d.rates.IDR); localStorage.setItem("usd_idr_rate", String(d.rates.IDR)); localStorage.setItem("usd_idr_rate_ts", String(Date.now())); } })
+        .catch(() => { if (cached) setIdrRate(Number(cached)); });
+    }
   }, []);
 
   return (
@@ -70,7 +81,7 @@ export default function PricingPage() {
               <div className="mb-6">
                 <span className="text-3xl font-bold">${Number(plan.price).toLocaleString()}</span>
                 <span className="text-[var(--text-secondary)] text-sm"> / {plan.duration_days} hari</span>
-                <p className="text-xs text-[var(--text-secondary)]">~Rp {Math.round(Number(plan.price) * 16000).toLocaleString("id-ID")}</p>
+                <p className="text-xs text-[var(--text-secondary)]">~Rp {Math.round(Number(plan.price) * idrRate).toLocaleString("id-ID")}</p>
               </div>
 
               {(plan.daily_token_limit || plan.weekly_token_limit || plan.monthly_token_limit) && (
