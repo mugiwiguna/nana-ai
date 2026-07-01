@@ -179,37 +179,40 @@ export default function SubscriptionPage() {
               <p className="text-xl font-bold">Rp {Number(sub!.active!.plan_credits).toLocaleString("id-ID")}</p>
             </div>
           </div>
+        </div>
+      )}
 
-          {/* Token Limits */}
-          {sub?.tokenLimits && (sub.tokenLimits.daily.limit || sub.tokenLimits.weekly.limit || sub.tokenLimits.monthly.limit) && (
-            <div className="space-y-3">
-              {([
-                ["daily", "Harian", "midnight WITA"],
-                ["weekly", "Mingguan", sub?.active?.starts_at ? "cycle dari tgl sub" : "Senin"],
-                ["monthly", "Bulanan", sub?.active?.starts_at ? "cycle 30 hari dari tgl sub" : "tgl 1"],
-              ] as const).map(([key, label, resetNote]) => {
-                const l = sub.tokenLimits![key];
-                if (!l.limit) return null;
-                const pct = (l.used / l.limit) * 100;
-                return (
-                  <div key={key} className="p-4 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)]">
-                    <div className="flex items-center justify-between mb-2">
-                      <p className="text-sm font-medium text-[var(--text-primary)]">Token {label}</p>
-                      <p className="text-xs text-[var(--text-secondary)]">{l.used.toLocaleString()} / {l.limit.toLocaleString()}</p>
-                    </div>
-                    <div className="w-full h-2 bg-[var(--bg-secondary)] rounded-full overflow-hidden">
-                      <div className={`h-full rounded-full transition-all duration-500 ${
-                        pct > 90 ? "bg-red-500" : pct > 70 ? "bg-amber-500" : "bg-emerald-500"
-                      }`} style={{ width: `${Math.min(100, pct)}%` }} />
-                    </div>
-                    <p className="text-[10px] text-[var(--text-secondary)] mt-1">
-                      Sisa: {(l.remaining ?? 0).toLocaleString()} · Reset {resetNote}
-                    </p>
+      {/* Token Limits — shown for all users (free + paid) */}
+      {sub?.tokenLimits && (sub.tokenLimits.daily.limit || sub.tokenLimits.weekly.limit || sub.tokenLimits.monthly.limit) && (
+        <div className="glass-card rounded-2xl p-6">
+          <h2 className="text-lg font-semibold mb-4">Token Limits</h2>
+          <div className="space-y-3">
+            {([
+              ["daily", "Harian", sub?.active?.starts_at ? "cycle dari tgl sub" : "midnight WITA"],
+              ["weekly", "Mingguan", sub?.active?.starts_at ? "cycle 7 hari dari tgl sub" : "Senin"],
+              ["monthly", "Bulanan", sub?.active?.starts_at ? "cycle 30 hari dari tgl sub" : "tgl 1"],
+            ] as const).map(([key, label, resetNote]) => {
+              const l = sub.tokenLimits![key];
+              if (!l.limit) return null;
+              const pct = (l.used / l.limit) * 100;
+              return (
+                <div key={key} className="p-4 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)]">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-sm font-medium text-[var(--text-primary)]">Token {label}</p>
+                    <p className="text-xs text-[var(--text-secondary)]">{l.used.toLocaleString()} / {l.limit.toLocaleString()}</p>
                   </div>
-                );
-              })}
-            </div>
-          )}
+                  <div className="w-full h-2 bg-[var(--bg-secondary)] rounded-full overflow-hidden">
+                    <div className={`h-full rounded-full transition-all duration-500 ${
+                      pct > 90 ? "bg-red-500" : pct > 70 ? "bg-amber-500" : "bg-emerald-500"
+                    }`} style={{ width: `${Math.min(100, pct)}%` }} />
+                  </div>
+                  <p className="text-[10px] text-[var(--text-secondary)] mt-1">
+                    Sisa: {(l.remaining ?? 0).toLocaleString()} · Reset {resetNote}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
 

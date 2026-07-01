@@ -171,10 +171,24 @@ export async function checkTokenLimits(userId: string): Promise<TokenLimitResult
     [userId]
   );
 
-  const sub = subRes.rows[0];
-  const dailyLimit = sub?.daily_token_limit ? Number(sub.daily_token_limit) : null;
-  const weeklyLimit = sub?.weekly_token_limit ? Number(sub.weekly_token_limit) : null;
-  const monthlyLimit = sub?.monthly_token_limit ? Number(sub.monthly_token_limit) : null;
+  let sub = subRes.rows[0];
+  let dailyLimit = sub?.daily_token_limit ? Number(sub.daily_token_limit) : null;
+  let weeklyLimit = sub?.weekly_token_limit ? Number(sub.weekly_token_limit) : null;
+  let monthlyLimit = sub?.monthly_token_limit ? Number(sub.monthly_token_limit) : null;
+
+  // No active subscription — fall back to free plan limits
+  if (!sub) {
+    const freePlanRes = await query(
+      `SELECT daily_token_limit, weekly_token_limit, monthly_token_limit
+       FROM plans WHERE slug = 'free' AND is_active = true LIMIT 1`
+    );
+    const fp = freePlanRes.rows[0];
+    if (fp) {
+      dailyLimit = fp.daily_token_limit ? Number(fp.daily_token_limit) : null;
+      weeklyLimit = fp.weekly_token_limit ? Number(fp.weekly_token_limit) : null;
+      monthlyLimit = fp.monthly_token_limit ? Number(fp.monthly_token_limit) : null;
+    }
+  }
 
   // No limits at all → allowed
   if (!dailyLimit && !weeklyLimit && !monthlyLimit) {
