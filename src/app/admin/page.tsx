@@ -188,7 +188,7 @@ export default function AdminPage() {
     <div className="space-y-8">
       <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">Admin Panel</h1>
 
-      <div className="flex gap-6 mt-6 border-b border-[var(--border-color)]">
+      <div className="flex gap-1 mt-6 border-b border-[var(--border-color)] overflow-x-auto scrollbar-hide">
         {([
           ["users", "Pengguna"],
           ["user-plans", "Paket User"],
@@ -201,7 +201,7 @@ export default function AdminPage() {
           <button
             key={key}
             onClick={() => setTab(key)}
-            className={`px-1 py-2 text-sm font-medium transition border-b-2 ${
+            className={`whitespace-nowrap px-3 py-2 text-sm font-medium transition border-b-2 ${
               tab === key
                 ? "text-[var(--text-primary)] border-[var(--text-primary)]"
                 : "text-[var(--text-secondary)] border-transparent hover:text-[var(--text-primary)]"
