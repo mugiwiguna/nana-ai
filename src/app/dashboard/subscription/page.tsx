@@ -409,7 +409,7 @@ export default function SubscriptionPage() {
       {/* Payment Method Picker Modal */}
       {paymentPicker && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md">
-          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border-2 border-black/80 shadow-2xl">
+          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border-2 border-white/30 dark:border-white/30 shadow-2xl">
             <h3 className="text-lg font-bold mb-1">Beli {paymentPicker.planName}</h3>
             <p className="text-sm text-[var(--text-secondary)] mb-5">Pilih metode pembayaran</p>
 
@@ -417,16 +417,16 @@ export default function SubscriptionPage() {
               <button
                 onClick={() => handleSubscribe(paymentPicker.planId, "balance")}
                 disabled={buying === paymentPicker.planId}
-                className="w-full flex items-center gap-3 p-4 rounded-xl border-2 border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 hover:border-emerald-500/60 transition-all"
+                className="w-full flex items-center gap-3 p-4 rounded-xl border-2 border-emerald-600 dark:border-emerald-500/40 bg-emerald-50 dark:bg-emerald-500/10 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 transition-all"
               >
-                <div className="w-11 h-11 rounded-full bg-emerald-500/25 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <div className="w-11 h-11 rounded-full bg-emerald-100 dark:bg-emerald-500/25 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-emerald-700 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
                   </svg>
                 </div>
                 <div className="text-left flex-1">
-                  <p className="text-sm font-semibold text-emerald-300">Bayar dengan Saldo</p>
-                  <p className="text-[11px] text-[var(--text-secondary)]">
+                  <p className="text-sm font-semibold text-emerald-800 dark:text-emerald-300">Bayar dengan Saldo</p>
+                  <p className="text-[11px] text-gray-500 dark:text-[var(--text-secondary)]">
                     ${Number(paymentPicker.price).toLocaleString()} dari saldo akun
                   </p>
                 </div>
@@ -435,24 +435,24 @@ export default function SubscriptionPage() {
               <button
                 onClick={() => handleSubscribe(paymentPicker.planId, "qris")}
                 disabled={buying === paymentPicker.planId}
-                className="w-full flex items-center gap-3 p-4 rounded-xl border-2 border-violet-500/40 bg-violet-500/10 hover:bg-violet-500/20 hover:border-violet-500/60 transition-all"
+                className="w-full flex items-center gap-3 p-4 rounded-xl border-2 border-violet-600 dark:border-violet-500/40 bg-violet-50 dark:bg-violet-500/10 hover:bg-violet-100 dark:hover:bg-violet-500/20 transition-all"
               >
-                <div className="w-11 h-11 rounded-full bg-violet-500/25 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-violet-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <div className="w-11 h-11 rounded-full bg-violet-100 dark:bg-violet-500/25 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-violet-700 dark:text-violet-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" />
                   </svg>
                 </div>
                 <div className="text-left flex-1">
-                  <p className="text-sm font-semibold text-violet-300">Scan QRIS</p>
-                  <p className="text-[11px] text-[var(--text-secondary)]">${Number(paymentPicker.price).toLocaleString()} · ~Rp {Math.round(Number(paymentPicker.price) * 16000).toLocaleString("id-ID")}</p>
+                  <p className="text-sm font-semibold text-violet-800 dark:text-violet-300">Scan QRIS</p>
+                  <p className="text-[11px] text-gray-500 dark:text-[var(--text-secondary)]">${Number(paymentPicker.price).toLocaleString()} · ~Rp {Math.round(Number(paymentPicker.price) * 16000).toLocaleString("id-ID")}</p>
                 </div>
               </button>
             </div>
 
             <button
               onClick={() => setPaymentPicker(null)}
-              className="w-full text-sm text-black dark:text-zinc-400 hover:opacity-70 py-2 font-medium transition-opacity"
+              className="w-full text-sm text-gray-800 dark:text-gray-300 hover:opacity-70 py-2 font-medium transition-opacity"
             >
               Batal
             </button>
@@ -463,20 +463,20 @@ export default function SubscriptionPage() {
       {/* Free Tier Info Modal */}
       {showFreeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md">
-          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border-2 border-black/80 shadow-2xl">
+          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border-2 border-white/30 dark:border-white/30 shadow-2xl">
             <h3 className="text-lg font-bold mb-1">Aktifkan Free Tier</h3>
             <p className="text-sm text-[var(--text-secondary)] mb-5">
               Topup minimal $1 (~Rp 16.000) untuk mengaktifkan free tier. Saldo bisa digunakan untuk beli plan nanti.
             </p>
             <button
               onClick={() => { setShowFreeModal(false); window.location.href = "/dashboard/topup"; }}
-              className="w-full py-2.5 rounded-xl text-sm font-semibold bg-emerald-500 text-white hover:bg-emerald-400 transition-colors mb-2"
+              className="w-full py-2.5 rounded-xl text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-500 transition-colors mb-2"
             >
               Topup Sekarang
             </button>
             <button
               onClick={() => setShowFreeModal(false)}
-              className="w-full text-sm text-black dark:text-zinc-400 hover:opacity-70 py-2 font-medium transition-opacity"
+              className="w-full text-sm text-gray-800 dark:text-gray-300 hover:opacity-70 py-2 font-medium transition-opacity"
             >
               Nanti Saja
             </button>
