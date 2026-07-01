@@ -136,13 +136,13 @@ export default function PlanSection({ showToast }: { showToast: (m: string) => v
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)]" />
             </div>
             <div>
-              <label className="text-xs text-[var(--text-secondary)] block mb-1">Harga (Rp)</label>
-              <input type="number" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} placeholder="150000"
+              <label className="text-xs text-[var(--text-secondary)] block mb-1">Harga ($)</label>
+              <input type="number" step="0.01" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} placeholder="5"
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)]" />
             </div>
             <div>
-              <label className="text-xs text-[var(--text-secondary)] block mb-1">Credits (Rp)</label>
-              <input type="number" value={form.credits} onChange={e => setForm({ ...form, credits: e.target.value })} placeholder="200000"
+              <label className="text-xs text-[var(--text-secondary)] block mb-1">Credits ($)</label>
+              <input type="number" step="0.01" value={form.credits} onChange={e => setForm({ ...form, credits: e.target.value })} placeholder="10"
                 className="w-full bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-lg px-3 py-2 text-sm text-[var(--text-primary)]" />
             </div>
             <div>
