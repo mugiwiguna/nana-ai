@@ -19,15 +19,19 @@ export async function GET() {
         'plan_slug', p.slug,
         'status', us.status,
         'expires_at', us.expires_at,
-        'payment_method', us.payment_method
+        'payment_method', us.payment_method,
+        'daily_limit', p.daily_token_limit,
+        'weekly_limit', p.weekly_token_limit,
+        'monthly_limit', p.monthly_token_limit
       ) FROM user_subscriptions us
         JOIN plans p ON us.plan_id = p.id
         WHERE us.user_id = u.id AND us.status = 'active' AND us.expires_at > now()
         ORDER BY us.created_at DESC LIMIT 1
       ) as active_plan,
       (SELECT json_build_object(
-        'daily_used', COALESCE(SUM(CASE WHEN ul.created_at >= date_trunc('day', now() AT TIME ZONE 'Asia/Makassar') AT TIME ZONE 'Asia/Makassar' THEN ul.tokens_in + ul.tokens_out ELSE 0 END), 0),
-        'monthly_used', COALESCE(SUM(CASE WHEN ul.created_at >= date_trunc('month', now() AT TIME ZONE 'Asia/Makassar') AT TIME ZONE 'Asia/Makassar' THEN ul.tokens_in + ul.tokens_out ELSE 0 END), 0)
+        'daily_used', COALESCE(SUM(CASE WHEN ul.created_at >= date_trunc('day', now() AT TIME ZONE 'Asia/Jakarta') AT TIME ZONE 'Asia/Jakarta' THEN ul.tokens_in + ul.tokens_out ELSE 0 END), 0),
+        'weekly_used', COALESCE(SUM(CASE WHEN ul.created_at >= date_trunc('week', now() AT TIME ZONE 'Asia/Jakarta') AT TIME ZONE 'Asia/Jakarta' THEN ul.tokens_in + ul.tokens_out ELSE 0 END), 0),
+        'monthly_used', COALESCE(SUM(CASE WHEN ul.created_at >= date_trunc('month', now() AT TIME ZONE 'Asia/Jakarta') AT TIME ZONE 'Asia/Jakarta' THEN ul.tokens_in + ul.tokens_out ELSE 0 END), 0)
       ) FROM usage_logs ul WHERE ul.user_id = u.id
       ) as token_usage
     FROM users u ORDER BY u.created_at DESC
