@@ -66,6 +66,7 @@ export default function SubscriptionPage() {
   const [showFreeModal, setShowFreeModal] = useState(false);
   const [idrRate, setIdrRate] = useState(16000);
   const [countdown, setCountdown] = useState("");
+  const [resetTimers, setResetTimers] = useState({ daily: "", weekly: "", monthly: "" });
 
   // Toast auto-dismiss
   useEffect(() => {
@@ -89,6 +90,44 @@ export default function SubscriptionPage() {
     const interval = setInterval(tick, 60000);
     return () => clearInterval(interval);
   }, [sub?.active?.expires_at]);
+
+  // Reset countdown timers (daily/weekly/monthly)
+  useEffect(() => {
+    const WIB_OFFSET = 7 * 60 * 60 * 1000;
+    const calcReset = () => {
+      const now = Date.now();
+      const wibNow = new Date(now + WIB_OFFSET);
+
+      // Daily: next midnight WIB
+      const nextDay = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate() + 1));
+      const dailyDiff = nextDay.getTime() - WIB_OFFSET - now;
+
+      // Weekly: next Monday 00:00 WIB
+      const dayOfWeek = wibNow.getUTCDay();
+      const daysToMonday = dayOfWeek === 0 ? 1 : 8 - dayOfWeek;
+      const nextMonday = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate() + daysToMonday));
+      const weeklyDiff = nextMonday.getTime() - WIB_OFFSET - now;
+
+      // Monthly: 1st of next month 00:00 WIB
+      const nextMonth = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth() + 1, 1));
+      const monthlyDiff = nextMonth.getTime() - WIB_OFFSET - now;
+
+      const fmt = (diff: number) => {
+        if (diff <= 0) return "0d 0j 0m";
+        const totalSec = Math.floor(diff / 1000);
+        const d = Math.floor(totalSec / 86400);
+        const h = Math.floor((totalSec % 86400) / 3600);
+        const m = Math.floor((totalSec % 3600) / 60);
+        const s = totalSec % 60;
+        return d > 0 ? `${d}h ${h}j ${m}m` : h > 0 ? `${h}j ${m}m ${s}d` : `${m}m ${s}d`;
+      };
+
+      setResetTimers({ daily: fmt(dailyDiff), weekly: fmt(weeklyDiff), monthly: fmt(monthlyDiff) });
+    };
+    calcReset();
+    const interval = setInterval(calcReset, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const cached = localStorage.getItem("usd_idr_rate");
@@ -261,10 +300,10 @@ export default function SubscriptionPage() {
           </h2>
           <div className="space-y-3">
             {([
-              ["daily", "Harian", "midnight WIB"],
-              ["weekly", "Mingguan", "Senin"],
-              ["monthly", "Bulanan", "tgl 1"],
-            ] as const).map(([key, label, resetNote]) => {
+              ["daily", "Harian"],
+              ["weekly", "Mingguan"],
+              ["monthly", "Bulanan"],
+            ] as const).map(([key, label]) => {
               const l = sub.freeTierLimits![key];
               if (!l.limit) return null;
               const pct = (l.used / l.limit) * 100;
@@ -280,7 +319,7 @@ export default function SubscriptionPage() {
                     }`} style={{ width: `${Math.min(100, pct)}%` }} />
                   </div>
                   <p className="text-[10px] text-[var(--text-secondary)] mt-1">
-                    Sisa: {(l.remaining ?? 0).toLocaleString()} · Reset {resetNote}
+                    Sisa: {(l.remaining ?? 0).toLocaleString()} · Reset dalam {resetTimers[key]}
                   </p>
                 </div>
               );
@@ -298,10 +337,10 @@ export default function SubscriptionPage() {
           <h2 className="text-lg font-semibold mb-4">Plan Limits</h2>
           <div className="space-y-3">
             {([
-              ["daily", "Harian", "midnight WIB"],
-              ["weekly", "Mingguan", "cycle 7 hari dari tgl sub"],
-              ["monthly", "Bulanan", "cycle 30 hari dari tgl sub"],
-            ] as const).map(([key, label, resetNote]) => {
+              ["daily", "Harian"],
+              ["weekly", "Mingguan"],
+              ["monthly", "Bulanan"],
+            ] as const).map(([key, label]) => {
               const l = sub.tokenLimits![key];
               if (!l.limit) return null;
               const pct = (l.used / l.limit) * 100;
@@ -317,7 +356,7 @@ export default function SubscriptionPage() {
                     }`} style={{ width: `${Math.min(100, pct)}%` }} />
                   </div>
                   <p className="text-[10px] text-[var(--text-secondary)] mt-1">
-                    Sisa: {(l.remaining ?? 0).toLocaleString()} · Reset {resetNote}
+                    Sisa: {(l.remaining ?? 0).toLocaleString()} · Reset dalam {resetTimers[key]}
                   </p>
                 </div>
               );
