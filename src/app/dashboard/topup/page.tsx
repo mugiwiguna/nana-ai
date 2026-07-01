@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-const AMOUNTS_USD = [5, 10, 25, 50, 100];
+const AMOUNTS_USD = [1, 2, 5, 10, 25, 50, 100];
 const QR_TIMEOUT = 10; // seconds
 
 export default function TopupPage() {

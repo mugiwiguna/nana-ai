@@ -9,7 +9,7 @@ const SECTIONS = [
     icon: "🚀",
     content: [
       { title: "1. Daftar Akun", desc: "Buat akun di halaman registrasi. Tanpa kartu kredit." },
-      { title: "2. Isi Saldo", desc: "Top up minimal $5 lewat halaman Isi Saldo." },
+      { title: "2. Isi Saldo", desc: "Top up minimal $1 lewat halaman Isi Saldo." },
       { title: "3. Buat API Key", desc: "Generate key di halaman Key API. Simpan — hanya tampil sekali." },
       { title: "4. Kirim Request", desc: "Chat completion via endpoint API dengan Bearer token." },
     ],
