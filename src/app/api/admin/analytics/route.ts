@@ -16,7 +16,7 @@ export async function GET(req: Request) {
     SELECT
       DATE(created_at) as date,
       COUNT(*) as request_count,
-      SUM(total_tokens) as total_tokens,
+      SUM(tokens_in + tokens_out) as total_tokens,
       SUM(cost) as total_cost,
       COUNT(DISTINCT user_id) as unique_users
     FROM usage_logs
@@ -46,7 +46,7 @@ export async function GET(req: Request) {
     SELECT
       model,
       COUNT(*) as requests,
-      SUM(total_tokens) as tokens,
+      SUM(tokens_in + tokens_out) as tokens,
       SUM(cost) as cost
     FROM usage_logs
     WHERE created_at >= NOW() - INTERVAL '${days} days'
@@ -59,7 +59,7 @@ export async function GET(req: Request) {
   const summary = await query(`
     SELECT
       COUNT(*) as total_requests,
-      SUM(total_tokens) as total_tokens,
+      SUM(tokens_in + tokens_out) as total_tokens,
       SUM(cost) as total_cost,
       COUNT(DISTINCT user_id) as total_users
     FROM usage_logs

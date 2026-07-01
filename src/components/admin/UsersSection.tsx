@@ -39,6 +39,8 @@ export default function UsersSection() {
   const [assigning, setAssigning] = useState<string | null>(null);
   const [selectedPlan, setSelectedPlan] = useState("");
   const [search, setSearch] = useState("");
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [resetting, setResetting] = useState(false);
 
   const filtered = search.trim()
     ? users.filter(u =>
@@ -61,6 +63,42 @@ export default function UsersSection() {
   };
 
   useEffect(() => { fetchAll(); }, []);
+
+  const toggleSelect = (id: string) => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectAll = () => {
+    if (selected.size === filtered.length) {
+      setSelected(new Set());
+    } else {
+      setSelected(new Set(filtered.map(u => u.id)));
+    }
+  };
+
+  const resetLimits = async (userIds: string[]) => {
+    if (userIds.length === 0) return;
+    if (!confirm(`Reset limit untuk ${userIds.length} user?`)) return;
+    setResetting(true);
+    const res = await fetch("/api/admin/users/reset-limit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_ids: userIds }),
+    });
+    const data = await res.json();
+    setResetting(false);
+    if (res.ok) {
+      alert(data.message);
+      setSelected(new Set());
+      fetchAll();
+    } else {
+      alert(data.error || "Gagal reset");
+    }
+  };
 
   const assignPlan = async (userId: string) => {
     if (!selectedPlan) return;
@@ -105,16 +143,46 @@ export default function UsersSection() {
         )}
       </div>
 
+      {/* Bulk actions */}
+      <div className="flex items-center gap-3 flex-wrap">
+        <button
+          onClick={toggleSelectAll}
+          className="px-3 py-1.5 text-xs font-medium rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-color)] hover:border-violet-500/50"
+        >
+          {selected.size === filtered.length ? "☐ Batal Pilih" : "☑ Pilih Semua"}
+        </button>
+        {selected.size > 0 && (
+          <>
+            <span className="text-xs text-[var(--text-secondary)]">{selected.size} dipilih</span>
+            <button
+              onClick={() => resetLimits(Array.from(selected))}
+              disabled={resetting}
+              className="px-3 py-1.5 text-xs font-medium rounded-lg bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 disabled:opacity-50"
+            >
+              {resetting ? "Resetting..." : `Reset Limit (${selected.size})`}
+            </button>
+          </>
+        )}
+      </div>
+
       <div className="space-y-3">
         {filtered.length === 0 && (
           <p className="text-sm text-[var(--text-secondary)] text-center py-4">{search ? "Tidak ditemukan" : "Belum ada user"}</p>
         )}
         {filtered.map((u) => (
-          <div key={u.id} className="glass-card rounded-xl p-4">
+          <div key={u.id} className={`glass-card rounded-xl p-4 transition-all ${selected.has(u.id) ? "ring-2 ring-violet-500/50" : ""}`}>
             <div className="flex items-start justify-between mb-2">
-              <div>
-                <p className="font-medium text-sm">{u.name || u.email}</p>
-                <p className="text-[11px] text-[var(--text-secondary)]">{u.email}</p>
+              <div className="flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  checked={selected.has(u.id)}
+                  onChange={() => toggleSelect(u.id)}
+                  className="mt-1 w-4 h-4 rounded border-[var(--border-color)] accent-violet-500"
+                />
+                <div>
+                  <p className="font-medium text-sm">{u.name || u.email}</p>
+                  <p className="text-[11px] text-[var(--text-secondary)]">{u.email}</p>
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 {u.active_plan ? (
@@ -129,7 +197,7 @@ export default function UsersSection() {
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 text-[11px] text-[var(--text-secondary)] mb-3">
+            <div className="grid grid-cols-3 gap-2 text-[11px] text-[var(--text-secondary)] mb-3 ml-7">
               <div>
                 <span className="block text-[var(--text-primary)] font-medium tabular-nums">${Number(u.balance).toFixed(2)}</span>
                 Saldo
@@ -149,13 +217,13 @@ export default function UsersSection() {
             </div>
 
             {u.active_plan && (
-              <p className="text-[10px] text-[var(--text-secondary)] mb-2">
+              <p className="text-[10px] text-[var(--text-secondary)] mb-2 ml-7">
                 Aktif s/d {new Date(u.active_plan.expires_at).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })}
                 {" · "}via {u.active_plan.payment_method}
               </p>
             )}
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ml-7">
               {assigning === u.id ? (
                 <div className="flex items-center gap-2 w-full">
                   <select
@@ -191,6 +259,13 @@ export default function UsersSection() {
                       Hapus Plan
                     </button>
                   )}
+                  <button
+                    onClick={() => resetLimits([u.id])}
+                    disabled={resetting}
+                    className="px-2 py-1 text-[10px] font-medium rounded-lg bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 disabled:opacity-50"
+                  >
+                    Reset Limit
+                  </button>
                 </>
               )}
             </div>
