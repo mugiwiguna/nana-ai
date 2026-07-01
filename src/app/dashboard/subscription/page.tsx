@@ -21,6 +21,7 @@ interface Plan {
 interface Subscription {
   active: {
     plan_name: string;
+    plan_price: string;
     plan_credits: string;
     starts_at: string;
     expires_at: string;
@@ -190,8 +191,8 @@ export default function SubscriptionPage() {
             </div>
             <div className="text-right">
               <p className="text-sm text-[var(--text-secondary)]">Harga plan</p>
-              <p className="text-xl font-bold">${Number(sub!.active!.plan_credits).toLocaleString()}</p>
-              <p className="text-[10px] text-[var(--text-secondary)]">~Rp {Math.round(Number(sub!.active!.plan_credits) * 16000).toLocaleString("id-ID")}</p>
+              <p className="text-xl font-bold">${Number(sub!.active!.plan_price).toLocaleString()}</p>
+              <p className="text-[10px] text-[var(--text-secondary)]">~Rp {Math.round(Number(sub!.active!.plan_price) * 16000).toLocaleString("id-ID")}</p>
             </div>
           </div>
         </div>
@@ -324,14 +325,21 @@ export default function SubscriptionPage() {
                     Stok Habis
                   </button>
                 ) : plan.slug === "free" ? (
-                  <button
-                    onClick={() => setShowFreeModal(true)}
-                    className="w-full text-sm font-semibold py-2.5 rounded-xl border border-[var(--border-color)] hover:border-emerald-500/50 transition-all"
-                  >
-                    Aktifkan
-                  </button>
+                  (sub?.history?.length ?? 0) > 0 ? (
+                    <div className="w-full text-sm font-semibold py-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 text-center flex items-center justify-center gap-1.5">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                      Aktif
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setShowFreeModal(true)}
+                      className="w-full text-sm font-semibold py-2.5 rounded-xl border border-[var(--border-color)] hover:border-emerald-500/50 transition-all"
+                    >
+                      Aktifkan
+                    </button>
+                  )
                 ) : (() => {
-                  const activePrice = sub?.active ? parseFloat(sub.active.plan_credits) : 0;
+                  const activePrice = sub?.active ? parseFloat(sub.active.plan_price) : 0;
                   const planPrice = parseFloat(plan.price);
                   const activeSlug = ""; // We'll use price comparison
                   const isSamePlan = sub?.active?.plan_name === plan.name;
