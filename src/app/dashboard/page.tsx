@@ -35,6 +35,7 @@ export default function DashboardPage() {
   const [daily, setDaily] = useState<any[]>([]);
   const [fetchErr, setFetchErr] = useState("");
   const [freeUsage, setFreeUsage] = useState<any>(null);
+  const [resetTimers, setResetTimers] = useState({ daily: "", weekly: "", monthly: "" });
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
@@ -73,6 +74,36 @@ export default function DashboardPage() {
       setStats({ keyCount, recent: recent.usage || [], daily: d, dailyModels: dailyModelsData.days || [], modelBreakdown: modelsRes.models || [] });
     });
   }, [status, router, session]);
+
+  // Reset countdown timers
+  useEffect(() => {
+    const WIB_OFFSET = 7 * 60 * 60 * 1000;
+    const calcReset = () => {
+      const now = Date.now();
+      const wibNow = new Date(now + WIB_OFFSET);
+      const nextDay = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate() + 1));
+      const dailyDiff = nextDay.getTime() - WIB_OFFSET - now;
+      const dayOfWeek = wibNow.getUTCDay();
+      const daysToMonday = dayOfWeek === 0 ? 1 : 8 - dayOfWeek;
+      const nextMonday = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate() + daysToMonday));
+      const weeklyDiff = nextMonday.getTime() - WIB_OFFSET - now;
+      const nextMonth = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth() + 1, 1));
+      const monthlyDiff = nextMonth.getTime() - WIB_OFFSET - now;
+      const fmt = (diff: number) => {
+        if (diff <= 0) return "0d 0j 0m";
+        const totalSec = Math.floor(diff / 1000);
+        const d = Math.floor(totalSec / 86400);
+        const h = Math.floor((totalSec % 86400) / 3600);
+        const m = Math.floor((totalSec % 3600) / 60);
+        const s = totalSec % 60;
+        return d > 0 ? `${d}h ${h}j ${m}m` : h > 0 ? `${h}j ${m}m ${s}d` : `${m}m ${s}d`;
+      };
+      setResetTimers({ daily: fmt(dailyDiff), weekly: fmt(weeklyDiff), monthly: fmt(monthlyDiff) });
+    };
+    calcReset();
+    const interval = setInterval(calcReset, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   if (status === "loading") return <p className="text-center mt-20 text-[var(--text-secondary)]">Loading...</p>;
   if (!session) return null;
@@ -292,7 +323,7 @@ export default function DashboardPage() {
                 );
               })}
               <p className="text-[10px] text-[var(--text-secondary)] pt-1">
-                Reset harian: midnight WIB · Reset mingguan: Senin · Reset bulanan: tgl 1
+                Reset harian: {resetTimers.daily} · Reset mingguan: {resetTimers.weekly} · Reset bulanan: {resetTimers.monthly}
               </p>
             </div>
           ) : (
