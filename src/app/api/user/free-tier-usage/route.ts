@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { query } from "@/lib/db";
 
-const FREE_TOKEN_LIMIT = 3_000_000;
-const FREE_WEEKLY_LIMIT = 2_000_000;
-const FREE_MONTHLY_LIMIT = 5_000_000;
+const FREE_DAILY_LIMIT = 3_000_000;
+const FREE_WEEKLY_LIMIT = 15_000_000;
+const FREE_MONTHLY_LIMIT = 50_000_000;
 const MIN_TOPUP = 1; // $1
 const WITA_OFFSET = 8 * 60 * 60 * 1000;
 
@@ -73,16 +73,16 @@ export async function GET() {
     return NextResponse.json({
       eligible,
       totalTopup,
-      daily: { used: dailyUsed, limit: FREE_TOKEN_LIMIT, remaining: Math.max(0, FREE_TOKEN_LIMIT - dailyUsed), percentage: Math.min(100, Math.round((dailyUsed / FREE_TOKEN_LIMIT) * 100)) },
+      daily: { used: dailyUsed, limit: FREE_DAILY_LIMIT, remaining: Math.max(0, FREE_DAILY_LIMIT - dailyUsed), percentage: Math.min(100, Math.round((dailyUsed / FREE_DAILY_LIMIT) * 100)) },
       weekly: { used: weeklyUsed, limit: FREE_WEEKLY_LIMIT, remaining: Math.max(0, FREE_WEEKLY_LIMIT - weeklyUsed), percentage: Math.min(100, Math.round((weeklyUsed / FREE_WEEKLY_LIMIT) * 100)) },
       monthly: { used: monthlyUsed, limit: FREE_MONTHLY_LIMIT, remaining: Math.max(0, FREE_MONTHLY_LIMIT - monthlyUsed), percentage: Math.min(100, Math.round((monthlyUsed / FREE_MONTHLY_LIMIT) * 100)) },
       freeModels,
       resetAt: resetAt.toISOString(),
       // Legacy flat fields for backward compat
       used: dailyUsed,
-      limit: FREE_TOKEN_LIMIT,
-      remaining: Math.max(0, FREE_TOKEN_LIMIT - dailyUsed),
-      percentage: Math.min(100, Math.round((dailyUsed / FREE_TOKEN_LIMIT) * 100)),
+      limit: FREE_DAILY_LIMIT,
+      remaining: Math.max(0, FREE_DAILY_LIMIT - dailyUsed),
+      percentage: Math.min(100, Math.round((dailyUsed / FREE_DAILY_LIMIT) * 100)),
     });
   } catch (e: any) {
     console.error("free-tier-usage error:", e);
