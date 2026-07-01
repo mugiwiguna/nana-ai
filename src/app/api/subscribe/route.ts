@@ -17,41 +17,118 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "payment_method must be 'balance' or 'qris'" }, { status: 400 });
   }
 
-  // Get plan
+  // Get target plan
   const planRes = await query("SELECT * FROM plans WHERE id = $1 AND is_active = true", [plan_id]);
   const plan = planRes.rows[0];
   if (!plan) return NextResponse.json({ error: "Plan not found" }, { status: 404 });
 
   // Check existing active subscription
   const existingRes = await query(
-    "SELECT id FROM user_subscriptions WHERE user_id = $1 AND status = 'active' AND expires_at > now()",
+    `SELECT us.*, p.price as plan_price, p.slug as plan_slug, p.duration_days
+     FROM user_subscriptions us
+     JOIN plans p ON us.plan_id = p.id
+     WHERE us.user_id = $1 AND us.status = 'active' AND us.expires_at > now()
+     ORDER BY us.created_at DESC LIMIT 1`,
     [session.user.id]
   );
-  if (existingRes.rows.length > 0) {
-    return NextResponse.json({ error: "Already have active subscription" }, { status: 409 });
+  const existing = existingRes.rows[0];
+
+  if (existing) {
+    const existingPrice = parseFloat(existing.plan_price);
+    const newPrice = parseFloat(plan.price);
+
+    // Can't downgrade while active
+    if (newPrice < existingPrice) {
+      return NextResponse.json({
+        error: `Tidak bisa downgrade. Plan aktif: ${existing.plan_slug}. Tunggu sampai expired atau hubungi admin.`,
+        current_plan: existing.plan_slug,
+        expires_at: existing.expires_at,
+      }, { status: 409 });
+    }
+
+    // Buyback same plan: extend duration + stack limits
+    if (existing.plan_id === plan_id) {
+      const paymentId = "SUB-" + uuidv4().slice(0, 8);
+
+      if (payment_method === "balance") {
+        const userRes = await query("SELECT balance FROM users WHERE id = $1", [session.user.id]);
+        const userBalance = parseFloat(userRes.rows[0].balance);
+        if (userBalance < newPrice) {
+          return NextResponse.json({ error: "Insufficient balance", required: plan.price, available: userBalance }, { status: 402 });
+        }
+
+        await query("BEGIN");
+        try {
+          await query("UPDATE users SET balance = balance - $1 WHERE id = $2", [plan.price, session.user.id]);
+          // Extend expiry from current expiry (or now if already expired)
+          const baseExpiry = new Date(existing.expires_at) > new Date() ? existing.expires_at : new Date().toISOString();
+          await query(
+            `UPDATE user_subscriptions
+             SET expires_at = $1::timestamp + interval '${plan.duration_days} days',
+                 limit_multiplier = limit_multiplier + 1
+             WHERE id = $2`,
+            [baseExpiry, existing.id]
+          );
+          await query("COMMIT");
+        } catch (e) {
+          await query("ROLLBACK");
+          throw e;
+        }
+
+        return NextResponse.json({
+          payment_id: paymentId,
+          status: "active",
+          plan: plan.name,
+          buyback: true,
+          message: `Buyback ${plan.name}! Durasi +${plan.duration_days} hari, limit ditumpuk.`,
+        });
+      }
+
+      // QRIS buyback
+      await query(
+        `INSERT INTO user_subscriptions (user_id, plan_id, starts_at, expires_at, status, payment_method, payment_id, limit_multiplier)
+         VALUES ($1, $2, now(), now(), 'pending', 'qris', $3, 1)`,
+        [session.user.id, plan_id, paymentId]
+      );
+      return NextResponse.json({
+        payment_id: paymentId,
+        status: "pending",
+        plan: plan.name,
+        buyback: true,
+        amount: plan.price,
+        message: "Scan QRIS untuk buyback. Durasi +limit ditumpuk setelah pembayaran.",
+        qris_url: null,
+      });
+    }
+
+    // Upgrade to more expensive plan: cancel existing, create new
+    if (newPrice >= existingPrice) {
+      // Allowed — will cancel old and create new below
+    }
   }
 
+  // New purchase (no active plan, or upgrade)
   const paymentId = "SUB-" + uuidv4().slice(0, 8);
 
   if (payment_method === "balance") {
-    // Deduct from balance
     const userRes = await query("SELECT balance FROM users WHERE id = $1", [session.user.id]);
     const userBalance = parseFloat(userRes.rows[0].balance);
-
     if (userBalance < parseFloat(plan.price)) {
       return NextResponse.json({ error: "Insufficient balance", required: plan.price, available: userBalance }, { status: 402 });
     }
 
-    // Deduct and create subscription in transaction
     await query("BEGIN");
     try {
       await query("UPDATE users SET balance = balance - $1 WHERE id = $2", [plan.price, session.user.id]);
+      // Cancel existing if upgrading
+      if (existing) {
+        await query("UPDATE user_subscriptions SET status = 'cancelled' WHERE id = $1", [existing.id]);
+      }
       await query(
         `INSERT INTO user_subscriptions (user_id, plan_id, starts_at, expires_at, status, payment_method, payment_id)
          VALUES ($1, $2, now(), now() + interval '${plan.duration_days} days', 'active', 'balance', $3)`,
         [session.user.id, plan_id, paymentId]
       );
-      await query("UPDATE users SET balance = balance + $1 WHERE id = $2", [plan.credits, session.user.id]);
       await query("COMMIT");
     } catch (e) {
       await query("ROLLBACK");
@@ -62,28 +139,23 @@ export async function POST(req: Request) {
       payment_id: paymentId,
       status: "active",
       plan: plan.name,
-      credits_added: plan.credits,
-      message: `Plan ${plan.name} activated! ${plan.credits} credits added.`,
+      message: `Plan ${plan.name} activated!`,
     });
   }
 
-  if (payment_method === "qris") {
-    // Create pending subscription, return QRIS payment info
-    // In production: integrate with Midtrans/Xendit for QRIS
-    await query(
-      `INSERT INTO user_subscriptions (user_id, plan_id, starts_at, expires_at, status, payment_method, payment_id)
-       VALUES ($1, $2, now(), now() + interval '${plan.duration_days} days', 'pending', 'qris', $3)`,
-      [session.user.id, plan_id, paymentId]
-    );
+  // QRIS new purchase
+  await query(
+    `INSERT INTO user_subscriptions (user_id, plan_id, starts_at, expires_at, status, payment_method, payment_id)
+     VALUES ($1, $2, now(), now() + interval '${plan.duration_days} days', 'pending', 'qris', $3)`,
+    [session.user.id, plan_id, paymentId]
+  );
 
-    return NextResponse.json({
-      payment_id: paymentId,
-      status: "pending",
-      plan: plan.name,
-      amount: plan.price,
-      message: "Scan QRIS to complete payment. Subscription activates after payment confirmed.",
-      // TODO: replace with real QRIS URL from payment gateway
-      qris_url: null,
-    });
-  }
+  return NextResponse.json({
+    payment_id: paymentId,
+    status: "pending",
+    plan: plan.name,
+    amount: plan.price,
+    message: "Scan QRIS to complete payment.",
+    qris_url: null,
+  });
 }

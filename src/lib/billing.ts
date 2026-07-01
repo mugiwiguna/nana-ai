@@ -163,7 +163,7 @@ export interface TokenLimitResult {
 export async function checkTokenLimits(userId: string): Promise<TokenLimitResult> {
   // Get active subscription + plan limits
   const subRes = await query(
-    `SELECT p.daily_token_limit, p.weekly_token_limit, p.monthly_token_limit, us.starts_at
+    `SELECT p.daily_token_limit, p.weekly_token_limit, p.monthly_token_limit, us.starts_at, COALESCE(us.limit_multiplier, 1) as limit_multiplier
      FROM user_subscriptions us
      JOIN plans p ON p.id = us.plan_id
      WHERE us.user_id = $1 AND us.status = 'active' AND us.expires_at > now()
@@ -172,9 +172,10 @@ export async function checkTokenLimits(userId: string): Promise<TokenLimitResult
   );
 
   let sub = subRes.rows[0];
-  let dailyLimit = sub?.daily_token_limit ? Number(sub.daily_token_limit) : null;
-  let weeklyLimit = sub?.weekly_token_limit ? Number(sub.weekly_token_limit) : null;
-  let monthlyLimit = sub?.monthly_token_limit ? Number(sub.monthly_token_limit) : null;
+  const multiplier = sub ? Number(sub.limit_multiplier) : 1;
+  let dailyLimit = sub?.daily_token_limit ? Number(sub.daily_token_limit) * multiplier : null;
+  let weeklyLimit = sub?.weekly_token_limit ? Number(sub.weekly_token_limit) * multiplier : null;
+  let monthlyLimit = sub?.monthly_token_limit ? Number(sub.monthly_token_limit) * multiplier : null;
 
   // No active subscription — fall back to free plan limits
   if (!sub) {

@@ -25,6 +25,7 @@ interface Subscription {
     starts_at: string;
     expires_at: string;
     payment_method: string;
+    limit_multiplier: number;
     daily_token_limit: number | null;
     weekly_token_limit: number | null;
     monthly_token_limit: number | null;
@@ -175,7 +176,13 @@ export default function SubscriptionPage() {
           <h2 className="text-lg font-semibold mb-4">Plan Aktif</h2>
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-2xl font-bold text-[var(--gradient-start)]">{sub!.active!.plan_name}</p>
+              <p className="text-2xl font-bold text-[var(--gradient-start)]">{sub!.active!.plan_name}
+                {(sub!.active!.limit_multiplier ?? 1) > 1 && (
+                  <span className="ml-2 text-sm font-normal px-2 py-0.5 rounded-full bg-violet-500/20 text-violet-400">
+                    x{sub!.active!.limit_multiplier}
+                  </span>
+                )}
+              </p>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
                 Berlaku hingga {new Date(sub!.active!.expires_at).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}
               </p>
@@ -315,14 +322,34 @@ export default function SubscriptionPage() {
                   <button disabled className="w-full text-sm font-semibold py-2.5 rounded-xl bg-gray-500/10 text-gray-500 cursor-not-allowed">
                     Stok Habis
                   </button>
-                ) : (
-                  <button onClick={() => plan.is_active && setPaymentPicker({ planId: plan.id, planName: plan.name, price: plan.price })} disabled={hasActivePlan || buying === plan.id}
-                    className={`w-full text-sm font-semibold py-2.5 rounded-xl transition-all duration-300 ${
-                      plan.is_popular ? "bg-[var(--accent-bg)] text-[var(--accent-fg)]" : "border border-[var(--border-color)]"
-                    } disabled:opacity-40 disabled:cursor-not-allowed`}>
-                    {buying === plan.id ? "Memproses..." : hasActivePlan ? "Sudah Berlangganan" : "Beli Paket"}
-                  </button>
-                )}
+                ) : (() => {
+                  const activePrice = sub?.active ? parseFloat(sub.active.plan_credits) : 0;
+                  const planPrice = parseFloat(plan.price);
+                  const activeSlug = ""; // We'll use price comparison
+                  const isSamePlan = sub?.active?.plan_name === plan.name;
+                  const canUpgrade = hasActivePlan && planPrice > activePrice;
+                  const canBuyback = hasActivePlan && isSamePlan;
+                  const canBuy = !hasActivePlan;
+                  const canAct = canBuy || canUpgrade || canBuyback;
+
+                  let btnLabel = "Beli Paket";
+                  if (buying === plan.id) btnLabel = "Memproses...";
+                  else if (canBuyback) btnLabel = "Buyback (+limit & durasi)";
+                  else if (canUpgrade) btnLabel = "Upgrade";
+                  else if (hasActivePlan && !canAct) btnLabel = "Plan aktif lebih mahal";
+
+                  return (
+                    <button
+                      onClick={() => canAct && setPaymentPicker({ planId: plan.id, planName: plan.name, price: plan.price })}
+                      disabled={!canAct || buying === plan.id}
+                      className={`w-full text-sm font-semibold py-2.5 rounded-xl transition-all duration-300 ${
+                        plan.is_popular ? "bg-[var(--accent-bg)] text-[var(--accent-fg)]" : "border border-[var(--border-color)]"
+                      } disabled:opacity-40 disabled:cursor-not-allowed`}
+                    >
+                      {btnLabel}
+                    </button>
+                  );
+                })()}
               </div>
             );
           })}

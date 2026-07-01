@@ -8,7 +8,7 @@ export async function GET() {
   if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const res = await query(
-    `SELECT us.*, p.name as plan_name, p.credits as plan_credits, p.duration_days, p.daily_token_limit, p.weekly_token_limit, p.monthly_token_limit
+    `SELECT us.*, p.name as plan_name, p.credits as plan_credits, p.duration_days, p.daily_token_limit, p.weekly_token_limit, p.monthly_token_limit, COALESCE(us.limit_multiplier, 1) as limit_multiplier
      FROM user_subscriptions us
      JOIN plans p ON us.plan_id = p.id
      WHERE us.user_id = $1 AND us.status = 'active' AND us.expires_at > now()
