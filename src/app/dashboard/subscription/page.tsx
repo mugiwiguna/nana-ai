@@ -408,20 +408,20 @@ export default function SubscriptionPage() {
 
       {/* Payment Method Picker Modal */}
       {paymentPicker && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border border-[var(--border-color)]">
-            <h3 className="text-lg font-semibold mb-1">Beli {paymentPicker.planName}</h3>
-            <p className="text-sm text-[var(--text-secondary)] mb-4">Pilih metode pembayaran</p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md">
+          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border-2 border-zinc-700 shadow-2xl">
+            <h3 className="text-lg font-bold mb-1">Beli {paymentPicker.planName}</h3>
+            <p className="text-sm text-[var(--text-secondary)] mb-5">Pilih metode pembayaran</p>
 
-            <div className="space-y-3 mb-4">
+            <div className="space-y-3 mb-5">
               <button
                 onClick={() => handleSubscribe(paymentPicker.planId, "balance")}
                 disabled={buying === paymentPicker.planId}
-                className="w-full flex items-center gap-3 p-4 rounded-xl border border-[var(--border-color)] hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all"
+                className="w-full flex items-center gap-3 p-4 rounded-xl border-2 border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 hover:border-emerald-500/60 transition-all"
               >
-                <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-lg">💰</div>
+                <div className="w-11 h-11 rounded-full bg-emerald-500/25 flex items-center justify-center text-xl">💰</div>
                 <div className="text-left flex-1">
-                  <p className="text-sm font-medium">Bayar dengan Saldo</p>
+                  <p className="text-sm font-semibold text-emerald-300">Bayar dengan Saldo</p>
                   <p className="text-[11px] text-[var(--text-secondary)]">
                     ${Number(paymentPicker.price).toLocaleString()} dari saldo akun
                   </p>
@@ -431,11 +431,11 @@ export default function SubscriptionPage() {
               <button
                 onClick={() => handleSubscribe(paymentPicker.planId, "qris")}
                 disabled={buying === paymentPicker.planId}
-                className="w-full flex items-center gap-3 p-4 rounded-xl border border-[var(--border-color)] hover:border-violet-500/50 hover:bg-violet-500/5 transition-all"
+                className="w-full flex items-center gap-3 p-4 rounded-xl border-2 border-violet-500/40 bg-violet-500/10 hover:bg-violet-500/20 hover:border-violet-500/60 transition-all"
               >
-                <div className="w-10 h-10 rounded-full bg-violet-500/20 flex items-center justify-center text-lg">📱</div>
+                <div className="w-11 h-11 rounded-full bg-violet-500/25 flex items-center justify-center text-xl">📱</div>
                 <div className="text-left flex-1">
-                  <p className="text-sm font-medium">Scan QRIS</p>
+                  <p className="text-sm font-semibold text-violet-300">Scan QRIS</p>
                   <p className="text-[11px] text-[var(--text-secondary)]">${Number(paymentPicker.price).toLocaleString()} · ~Rp {Math.round(Number(paymentPicker.price) * 16000).toLocaleString("id-ID")}</p>
                 </div>
               </button>
@@ -443,7 +443,7 @@ export default function SubscriptionPage() {
 
             <button
               onClick={() => setPaymentPicker(null)}
-              className="w-full text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] py-2"
+              className="w-full text-sm text-zinc-400 hover:text-white py-2 transition-colors"
             >
               Batal
             </button>
@@ -453,21 +453,21 @@ export default function SubscriptionPage() {
 
       {/* Free Tier Info Modal */}
       {showFreeModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border border-[var(--border-color)]">
-            <h3 className="text-lg font-semibold mb-1">Aktifkan Free Tier</h3>
-            <p className="text-sm text-[var(--text-secondary)] mb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md">
+          <div className="glass-card rounded-2xl p-6 w-[90vw] max-w-sm border-2 border-zinc-700 shadow-2xl">
+            <h3 className="text-lg font-bold mb-1">Aktifkan Free Tier</h3>
+            <p className="text-sm text-[var(--text-secondary)] mb-5">
               Topup minimal $1 (~Rp 16.000) untuk mengaktifkan free tier. Saldo bisa digunakan untuk beli plan nanti.
             </p>
             <button
               onClick={() => { setShowFreeModal(false); window.location.href = "/dashboard/topup"; }}
-              className="w-full py-2.5 rounded-xl text-sm font-medium bg-[var(--accent-bg)] text-[var(--accent-fg)] mb-2"
+              className="w-full py-2.5 rounded-xl text-sm font-semibold bg-emerald-500 text-white hover:bg-emerald-400 transition-colors mb-2"
             >
               Topup Sekarang
             </button>
             <button
               onClick={() => setShowFreeModal(false)}
-              className="w-full text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] py-2"
+              className="w-full text-sm text-zinc-400 hover:text-white py-2 transition-colors"
             >
               Nanti Saja
             </button>

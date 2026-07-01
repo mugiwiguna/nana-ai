@@ -38,6 +38,14 @@ export default function UsersSection() {
   const [loading, setLoading] = useState(true);
   const [assigning, setAssigning] = useState<string | null>(null);
   const [selectedPlan, setSelectedPlan] = useState("");
+  const [search, setSearch] = useState("");
+
+  const filtered = search.trim()
+    ? users.filter(u =>
+        (u.name || "").toLowerCase().includes(search.toLowerCase()) ||
+        u.email.toLowerCase().includes(search.toLowerCase())
+      )
+    : users;
 
   const fetchAll = async () => {
     setLoading(true);
@@ -84,8 +92,24 @@ export default function UsersSection() {
         <span className="text-xs text-[var(--text-secondary)]">{users.length} user</span>
       </div>
 
+      <div className="relative">
+        <input
+          type="text"
+          placeholder="Cari user (email/nama)..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          className="w-full px-3 py-2 text-sm rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-color)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:border-violet-500/50"
+        />
+        {search && (
+          <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] hover:text-[var(--text-primary)]">✕</button>
+        )}
+      </div>
+
       <div className="space-y-3">
-        {users.map((u) => (
+        {filtered.length === 0 && (
+          <p className="text-sm text-[var(--text-secondary)] text-center py-4">{search ? "Tidak ditemukan" : "Belum ada user"}</p>
+        )}
+        {filtered.map((u) => (
           <div key={u.id} className="glass-card rounded-xl p-4">
             <div className="flex items-start justify-between mb-2">
               <div>
