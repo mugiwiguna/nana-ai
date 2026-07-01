@@ -261,7 +261,7 @@ export default function SubscriptionPage() {
           </h2>
           <div className="space-y-3">
             {([
-              ["daily", "Harian", "midnight WITA"],
+              ["daily", "Harian", "midnight WIB"],
               ["weekly", "Mingguan", "Senin"],
               ["monthly", "Bulanan", "tgl 1"],
             ] as const).map(([key, label, resetNote]) => {
@@ -298,7 +298,7 @@ export default function SubscriptionPage() {
           <h2 className="text-lg font-semibold mb-4">Plan Limits</h2>
           <div className="space-y-3">
             {([
-              ["daily", "Harian", "midnight WITA"],
+              ["daily", "Harian", "midnight WIB"],
               ["weekly", "Mingguan", "cycle 7 hari dari tgl sub"],
               ["monthly", "Bulanan", "cycle 30 hari dari tgl sub"],
             ] as const).map(([key, label, resetNote]) => {

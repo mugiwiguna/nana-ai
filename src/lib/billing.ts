@@ -148,8 +148,8 @@ export async function deductBalance(
 
 /**
  * Token limit periods.
- * Free plan: reset follows calendar (daily=midnight WITA, weekly=Monday, monthly=1st).
- * Paid plan: daily=midnight WITA, weekly=7-day cycle from sub start, monthly=same day as sub start.
+ * Free plan: reset follows calendar (daily=midnight WIB, weekly=Monday, monthly=1st).
+ * Paid plan: daily=midnight WIB, weekly=7-day cycle from sub start, monthly=same day as sub start.
  */
 export interface TokenLimitResult {
   allowed: boolean;
@@ -204,12 +204,12 @@ export async function checkTokenLimits(userId: string): Promise<TokenLimitResult
   }
 
   const now = new Date();
-  const WITA_OFFSET = 8 * 60 * 60 * 1000;
+  const WIB_OFFSET = 7 * 60 * 60 * 1000;
 
-  // Daily window: always calendar-based (midnight WITA)
-  const witaNow = new Date(now.getTime() + WITA_OFFSET);
-  const dayStart = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), witaNow.getUTCDate()));
-  const dayStartUTC = new Date(dayStart.getTime() - WITA_OFFSET);
+  // Daily window: always calendar-based (midnight WIB)
+  const wibNow = new Date(now.getTime() + WIB_OFFSET);
+  const dayStart = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate()));
+  const dayStartUTC = new Date(dayStart.getTime() - WIB_OFFSET);
 
   // Weekly + Monthly windows: calendar for free, purchase-date cycle for paid
   let weekStartUTC: Date;
@@ -231,15 +231,15 @@ export async function checkTokenLimits(userId: string): Promise<TokenLimitResult
     monthStartUTC = new Date(subStart.getTime() + monthsSinceStart * msPerMonth);
   } else {
     // Free plan: calendar-based
-    // Week start: Monday 00:00 WITA
-    const dayOfWeek = witaNow.getUTCDay(); // 0=Sun, 1=Mon...
+    // Week start: Monday 00:00 WIB
+    const dayOfWeek = wibNow.getUTCDay(); // 0=Sun, 1=Mon...
     const daysSinceMon = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-    const monDate = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), witaNow.getUTCDate() - daysSinceMon));
-    weekStartUTC = new Date(monDate.getTime() - WITA_OFFSET);
+    const monDate = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate() - daysSinceMon));
+    weekStartUTC = new Date(monDate.getTime() - WIB_OFFSET);
 
-    // Month start: 1st of current month 00:00 WITA
-    const monthStart = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), 1));
-    monthStartUTC = new Date(monthStart.getTime() - WITA_OFFSET);
+    // Month start: 1st of current month 00:00 WIB
+    const monthStart = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), 1));
+    monthStartUTC = new Date(monthStart.getTime() - WIB_OFFSET);
   }
 
   // Query usage for all 3 windows in one shot
@@ -321,20 +321,20 @@ export async function checkFreeTierUsage(userId: string): Promise<{
   }
 
   const now = new Date();
-  const WITA_OFFSET = 8 * 60 * 60 * 1000;
-  const witaNow = new Date(now.getTime() + WITA_OFFSET);
+  const WIB_OFFSET = 7 * 60 * 60 * 1000;
+  const wibNow = new Date(now.getTime() + WIB_OFFSET);
 
   // Calendar-based windows
-  const dayStart = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), witaNow.getUTCDate()));
-  const dayStartUTC = new Date(dayStart.getTime() - WITA_OFFSET);
+  const dayStart = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate()));
+  const dayStartUTC = new Date(dayStart.getTime() - WIB_OFFSET);
 
-  const dayOfWeek = witaNow.getUTCDay();
+  const dayOfWeek = wibNow.getUTCDay();
   const daysSinceMon = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-  const monDate = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), witaNow.getUTCDate() - daysSinceMon));
-  const weekStartUTC = new Date(monDate.getTime() - WITA_OFFSET);
+  const monDate = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate() - daysSinceMon));
+  const weekStartUTC = new Date(monDate.getTime() - WIB_OFFSET);
 
-  const monthStart = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), 1));
-  const monthStartUTC = new Date(monthStart.getTime() - WITA_OFFSET);
+  const monthStart = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), 1));
+  const monthStartUTC = new Date(monthStart.getTime() - WIB_OFFSET);
 
   // Only count free model usage
   const usageRes = await query(

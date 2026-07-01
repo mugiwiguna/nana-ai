@@ -292,7 +292,7 @@ export default function DashboardPage() {
                 );
               })}
               <p className="text-[10px] text-[var(--text-secondary)] pt-1">
-                Reset harian: midnight WITA · Reset mingguan: Senin · Reset bulanan: tgl 1
+                Reset harian: midnight WIB · Reset mingguan: Senin · Reset bulanan: tgl 1
               </p>
             </div>
           ) : (

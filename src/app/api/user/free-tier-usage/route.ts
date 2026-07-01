@@ -6,7 +6,7 @@ const FREE_DAILY_LIMIT = 3_000_000;
 const FREE_WEEKLY_LIMIT = 15_000_000;
 const FREE_MONTHLY_LIMIT = 50_000_000;
 const MIN_TOPUP = 1; // $1
-const WITA_OFFSET = 8 * 60 * 60 * 1000;
+const WIB_OFFSET = 7 * 60 * 60 * 1000;
 
 export async function GET() {
   try {
@@ -24,25 +24,25 @@ export async function GET() {
     const eligible = totalTopup >= MIN_TOPUP;
 
     const now = new Date();
-    const witaNow = new Date(now.getTime() + WITA_OFFSET);
+    const wibNow = new Date(now.getTime() + WIB_OFFSET);
 
-    // Daily: midnight WITA
-    const dayStart = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), witaNow.getUTCDate()));
-    const dayStartUTC = new Date(dayStart.getTime() - WITA_OFFSET);
+    // Daily: midnight WIB
+    const dayStart = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate()));
+    const dayStartUTC = new Date(dayStart.getTime() - WIB_OFFSET);
 
-    // Weekly: Monday 00:00 WITA
-    const dayOfWeek = witaNow.getUTCDay();
+    // Weekly: Monday 00:00 WIB
+    const dayOfWeek = wibNow.getUTCDay();
     const daysSinceMon = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-    const monDate = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), witaNow.getUTCDate() - daysSinceMon));
-    const weekStartUTC = new Date(monDate.getTime() - WITA_OFFSET);
+    const monDate = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate() - daysSinceMon));
+    const weekStartUTC = new Date(monDate.getTime() - WIB_OFFSET);
 
-    // Monthly: 1st of current month 00:00 WITA
-    const monthStart = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), 1));
-    const monthStartUTC = new Date(monthStart.getTime() - WITA_OFFSET);
+    // Monthly: 1st of current month 00:00 WIB
+    const monthStart = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), 1));
+    const monthStartUTC = new Date(monthStart.getTime() - WIB_OFFSET);
 
-    // Reset at = tomorrow 00:00 WITA
-    const tomorrowStart = new Date(Date.UTC(witaNow.getUTCFullYear(), witaNow.getUTCMonth(), witaNow.getUTCDate() + 1));
-    const resetAt = new Date(tomorrowStart.getTime() - WITA_OFFSET);
+    // Reset at = tomorrow 00:00 WIB
+    const tomorrowStart = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate() + 1));
+    const resetAt = new Date(tomorrowStart.getTime() - WIB_OFFSET);
 
     let dailyUsed = 0, weeklyUsed = 0, monthlyUsed = 0;
     try {
