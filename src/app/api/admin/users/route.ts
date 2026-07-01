@@ -12,7 +12,7 @@ export async function GET() {
   const res = await query(`
     SELECT u.id, u.email, u.name, u.balance, u.status, u.role, u.created_at,
       (SELECT COUNT(*) FROM api_keys WHERE user_id = u.id) as api_key_count,
-      (SELECT COALESCE(SUM(cost),0) FROM usage_logs WHERE user_id = u.id) as total_usage,
+      (SELECT COALESCE(SUM(tokens_in + tokens_out),0) FROM usage_logs WHERE user_id = u.id) as total_usage,
       (SELECT json_build_object(
         'id', us.id,
         'plan_name', p.name,
