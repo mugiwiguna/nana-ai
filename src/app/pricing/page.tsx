@@ -68,18 +68,9 @@ export default function PricingPage() {
               <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
 
               <div className="mb-6">
-                <span className="text-3xl font-bold">Rp {Number(plan.price).toLocaleString("id-ID")}</span>
+                <span className="text-3xl font-bold">${Number(plan.price).toLocaleString()}</span>
                 <span className="text-[var(--text-secondary)] text-sm"> / {plan.duration_days} hari</span>
-              </div>
-
-              <div className="mb-6 p-3 rounded-xl bg-[var(--gradient-start)]/5 border border-[var(--gradient-start)]/10">
-                <p className="text-sm text-[var(--text-secondary)]">Credit didapat</p>
-                <p className="text-xl font-bold text-[var(--gradient-start)]">
-                  Rp {Number(plan.credits).toLocaleString("id-ID")}
-                </p>
-                <p className="text-xs text-[var(--text-secondary)]">
-                  Bonus Rp {(Number(plan.credits) - Number(plan.price)).toLocaleString("id-ID")}
-                </p>
+                <p className="text-xs text-[var(--text-secondary)]">~Rp {Math.round(Number(plan.price) * 16000).toLocaleString("id-ID")}</p>
               </div>
 
               {(plan.daily_token_limit || plan.weekly_token_limit || plan.monthly_token_limit) && (

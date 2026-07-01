@@ -180,8 +180,9 @@ export default function SubscriptionPage() {
               </p>
             </div>
             <div className="text-right">
-              <p className="text-sm text-[var(--text-secondary)]">Credit plan</p>
-              <p className="text-xl font-bold">Rp {Number(sub!.active!.plan_credits).toLocaleString("id-ID")}</p>
+              <p className="text-sm text-[var(--text-secondary)]">Harga plan</p>
+              <p className="text-xl font-bold">${Number(sub!.active!.plan_credits).toLocaleString()}</p>
+              <p className="text-[10px] text-[var(--text-secondary)]">~Rp {Math.round(Number(sub!.active!.plan_credits) * 16000).toLocaleString("id-ID")}</p>
             </div>
           </div>
         </div>
@@ -285,18 +286,9 @@ export default function SubscriptionPage() {
 
                 <h3 className="font-bold text-lg mb-1">{plan.name}</h3>
                 <div className="mb-3">
-                  <span className="text-2xl font-bold">Rp {Number(plan.price).toLocaleString("id-ID")}</span>
+                  <span className="text-2xl font-bold">${Number(plan.price).toLocaleString()}</span>
                   <span className="text-xs text-[var(--text-secondary)]"> / {plan.duration_days} hari</span>
-                </div>
-
-                <div className="mb-3 p-2 rounded-lg bg-black/10">
-                  <p className="text-xs text-[var(--text-secondary)]">Credit</p>
-                  <p className="text-sm font-bold text-[var(--gradient-start)]">
-                    Rp {Number(plan.credits).toLocaleString("id-ID")}
-                    <span className="text-[10px] font-normal text-[var(--gradient-start)] ml-1">
-                      +{Math.round(((Number(plan.credits) - Number(plan.price)) / Number(plan.price)) * 100)}%
-                    </span>
-                  </p>
+                  <p className="text-[10px] text-[var(--text-secondary)]">~Rp {Math.round(Number(plan.price) * 16000).toLocaleString("id-ID")}</p>
                 </div>
 
                 {/* Token Limits */}
@@ -350,7 +342,8 @@ export default function SubscriptionPage() {
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-medium">Rp {Number(item.price).toLocaleString("id-ID")}</p>
+                  <p className="text-sm font-medium">${Number(item.price).toLocaleString()}</p>
+                  <p className="text-[10px] text-[var(--text-secondary)]">~Rp {Math.round(Number(item.price) * 16000).toLocaleString("id-ID")}</p>
                   <span className={`text-[10px] px-2 py-0.5 rounded-full ${
                     item.status === "active"
                       ? "bg-[var(--gradient-start)]/10 text-[var(--gradient-start)]"

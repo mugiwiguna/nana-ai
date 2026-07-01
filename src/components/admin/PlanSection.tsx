@@ -217,7 +217,7 @@ export default function PlanSection({ showToast }: { showToast: (m: string) => v
                   </span>
                 </div>
                 <div className="text-[11px] text-[var(--text-secondary)] mt-0.5">
-                  Rp {Number(p.price).toLocaleString("id-ID")} · {p.duration_days} hari · Credits Rp {Number(p.credits).toLocaleString("id-ID")}
+                  ${Number(p.price).toLocaleString()} · {p.duration_days} hari
                   {p.description && <span> · {p.description}</span>}
                 </div>
                 {p.model_ids && p.model_ids.length > 0 && (
