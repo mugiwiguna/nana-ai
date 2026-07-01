@@ -1,12 +1,9 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { query } from "@/lib/db";
+import { checkFreeTierUsage } from "@/lib/billing";
 
-const FREE_DAILY_LIMIT = 3_000_000;
-const FREE_WEEKLY_LIMIT = 15_000_000;
-const FREE_MONTHLY_LIMIT = 50_000_000;
 const MIN_TOPUP = 1; // $1
-const WIB_OFFSET = 7 * 60 * 60 * 1000;
 
 export async function GET() {
   try {
@@ -23,66 +20,33 @@ export async function GET() {
     const totalTopup = Number(topupRes.rows[0].total);
     const eligible = totalTopup >= MIN_TOPUP;
 
-    const now = new Date();
-    const wibNow = new Date(now.getTime() + WIB_OFFSET);
-
-    // Daily: midnight WIB
-    const dayStart = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate()));
-    const dayStartUTC = new Date(dayStart.getTime() - WIB_OFFSET);
-
-    // Weekly: Monday 00:00 WIB
-    const dayOfWeek = wibNow.getUTCDay();
-    const daysSinceMon = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-    const monDate = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate() - daysSinceMon));
-    const weekStartUTC = new Date(monDate.getTime() - WIB_OFFSET);
-
-    // Monthly: 1st of current month 00:00 WIB
-    const monthStart = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), 1));
-    const monthStartUTC = new Date(monthStart.getTime() - WIB_OFFSET);
-
-    // Reset at = tomorrow 00:00 WIB
-    const tomorrowStart = new Date(Date.UTC(wibNow.getUTCFullYear(), wibNow.getUTCMonth(), wibNow.getUTCDate() + 1));
-    const resetAt = new Date(tomorrowStart.getTime() - WIB_OFFSET);
-
-    let dailyUsed = 0, weeklyUsed = 0, monthlyUsed = 0;
-    try {
-      const usageRes = await query(
-        `SELECT
-           COALESCE(SUM(CASE WHEN ul.created_at >= $2 THEN ul.tokens_in + ul.tokens_out ELSE 0 END), 0) as daily_used,
-           COALESCE(SUM(CASE WHEN ul.created_at >= $3 THEN ul.tokens_in + ul.tokens_out ELSE 0 END), 0) as weekly_used,
-           COALESCE(SUM(CASE WHEN ul.created_at >= $4 THEN ul.tokens_in + ul.tokens_out ELSE 0 END), 0) as monthly_used
-         FROM usage_logs ul
-         JOIN custom_models cm ON ul.model = cm.name
-         WHERE ul.user_id = $1
-           AND cm.is_free = true`,
-        [userId, dayStartUTC.toISOString(), weekStartUTC.toISOString(), monthStartUTC.toISOString()]
-      );
-      const row = usageRes.rows[0];
-      dailyUsed = Number(row.daily_used);
-      weeklyUsed = Number(row.weekly_used);
-      monthlyUsed = Number(row.monthly_used);
-    } catch (e) {
-      // usage query failed, default to 0
-    }
-
     const modelsRes = await query(
       `SELECT COUNT(*) as count FROM custom_models WHERE is_free = true AND is_active = true`
     );
     const freeModels = Number(modelsRes.rows[0].count);
 
+    // Get free tier limits (daily/weekly/monthly)
+    const freeTierLimits = await checkFreeTierUsage(userId);
+    const dl = freeTierLimits.limits.daily;
+    const wl = freeTierLimits.limits.weekly;
+    const ml = freeTierLimits.limits.monthly;
+
+    const addPct = (l: any) => ({ ...l, percentage: l.limit ? Math.min(100, Math.round((l.used / l.limit) * 100)) : 0 });
+
     return NextResponse.json({
       eligible,
       totalTopup,
-      daily: { used: dailyUsed, limit: FREE_DAILY_LIMIT, remaining: Math.max(0, FREE_DAILY_LIMIT - dailyUsed), percentage: Math.min(100, Math.round((dailyUsed / FREE_DAILY_LIMIT) * 100)) },
-      weekly: { used: weeklyUsed, limit: FREE_WEEKLY_LIMIT, remaining: Math.max(0, FREE_WEEKLY_LIMIT - weeklyUsed), percentage: Math.min(100, Math.round((weeklyUsed / FREE_WEEKLY_LIMIT) * 100)) },
-      monthly: { used: monthlyUsed, limit: FREE_MONTHLY_LIMIT, remaining: Math.max(0, FREE_MONTHLY_LIMIT - monthlyUsed), percentage: Math.min(100, Math.round((monthlyUsed / FREE_MONTHLY_LIMIT) * 100)) },
       freeModels,
-      resetAt: resetAt.toISOString(),
-      // Legacy flat fields for backward compat
-      used: dailyUsed,
-      limit: FREE_DAILY_LIMIT,
-      remaining: Math.max(0, FREE_DAILY_LIMIT - dailyUsed),
-      percentage: Math.min(100, Math.round((dailyUsed / FREE_DAILY_LIMIT) * 100)),
+      // Flat structure (backward compat)
+      used: dl.used,
+      limit: dl.limit,
+      remaining: dl.remaining,
+      percentage: dl.limit ? Math.min(100, Math.round((dl.used / dl.limit) * 100)) : 0,
+      // Nested structure with percentage
+      daily: addPct(dl),
+      weekly: addPct(wl),
+      monthly: addPct(ml),
+      allowed: freeTierLimits.allowed,
     });
   } catch (e: any) {
     console.error("free-tier-usage error:", e);

@@ -54,7 +54,7 @@ interface Subscription {
 }
 
 export default function SubscriptionPage() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [plans, setPlans] = useState<Plan[]>([]);
   const [sub, setSub] = useState<Subscription | null>(null);
   const [loading, setLoading] = useState(true);
@@ -152,14 +152,14 @@ export default function SubscriptionPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/plans").then((r) => r.json()),
-      fetch("/api/subscription").then((r) => r.json()),
+      fetch("/api/plans").then((r) => r.ok ? r.json() : []).catch(() => []),
+      fetch("/api/subscription").then((r) => r.ok ? r.json() : { active: null, history: [], tokenLimits: null, freeTierLimits: null }).catch(() => ({ active: null, history: [], tokenLimits: null, freeTierLimits: null })),
       fetch("/api/user/free-tier-usage", { cache: "no-store" }).then((r) => r.json()).catch(() => null),
       fetch("/api/payments").then((r) => r.json()).catch(() => []),
     ])
       .then(([p, s, f, pay]) => {
-        setPlans(p);
-        setSub(s);
+        if (Array.isArray(p)) setPlans(p);
+        if (s && typeof s === "object") setSub(s);
         if (f && !f.error) setFreeUsage(f);
         if (Array.isArray(pay)) setPayments(pay);
       })
@@ -180,8 +180,8 @@ export default function SubscriptionPage() {
       if (res.ok) {
         setToast({ text: json.message || "Berhasil!", ok: true });
         // Refresh subscription data
-        const s = await fetch("/api/subscription").then((r) => r.json());
-        setSub(s);
+        const s = await fetch("/api/subscription").then((r) => r.ok ? r.json() : null).catch(() => null);
+        if (s) setSub(s);
       } else {
         setToast({ text: json.error || "Gagal", ok: false });
       }
@@ -191,7 +191,7 @@ export default function SubscriptionPage() {
     setBuying(null);
   }
 
-  if (loading) {
+  if (loading || status === "loading") {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="w-6 h-6 border-2 border-[var(--gradient-start)] border-t-transparent rounded-full animate-spin" />

@@ -38,30 +38,21 @@ export async function POST(req: Request) {
     // Check free tier eligibility
     const freeTier = await checkFreeTier(user.id, model);
 
-    // Check free tier limits FIRST (for free models) — applies to ALL users
+    // Check free tier limits first (for free models)
+    let freeTierExhausted = false;
     if (freeTier.eligible) {
       const freeLimits = await checkFreeTierUsage(user.id);
-      if (!freeLimits.allowed) {
-        const exceeded: string[] = [];
-        const l = freeLimits.limits;
-        if (l.daily.limit && l.daily.remaining === 0) exceeded.push(`daily: ${l.daily.used.toLocaleString()}/${l.daily.limit.toLocaleString()}`);
-        if (l.weekly.limit && l.weekly.remaining === 0) exceeded.push(`weekly: ${l.weekly.used.toLocaleString()}/${l.weekly.limit.toLocaleString()}`);
-        if (l.monthly.limit && l.monthly.remaining === 0) exceeded.push(`monthly: ${l.monthly.used.toLocaleString()}/${l.monthly.limit.toLocaleString()}`);
-        return NextResponse.json({
-          error: {
-            message: `Free tier limit reached (${exceeded.join(", ")}). Upgrade plan atau tunggu reset berikutnya.`,
-            type: "rate_limit_error",
-            limits: l,
-          },
-        }, { status: 429 });
-      }
+      freeTierExhausted = !freeLimits.allowed;
     }
 
-    // Check paid plan token limits (daily/weekly/monthly) — for paid users or as fallback
+    // Check paid plan token limits (daily/weekly/monthly)
     const tokenLimits = await checkTokenLimits(user.id);
-    if (!tokenLimits.allowed) {
+    const paidPlanExhausted = !tokenLimits.allowed;
+
+    // Only block if BOTH free tier AND paid plan are exhausted
+    if (freeTierExhausted && paidPlanExhausted) {
       const exceeded: string[] = [];
-      const l = tokenLimits.limits;
+      const l = freeTierExhausted ? (await checkFreeTierUsage(user.id)).limits : tokenLimits.limits;
       if (l.daily.limit && l.daily.remaining === 0) exceeded.push(`daily: ${l.daily.used.toLocaleString()}/${l.daily.limit.toLocaleString()}`);
       if (l.weekly.limit && l.weekly.remaining === 0) exceeded.push(`weekly: ${l.weekly.used.toLocaleString()}/${l.weekly.limit.toLocaleString()}`);
       if (l.monthly.limit && l.monthly.remaining === 0) exceeded.push(`monthly: ${l.monthly.used.toLocaleString()}/${l.monthly.limit.toLocaleString()}`);
@@ -74,7 +65,11 @@ export async function POST(req: Request) {
       }, { status: 429 });
     }
 
-    if (!freeTier.eligible && Number(user.balance) <= 0) {
+    // Determine billing tier: free → paid plan → balance deduction
+    const useFreeTier = freeTier.eligible && !freeTierExhausted;
+    const usePaidPlan = !useFreeTier && !paidPlanExhausted && tokenLimits.allowed;
+
+    if (!useFreeTier && !usePaidPlan && Number(user.balance) <= 0) {
       return NextResponse.json({ error: { message: "Insufficient balance", type: "insufficient_quota" } }, { status: 402 });
     }
 
@@ -152,7 +147,7 @@ export async function POST(req: Request) {
             }
 
             // Deduct balance or log free usage
-            if (freeTier.eligible) {
+            if (useFreeTier || usePaidPlan) {
               logFreeUsage(user.id, user.api_key_id, model, tokensIn, tokensOut).catch(() => {});
             } else {
               const cost = useCustomPricing
@@ -224,7 +219,7 @@ export async function POST(req: Request) {
     const tokensIn = data.usage?.prompt_tokens || 0;
     const tokensOut = data.usage?.completion_tokens || 0;
 
-    if (freeTier.eligible) {
+    if (useFreeTier || usePaidPlan) {
       await logFreeUsage(user.id, user.api_key_id, model, tokensIn, tokensOut);
       return NextResponse.json({
         ...data,

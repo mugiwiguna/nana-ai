@@ -36,6 +36,7 @@ export default function DashboardPage() {
   const [fetchErr, setFetchErr] = useState("");
   const [freeUsage, setFreeUsage] = useState<any>(null);
   const [resetTimers, setResetTimers] = useState({ daily: "", weekly: "", monthly: "" });
+  const [sub, setSub] = useState<any>(null);
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
@@ -49,7 +50,8 @@ export default function DashboardPage() {
       fetch("/api/user/free-tier-usage", { cache: "no-store" }).then(r => r.json()).catch(e => null),
       fetch("/api/headlines").then(r => r.json()).catch(e => ({ headlines: [] })),
       fetch("/api/notifications").then(r => r.json()).catch(e => ({ notifications: [], unread: 0 })),
-    ]).then(([keyCount, recent, dailyData, dailyModelsData, modelsRes, freeData, headlineData, notifData]) => {
+      fetch("/api/subscription", { cache: "no-store" }).then(r => r.json()).catch(e => null),
+    ]).then(([keyCount, recent, dailyData, dailyModelsData, modelsRes, freeData, headlineData, notifData, subData]) => {
       if (keyCount.error || recent.error || dailyData.error || dailyModelsData.error || modelsRes.error) {
         const errs = [keyCount, recent, dailyData, dailyModelsData, modelsRes]
           .map((r:any,i) => r.error ? ["keys/count","usage","usage/daily","usage/daily-models","usage/models"][i]+": "+r.error : null).filter(Boolean);
@@ -72,6 +74,7 @@ export default function DashboardPage() {
       setNotifications(notifData.notifications || []);
       setUnreadCount(notifData.unread || 0);
       setStats({ keyCount, recent: recent.usage || [], daily: d, dailyModels: dailyModelsData.days || [], modelBreakdown: modelsRes.models || [] });
+      if (subData && subData.active) setSub(subData);
     });
   }, [status, router, session]);
 
@@ -259,6 +262,38 @@ export default function DashboardPage() {
           icon={<ZapIcon />}
         />
       </div>
+
+      {/* Active Plan Badge */}
+      {sub && sub.active && (
+        <div className="glass-card rounded-xl p-5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 border border-violet-500/30 flex items-center justify-center">
+                <svg className="w-5 h-5 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                </svg>
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-semibold text-[var(--text-primary)]">{sub.active.plan_name}</span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/25">Aktif</span>
+                </div>
+                <p className="text-xs text-[var(--text-secondary)] mt-0.5">
+                  Berlaku hingga {new Date(sub.active.expires_at).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}
+                </p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-[var(--text-secondary)]">Sisa Token Hari Ini</p>
+              {sub.tokenLimits && sub.tokenLimits.daily && (
+                <p className="text-lg font-bold gradient-text">
+                  {sub.tokenLimits.daily.remaining?.toLocaleString() || "—"}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Free Tier Progress Bar */}
       {freeUsage && (
